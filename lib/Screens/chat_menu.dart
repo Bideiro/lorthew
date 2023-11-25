@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 
 class ChatMenu extends StatelessWidget {
   const ChatMenu({super.key});
@@ -6,10 +7,19 @@ class ChatMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const ChatScreen();
+=======
+import 'package:lorthew/Screens/all.dart';
+
+class ChatMenu extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ChatScreen();
+>>>>>>> 78bfe58 (Test version 1)
   }
 }
 
 class ChatScreen extends StatefulWidget {
+<<<<<<< HEAD
   const ChatScreen({super.key});
 
   @override
@@ -21,6 +31,13 @@ class _ChatScreenState extends State<ChatScreen>
   @override
   bool get wantKeepAlive => true;
 
+=======
+  @override
+  _ChatScreenState createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+>>>>>>> 78bfe58 (Test version 1)
   final List<String> users = [
     'Alice',
     'Bob',
@@ -49,6 +66,7 @@ class _ChatScreenState extends State<ChatScreen>
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     super.build(context);
     return Scaffold(
       appBar: AppBar(
@@ -58,14 +76,29 @@ class _ChatScreenState extends State<ChatScreen>
           style: TextStyle(
               fontFamily: 'Bebas', fontSize: 30, fontWeight: FontWeight.w400),
         ),
+=======
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Chats',
+          style: TextStyle(color: Colors.black),
+        ),
+        centerTitle: true, // Aligns the title in the center of the AppBar
+>>>>>>> 78bfe58 (Test version 1)
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
             child: IconButton(
+<<<<<<< HEAD
               icon: const Icon(
                 Icons.notifications,
                 // color: Colors.yellow,
                 size: 30,
+=======
+              icon: Icon(
+                Icons.notifications,
+                color: Colors.yellow,
+>>>>>>> 78bfe58 (Test version 1)
               ),
               onPressed: () {
                 // Add functionality for the notification icon
@@ -76,6 +109,7 @@ class _ChatScreenState extends State<ChatScreen>
       ),
       body: Column(
         children: <Widget>[
+<<<<<<< HEAD
           Column(
           children: [
             Padding(
@@ -125,6 +159,21 @@ class _ChatScreenState extends State<ChatScreen>
             ),
           ],
         ),
+=======
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Search users...',
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+              onChanged: _filterUsers,
+            ),
+          ),
+>>>>>>> 78bfe58 (Test version 1)
           Expanded(
             child: ListView.builder(
               itemCount: filteredUsers.length,
@@ -143,6 +192,10 @@ class _ChatScreenState extends State<ChatScreen>
           ),
         ],
       ),
+<<<<<<< HEAD
+=======
+      bottomNavigationBar: CustomNavBar(),
+>>>>>>> 78bfe58 (Test version 1)
     );
   }
 
