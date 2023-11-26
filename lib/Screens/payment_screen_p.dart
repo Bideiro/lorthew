@@ -54,14 +54,14 @@ class _PaymentScreenState extends State<PaymentScreenP> {
           IconButton(
             icon: const Icon(
               Icons.history,
-              color: Color.fromRGBO(16, 48, 89, 1),
+              // color: Color.fromRGBO(16, 48, 89, 1),
             ),
             onPressed: () {},
           ),
           IconButton(
             icon: const Icon(
               Icons.notifications,
-              color: Color.fromRGBO(16, 48, 89, 1),
+              // color: Color.fromRGBO(16, 48, 89, 1),
             ),
             onPressed: () {},
           ),

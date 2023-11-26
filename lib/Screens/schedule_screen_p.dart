@@ -32,7 +32,7 @@ class StudentInfo {
   });
 }
 
-class ScheduleTutor extends StatelessWidget  {
+class ScheduleTutor extends StatelessWidget {
   final List<Color> bookmarkColors = [
     (const Color(0xFF4FC3F7)),
     (const Color(0xFF1976D2)),
@@ -40,12 +40,14 @@ class ScheduleTutor extends StatelessWidget  {
   ];
   final List<StudentInfo> tutorDatas;
 
-  ScheduleTutor({super.key, required this.tutorDatas,});
+  ScheduleTutor({
+    super.key,
+    required this.tutorDatas,
+  });
 
   int colorIndex = 0;
   @override
   Widget build(BuildContext context) {
-
     DateTime now = DateTime.now();
     String month = DateFormat('MMM').format(now);
     String day = DateFormat('d').format(now);
@@ -116,22 +118,23 @@ class ScheduleTutor extends StatelessWidget  {
     }
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Schedule',
+          style: TextStyle(
+              fontFamily: 'Bebas', fontSize: 30, fontWeight: FontWeight.w400),
+        ),
+        automaticallyImplyLeading: false,
+      ),
       body: SingleChildScrollView(
-        physics: tutorDatas.length <= 4 ? const NeverScrollableScrollPhysics() : null,
+        physics: tutorDatas.length <= 4
+            ? const NeverScrollableScrollPhysics()
+            : null,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50.0),
           child: Center(
             child: Column(
               children: [
-                const Text(
-                  'Schedule',
-                  style: TextStyle(
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-                const SizedBox(height: 20.0,),
                 Row(
                   children: [
                     Container(
@@ -196,9 +199,15 @@ class ScheduleTutor extends StatelessWidget  {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                for (var i = 0; i < (tutorDatas.length <= 4 ? tutorDatas.length : 3); i++)
+                                for (var i = 0;
+                                    i <
+                                        (tutorDatas.length <= 4
+                                            ? tutorDatas.length
+                                            : 3);
+                                    i++)
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
@@ -220,7 +229,8 @@ class ScheduleTutor extends StatelessWidget  {
                                   ),
                                 if (showRemainingStudents)
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
@@ -246,7 +256,6 @@ class ScheduleTutor extends StatelessWidget  {
                         ),
                       ),
                     )
-
                   ],
                 ),
                 const SizedBox(height: 20.0),
@@ -255,7 +264,8 @@ class ScheduleTutor extends StatelessWidget  {
                     //Individual Containers with Time
                     Column(
                       children: tutorDatas.map((info) {
-                        Color bookmarkColor = bookmarkColors[colorIndex % bookmarkColors.length];
+                        Color bookmarkColor =
+                            bookmarkColors[colorIndex % bookmarkColors.length];
                         colorIndex++;
                         return Column(
                           children: [
@@ -274,7 +284,8 @@ class ScheduleTutor extends StatelessWidget  {
                                   ),
                                   const SizedBox(width: 30.0),
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         info.name.toUpperCase(),
@@ -305,7 +316,8 @@ class ScheduleTutor extends StatelessWidget  {
                     TextButton(
                       onPressed: printPdf,
                       style: ButtonStyle(
-                        overlayColor: MaterialStateProperty.resolveWith((states) {
+                        overlayColor:
+                            MaterialStateProperty.resolveWith((states) {
                           return Colors.transparent;
                         }),
                       ),
@@ -330,7 +342,6 @@ class ScheduleTutor extends StatelessWidget  {
                         ),
                       ),
                     ),
-
                   ],
                 ),
               ],

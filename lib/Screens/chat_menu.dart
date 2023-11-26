@@ -16,8 +16,8 @@ class ChatScreen extends StatefulWidget {
   State<ChatScreen> createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> with AutomaticKeepAliveClientMixin{
-  
+class _ChatScreenState extends State<ChatScreen>
+    with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -51,21 +51,21 @@ class _ChatScreenState extends State<ChatScreen> with AutomaticKeepAliveClientMi
   Widget build(BuildContext context) {
     super.build(context);
     return Scaffold(
-      
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Text(
           'Chats',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(
+              fontFamily: 'Bebas', fontSize: 30, fontWeight: FontWeight.w400),
         ),
-        centerTitle: true, // Aligns the title in the center of the AppBar
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
             child: IconButton(
-              icon:  const Icon(
+              icon: const Icon(
                 Icons.notifications,
-                color: Colors.yellow,
+                // color: Colors.yellow,
+                size: 30,
               ),
               onPressed: () {
                 // Add functionality for the notification icon
@@ -76,19 +76,55 @@ class _ChatScreenState extends State<ChatScreen> with AutomaticKeepAliveClientMi
       ),
       body: Column(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Search users...',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
+          Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: SearchAnchor(
+                      builder:
+                          (BuildContext context, SearchController controller) {
+                        return SearchBar(
+                          controller: controller,
+                          padding: const MaterialStatePropertyAll<EdgeInsets>(
+                            EdgeInsets.symmetric(horizontal: 16.0),
+                          ),
+                          onTap: () {
+                            controller.openView();
+                          },
+                          onChanged: (_) {
+                            controller.openView();
+                          },
+                          leading: const Icon(Icons.search),
+                        );
+                      },
+                      suggestionsBuilder:
+                          (BuildContext context, SearchController controller) {
+                        return List<ListTile>.generate(5, (int index) {
+                          final String item = 'item $index';
+                          return ListTile(
+                            title: Text(item),
+                            onTap: () {
+                              setState(() {
+                                controller.closeView(item);
+                              });
+                            },
+                          );
+                        });
+                      },
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.filter_list),
+                    onPressed: () {},
+                  ),
+                ],
               ),
-              onChanged: _filterUsers,
             ),
-          ),
+          ],
+        ),
           Expanded(
             child: ListView.builder(
               itemCount: filteredUsers.length,
@@ -114,6 +150,4 @@ class _ChatScreenState extends State<ChatScreen> with AutomaticKeepAliveClientMi
     print('Selected user: $userName');
     // Navigate to the chat screen or perform any action here
   }
-
-  
 }

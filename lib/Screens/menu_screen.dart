@@ -105,12 +105,12 @@ class _MenuScreenState extends State<MenuScreen> {
   }
 }
 
-
 class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
-class _HomeScreenState extends State<HomeScreen>{
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     List<UserInfo> users = [
@@ -131,21 +131,23 @@ class _HomeScreenState extends State<HomeScreen>{
     ];
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Home',
+          style: TextStyle(
+              fontFamily: 'Bebas', fontSize: 30, fontWeight: FontWeight.w400),
+        ),
+        automaticallyImplyLeading: false,
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.notifications),
+            onPressed: () {},
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: Row(
-                children: [
-                  const Spacer(),
-                  IconButton(
-                    icon: const Icon(Icons.notifications),
-                    onPressed: () {},
-                  ),
-                ],
-              ),
-            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(

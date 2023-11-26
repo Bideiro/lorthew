@@ -16,34 +16,39 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.shopping_cart),
-            tooltip: 'Open shopping cart',
-            onPressed: () {
-              // handle the press
-            },
+          title: const Text(
+            'Schedule',
+            style: TextStyle(
+                fontFamily: 'Bebas', fontSize: 30, fontWeight: FontWeight.w400),
           ),
-          TextButton.icon(
-            icon: const Icon(
-              Icons.mode_edit,
-              // color: Colors.black,
-            ),
-            label: const Text("Edit Profile",selectionColor: Colors.black,),
-            onPressed: () {
-              // handle the press
-            },
-          )
-        ],
-        title:const  Text(
-          'Profile',
-          style: TextStyle(color: Colors.black),
-        ),
-        centerTitle: true,
-        elevation: 0.0,
-        backgroundColor: Colors.white,
-      ),
+          automaticallyImplyLeading: false,
+          actions: <Widget>[
+            // icon with text code is below
+
+            // TextButton.icon(
+            //   icon: const Icon(
+            //     Icons.mode_edit,
+            //     color: Colors.black,
+            //     size: 30,
+            //   ),
+            //   label: const Text(
+            //     "Edit Profile",
+            //     style: TextStyle(color: Colors.black,fontFamily: 'Bebas', fontSize: 30, fontWeight: FontWeight.w400),
+            //   ),
+            //   onPressed: () {
+            //     // handle the press
+            //   },)
+
+            IconButton(
+                icon: const Icon(
+                  Icons.mode_edit,
+                  size: 30,
+                ),
+                tooltip: 'Increase volume by 10',
+                onPressed: () {
+                  //enter functionality code
+                })
+          ]),
       body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
