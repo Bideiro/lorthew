@@ -14,12 +14,12 @@ class MenuScreen extends StatefulWidget {
 
 class _MenuScreenState extends State<MenuScreen> {
   int _selectedIndex = 0;
-  List<Widget> _widgetOptions = <Widget>[
+  final List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     ChatMenu(),
     ScheduleScreenP(),
     PaymentScreenP(),
-    ProfileScreenP(),
+    const ProfileScreenP(),
   ];
 
   bool isDark = false;
@@ -59,8 +59,8 @@ class _MenuScreenState extends State<MenuScreen> {
               gap: 8,
               activeColor: Colors.black,
               iconSize: 24,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              duration: Duration(milliseconds: 400),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              duration: const Duration(milliseconds: 400),
               tabBackgroundColor: Colors.grey[100]!,
               color: Colors.black,
               tabs: [
@@ -103,17 +103,15 @@ class _MenuScreenState extends State<MenuScreen> {
       ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }
 
 
 class HomeScreen extends StatefulWidget {
-
+  @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 class _HomeScreenState extends State<HomeScreen>{
+  @override
   Widget build(BuildContext context) {
     List<UserInfo> users = [
       UserInfo(
@@ -140,9 +138,9 @@ class _HomeScreenState extends State<HomeScreen>{
               padding: const EdgeInsets.only(top: 20),
               child: Row(
                 children: [
-                  Spacer(),
+                  const Spacer(),
                   IconButton(
-                    icon: Icon(Icons.notifications),
+                    icon: const Icon(Icons.notifications),
                     onPressed: () {},
                   ),
                 ],
@@ -187,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen>{
                     ),
                   ),
                   IconButton(
-                    icon: Icon(Icons.filter_list),
+                    icon: const Icon(Icons.filter_list),
                     onPressed: () {},
                   ),
                 ],
@@ -221,7 +219,7 @@ class UserInfo {
 class ExpandableCard extends StatelessWidget {
   final UserInfo user;
 
-  ExpandableCard({required this.user});
+  const ExpandableCard({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -256,7 +254,7 @@ class ExpandableCard extends StatelessWidget {
                         if (loadingProgress == null) {
                           return child;
                         } else {
-                          return Center(
+                          return const Center(
                             child: CircularProgressIndicator(),
                           );
                         }
@@ -311,7 +309,7 @@ class ExpandableCard extends StatelessWidget {
 class FullScreenCard extends StatelessWidget {
   final UserInfo user;
 
-  FullScreenCard({required this.user});
+  const FullScreenCard({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -337,7 +335,7 @@ class FullScreenCard extends StatelessWidget {
                     if (loadingProgress == null) {
                       return child;
                     } else {
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(),
                       );
                     }
@@ -384,7 +382,7 @@ class FullScreenCard extends StatelessWidget {
           const Expanded(
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.all(15),
+                padding: EdgeInsets.all(15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -435,7 +433,4 @@ class FullScreenCard extends StatelessWidget {
       ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

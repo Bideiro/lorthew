@@ -8,7 +8,7 @@ class PaymentScreenP3 extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: Container(
+        child: SizedBox(
           width: 500.0, // Adjust the width as needed
           child: Padding(
             padding: const EdgeInsets.all(16.0),

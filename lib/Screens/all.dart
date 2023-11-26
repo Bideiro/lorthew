@@ -1,5 +1,4 @@
 export 'chat_menu.dart';
-export 'customnavbar.dart';
 export 'login_screen.dart';
 export 'menu_screen.dart';
 // export 'sched_t.dart';
