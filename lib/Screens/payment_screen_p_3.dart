@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'customnavbar.dart';
 
 class PaymentScreenP3 extends StatelessWidget {
   @override
@@ -104,13 +103,6 @@ class PaymentScreenP3 extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 30.0),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Add logic to download receipt
-                      },
-                      child: const Text('Download Receipt'),
-                    ),
                   ],
                 ),
               ),
@@ -118,7 +110,6 @@ class PaymentScreenP3 extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: const CustomNavBar(),
     );
   }
 }
