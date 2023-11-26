@@ -127,7 +127,6 @@ class _PaymentScreenState extends State<PaymentScreenP> {
           ),
         ],
       ),
-      bottomNavigationBar: const CustomNavBar(),
     );
   }
 }

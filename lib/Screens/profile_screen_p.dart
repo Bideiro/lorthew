@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'customnavbar.dart';
-
 class ProfileScreenP extends StatelessWidget {
   const ProfileScreenP({super.key});
 
@@ -107,7 +105,6 @@ class ProfilePage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: const CustomNavBar(),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
+import 'package:lorthew/Screens/all.dart';
 
 class PaymentScreenP2 extends StatelessWidget {
   final String tutorName;
@@ -87,7 +88,7 @@ class PaymentScreenP2 extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Container(
-                padding:const  EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -200,7 +201,11 @@ class PaymentScreenP2 extends StatelessWidget {
                         borderRadius: 50,
                         borderWidth: 2,
                         onPress: () {
-                          Navigator.pushNamed(context, '/payment3');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const PaymentScreenP3()),
+                          );
                         },
                       ),
                     ],

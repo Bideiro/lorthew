@@ -2,10 +2,11 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
+import 'package:lorthew/Screens/menu_screen.dart';
 
-void main() {
-  runApp(LoginScreen());
-}
+// void main() {
+//   runApp(LoginScreen());
+// }
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -79,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             decoration: InputDecoration(
                               labelText: 'Email',
                               contentPadding:
-                              EdgeInsets.symmetric(horizontal: 20),
+                                  EdgeInsets.symmetric(horizontal: 20),
                               border: InputBorder.none,
                             ),
                           ),
@@ -94,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             decoration: InputDecoration(
                               labelText: 'Password',
                               contentPadding:
-                              EdgeInsets.symmetric(horizontal: 20),
+                                  EdgeInsets.symmetric(horizontal: 20),
                               border: InputBorder.none,
                             ),
                             obscureText: true,
@@ -127,17 +128,17 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             items: items
                                 .map((String item) => DropdownMenuItem<String>(
-                              value: item,
-                              child: Text(
-                                item,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ))
+                                      value: item,
+                                      child: Text(
+                                        item,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ))
                                 .toList(),
                             value: selectedValue,
                             onChanged: (String? value) {
@@ -148,7 +149,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             buttonStyleData: ButtonStyleData(
                               height: 50,
                               width: 400,
-                              padding: const EdgeInsets.only(left: 14, right: 14),
+                              padding:
+                                  const EdgeInsets.only(left: 14, right: 14),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(14),
                                 border: Border.all(
@@ -177,7 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 radius: const Radius.circular(40),
                                 thickness: MaterialStateProperty.all<double>(6),
                                 thumbVisibility:
-                                MaterialStateProperty.all<bool>(true),
+                                    MaterialStateProperty.all<bool>(true),
                               ),
                             ),
                             menuItemStyleData: const MenuItemStyleData(
@@ -199,7 +201,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderRadius: 50,
                           borderWidth: 2,
                           onPress: () {
-                            Navigator.pushNamed(context, '/home');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const MenuScreen()),
+                            );
                           },
                         ),
                         SizedBox(height: 20),

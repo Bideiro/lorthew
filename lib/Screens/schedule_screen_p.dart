@@ -3,8 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
-import 'customnavbar.dart';
-
 class ScheduleScreenP extends StatelessWidget {
   final List<StudentInfo> tutorData = [
     StudentInfo(name: "Chelsea Pearce", date: "7:30 am - 10:30 am"),
@@ -340,7 +338,6 @@ class ScheduleTutor extends StatelessWidget  {
           ),
         ),
       ),
-      bottomNavigationBar: const CustomNavBar(),
     );
   }
 }
