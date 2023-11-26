@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-import 'customnavbar.dart';
-
 class PaymentScreenP3 extends StatelessWidget {
+  const PaymentScreenP3({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: Container(
+        child: SizedBox(
           width: 500.0, // Adjust the width as needed
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -118,7 +118,6 @@ class PaymentScreenP3 extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: const CustomNavBar(),
     );
   }
 }

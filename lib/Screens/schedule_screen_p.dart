@@ -3,8 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
-import 'customnavbar.dart';
-
 class ScheduleScreenP extends StatelessWidget {
   final List<StudentInfo> tutorData = [
     StudentInfo(name: "Chelsea Pearce", date: "7:30 am - 10:30 am"),
@@ -16,12 +14,13 @@ class ScheduleScreenP extends StatelessWidget {
     //StudentInfo(name: "Inaaya Cain", date: "9:30 pm - 10:30 pm"),
   ];
 
+  ScheduleScreenP({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ScheduleTutor(tutorDatas: tutorData);
   }
 }
-
 
 class StudentInfo {
   final String name;
@@ -33,7 +32,6 @@ class StudentInfo {
   });
 }
 
-
 class ScheduleTutor extends StatelessWidget {
   final List<Color> bookmarkColors = [
     (const Color(0xFF4FC3F7)),
@@ -42,12 +40,14 @@ class ScheduleTutor extends StatelessWidget {
   ];
   final List<StudentInfo> tutorDatas;
 
-  ScheduleTutor({required this.tutorDatas,});
+  ScheduleTutor({
+    super.key,
+    required this.tutorDatas,
+  });
 
   int colorIndex = 0;
   @override
   Widget build(BuildContext context) {
-
     DateTime now = DateTime.now();
     String month = DateFormat('MMM').format(now);
     String day = DateFormat('d').format(now);
@@ -55,7 +55,7 @@ class ScheduleTutor extends StatelessWidget {
     int remainingStudents = tutorDatas.length - 4 + 1;
     bool showRemainingStudents = remainingStudents > 1;
 
-    pw.Widget _buildPdfContent() {
+    pw.Widget buildPdfContent() {
       DateTime now = DateTime.now();
       String formattedDate = DateFormat('MMMM dd, yyyy').format(now);
 
@@ -101,13 +101,13 @@ class ScheduleTutor extends StatelessWidget {
       );
     }
 
-    Future<void> _printPdf() async {
+    Future<void> printPdf() async {
       final pdf = pw.Document();
 
       // Add your widget to PDF
       pdf.addPage(pw.MultiPage(
         build: (context) => [
-          _buildPdfContent(),
+          buildPdfContent(),
         ],
       ));
 
@@ -118,22 +118,23 @@ class ScheduleTutor extends StatelessWidget {
     }
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Schedule',
+          style: TextStyle(
+              fontFamily: 'Bebas', fontSize: 30, fontWeight: FontWeight.w400),
+        ),
+        automaticallyImplyLeading: false,
+      ),
       body: SingleChildScrollView(
-        physics: tutorDatas.length <= 4 ? const NeverScrollableScrollPhysics() : null,
+        physics: tutorDatas.length <= 4
+            ? const NeverScrollableScrollPhysics()
+            : null,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50.0),
           child: Center(
             child: Column(
               children: [
-                const Text(
-                  'Schedule',
-                  style: TextStyle(
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-                const SizedBox(height: 20.0,),
                 Row(
                   children: [
                     Container(
@@ -198,9 +199,15 @@ class ScheduleTutor extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                for (var i = 0; i < (tutorDatas.length <= 4 ? tutorDatas.length : 3); i++)
+                                for (var i = 0;
+                                    i <
+                                        (tutorDatas.length <= 4
+                                            ? tutorDatas.length
+                                            : 3);
+                                    i++)
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
@@ -222,7 +229,8 @@ class ScheduleTutor extends StatelessWidget {
                                   ),
                                 if (showRemainingStudents)
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
@@ -248,7 +256,6 @@ class ScheduleTutor extends StatelessWidget {
                         ),
                       ),
                     )
-
                   ],
                 ),
                 const SizedBox(height: 20.0),
@@ -257,7 +264,8 @@ class ScheduleTutor extends StatelessWidget {
                     //Individual Containers with Time
                     Column(
                       children: tutorDatas.map((info) {
-                        Color bookmarkColor = bookmarkColors[colorIndex % bookmarkColors.length];
+                        Color bookmarkColor =
+                            bookmarkColors[colorIndex % bookmarkColors.length];
                         colorIndex++;
                         return Column(
                           children: [
@@ -276,7 +284,8 @@ class ScheduleTutor extends StatelessWidget {
                                   ),
                                   const SizedBox(width: 30.0),
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         info.name.toUpperCase(),
@@ -305,9 +314,10 @@ class ScheduleTutor extends StatelessWidget {
                       }).toList(),
                     ),
                     TextButton(
-                      onPressed: _printPdf,
+                      onPressed: printPdf,
                       style: ButtonStyle(
-                        overlayColor: MaterialStateProperty.resolveWith((states) {
+                        overlayColor:
+                            MaterialStateProperty.resolveWith((states) {
                           return Colors.transparent;
                         }),
                       ),
@@ -332,7 +342,6 @@ class ScheduleTutor extends StatelessWidget {
                         ),
                       ),
                     ),
-
                   ],
                 ),
               ],
@@ -340,7 +349,6 @@ class ScheduleTutor extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: const CustomNavBar(),
     );
   }
 }

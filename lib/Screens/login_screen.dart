@@ -2,11 +2,17 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
+import 'package:lorthew/Screens/menu_screen.dart';
 
+// void main() {
+//   runApp(LoginScreen());
+// }
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
@@ -19,251 +25,211 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(FocusNode());
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                'Lorthew',
-                style: TextStyle(
-                    fontFamily: 'Bebas',
-                    fontSize: 40,
-                    fontWeight: FontWeight.w400),
-              ),
-              const SizedBox(height: 10),
-              ClipOval(
-                child: SizedBox.fromSize(
-                  size: Size.fromRadius(48),
-                  child: Image.asset(
-                    'assets/images/Lorthew_Logo.png',
-                    fit: BoxFit.cover,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Text(
+                  'Lorthew',
+                  style: TextStyle(
+                      fontFamily: 'Bebas',
+                      fontSize: 40,
+                      fontWeight: FontWeight.w400),
+                ),
+                const SizedBox(height: 10),
+                ClipOval(
+                  child: SizedBox.fromSize(
+                    size: const Size.fromRadius(48),
+                    child: Image.asset(
+                      'assets/images/Lorthew_Logo.png',
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 10),
-              Card(
-                color: const Color.fromRGBO(244, 182, 38, 1),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      const SizedBox(height: 30),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          InkWell(
-                            onTap: () {
-                              handleAvatarTap(0);
-                            },
-                            child: CircleAvatar(
-                              backgroundColor: const Color.fromRGBO(16, 48, 89, 1),
-                              radius: 30,
-                              child: ClipOval(
-                                child:
-                                    Image.asset('assets/images/myidolo2.jpg'),
-                              ),
+                const SizedBox(height: 10),
+                Card(
+                  color: (const Color(0xFFFDD835)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        const SizedBox(height: 30),
+                        const Text(
+                          'Login with your email and password:',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30.0),
+                            color: Colors.grey[200],
+                          ),
+                          child: const TextField(
+                            decoration: InputDecoration(
+                              labelText: 'Email',
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 20),
+                              border: InputBorder.none,
                             ),
                           ),
-                          InkWell(
-                            onTap: () {
-                              handleAvatarTap(1);
-                            },
-                            child: CircleAvatar(
-                              backgroundColor: const Color.fromRGBO(16, 48, 89, 1),
-                              radius: 30,
-                              child: ClipOval(
-                                child:
-                                    Image.asset('assets/images/myidolo2.jpg'),
-                              ),
+                        ),
+                        const SizedBox(height: 10),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30.0),
+                            color: Colors.grey[200],
+                          ),
+                          child: const TextField(
+                            decoration: InputDecoration(
+                              labelText: 'Password',
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 20),
+                              border: InputBorder.none,
                             ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              handleAvatarTap(2);
-                            },
-                            child: CircleAvatar(
-                              backgroundColor: const Color.fromRGBO(16, 48, 89, 1),
-                              radius: 30,
-                              child: ClipOval(
-                                child:
-                                    Image.asset('assets/images/myidolo2.jpg'),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      const Text(
-                        'OR',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      const Text(
-                        'Login with your email and password:',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30.0),
-                          color: Colors.grey[200],
-                        ),
-                        child: const TextField(
-                          decoration: InputDecoration(
-                            labelText: 'Email',
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 20),
-                            border: InputBorder.none,
+                            obscureText: true,
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30.0),
-                          color: Colors.grey[200],
-                        ),
-                        child: const TextField(
-                          decoration: InputDecoration(
-                            labelText: 'Password',
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 20),
-                            border: InputBorder.none,
-                          ),
-                          obscureText: true,
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      DropdownButtonHideUnderline(
-                        child: DropdownButton2<String>(
-                          isExpanded: true,
-                          hint: const Row(
-                            children: [
-                              Icon(
-                                Icons.list,
-                                size: 16,
-                                color: Colors.yellow,
-                              ),
-                              SizedBox(width: 4),
-                              Expanded(
-                                child: Text(
-                                  'Select',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.yellow,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
+                        const SizedBox(height: 20),
+                        DropdownButtonHideUnderline(
+                          child: DropdownButton2<String>(
+                            isExpanded: true,
+                            hint: const Row(
+                              children: [
+                                Icon(
+                                  Icons.list,
+                                  size: 16,
+                                  color: Colors.yellow,
                                 ),
-                              ),
-                            ],
-                          ),
-                          items: items
-                              .map((String item) => DropdownMenuItem<String>(
-                                    value: item,
-                                    child: Text(
-                                      item,
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                      overflow: TextOverflow.ellipsis,
+                                SizedBox(width: 4),
+                                Expanded(
+                                  child: Text(
+                                    'Select',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.yellow,
                                     ),
-                                  ))
-                              .toList(),
-                          value: selectedValue,
-                          onChanged: (String? value) {
-                            setState(() {
-                              selectedValue = value;
-                            });
-                          },
-                          buttonStyleData: ButtonStyleData(
-                            height: 50,
-                            width: 400,
-                            padding: const EdgeInsets.only(left: 14, right: 14),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(14),
-                              border: Border.all(
-                                color: Colors.black26,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            items: items
+                                .map((String item) => DropdownMenuItem<String>(
+                                      value: item,
+                                      child: Text(
+                                        item,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ))
+                                .toList(),
+                            value: selectedValue,
+                            onChanged: (String? value) {
+                              setState(() {
+                                selectedValue = value;
+                              });
+                            },
+                            buttonStyleData: ButtonStyleData(
+                              height: 50,
+                              width: 400,
+                              padding:
+                                  const EdgeInsets.only(left: 14, right: 14),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(14),
+                                border: Border.all(
+                                  color: Colors.black26,
+                                ),
+                                color: const Color.fromRGBO(16, 48, 89, 1),
                               ),
-                              color: const Color.fromRGBO(16, 48, 89, 1),
+                              elevation: 2,
                             ),
-                            elevation: 2,
-                          ),
-                          iconStyleData: const IconStyleData(
-                            icon: Icon(
-                              Icons.arrow_forward_ios_outlined,
+                            iconStyleData: const IconStyleData(
+                              icon: Icon(
+                                Icons.arrow_forward_ios_outlined,
+                              ),
+                              iconSize: 14,
+                              iconEnabledColor: Colors.yellow,
+                              iconDisabledColor: Colors.grey,
                             ),
-                            iconSize: 14,
-                            iconEnabledColor: Colors.yellow,
-                            iconDisabledColor: Colors.grey,
-                          ),
-                          dropdownStyleData: DropdownStyleData(
-                            maxHeight: 200,
-                            width: 400,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(14),
-                              color: const Color.fromRGBO(16, 48, 89, 1),
+                            dropdownStyleData: DropdownStyleData(
+                              maxHeight: 200,
+                              width: 350, //400 width dati
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(14),
+                                color: const Color.fromRGBO(16, 48, 89, 1),
+                              ),
+                              scrollbarTheme: ScrollbarThemeData(
+                                radius: const Radius.circular(40),
+                                thickness: MaterialStateProperty.all<double>(6),
+                                thumbVisibility:
+                                    MaterialStateProperty.all<bool>(true),
+                              ),
                             ),
-                            scrollbarTheme: ScrollbarThemeData(
-                              radius: const Radius.circular(40),
-                              thickness: MaterialStateProperty.all<double>(6),
-                              thumbVisibility:
-                                  MaterialStateProperty.all<bool>(true),
+                            menuItemStyleData: const MenuItemStyleData(
+                              height: 40,
+                              padding: EdgeInsets.only(left: 14, right: 14),
                             ),
-                          ),
-                          menuItemStyleData: const MenuItemStyleData(
-                            height: 40,
-                            padding: EdgeInsets.only(left: 14, right: 14),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 20),
-                      AnimatedButton(
-                        height: 40,
-                        width: 200,
-                        text: 'LOGIN',
-                        isReverse: true,
-                        selectedTextColor: Colors.black,
-                        transitionType: TransitionType.LEFT_TO_RIGHT,
-                        backgroundColor: const Color.fromRGBO(16, 48, 89, 1),
-                        borderColor: Colors.white,
-                        borderRadius: 50,
-                        borderWidth: 2,
-                        onPress: () {
-                          Navigator.pushNamed(context, '/home');
-                        },
-                      ),
-                      const SizedBox(height: 20),
-                      TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                          foregroundColor: const Color.fromRGBO(16, 48, 89, 1),
+                        const SizedBox(height: 20),
+                        AnimatedButton(
+                          height: 40,
+                          width: 200,
+                          text: 'LOGIN',
+                          isReverse: true,
+                          selectedTextColor: Colors.black,
+                          transitionType: TransitionType.LEFT_TO_RIGHT,
+                          backgroundColor: const Color.fromRGBO(16, 48, 89, 1),
+                          borderColor: Colors.white,
+                          borderRadius: 50,
+                          borderWidth: 2,
+                          onPress: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const MenuScreen()),
+                            );
+                          },
                         ),
-                        child: const Text(
-                          "Don't have an account? Click here to Register",
-                          style: TextStyle(fontFamily: 'Bebas'),
+                        const SizedBox(height: 20),
+                        TextButton(
+                          onPressed: () {},
+                          style: TextButton.styleFrom(
+                            foregroundColor:
+                                const Color.fromRGBO(16, 48, 89, 1),
+                          ),
+                          child: const Text(
+                            "Don't have an account? Click here to Register",
+                            style: TextStyle(fontFamily: 'Bebas'),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ).animate().fadeIn().scale().move(delay: 500.ms, duration: 600.ms),
+              ],
+            ),
+          ).animate().fadeIn().scale().move(delay: 500.ms, duration: 600.ms),
+        ),
       ),
     );
   }

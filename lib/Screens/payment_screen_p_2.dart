@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
-
-import 'customnavbar.dart';
+import 'package:lorthew/Screens/all.dart';
 
 class PaymentScreenP2 extends StatelessWidget {
   final String tutorName;
 
-  PaymentScreenP2(this.tutorName);
+  const PaymentScreenP2(this.tutorName, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +88,7 @@ class PaymentScreenP2 extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Container(
-                padding:const  EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -175,12 +174,12 @@ class PaymentScreenP2 extends StatelessWidget {
                             value: 'GCASH',
                             items: const [
                               DropdownMenuItem(
-                                child: Text('GCASH'),
                                 value: 'GCASH',
+                                child: Text('GCASH'),
                               ),
                               DropdownMenuItem(
-                                child: Text('PAYPAL'),
                                 value: 'PAYPAL',
+                                child: Text('PAYPAL'),
                               ),
                             ],
                             onChanged: (value) {
@@ -202,7 +201,11 @@ class PaymentScreenP2 extends StatelessWidget {
                         borderRadius: 50,
                         borderWidth: 2,
                         onPress: () {
-                          Navigator.pushNamed(context, '/p3');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const PaymentScreenP3()),
+                          );
                         },
                       ),
                     ],
@@ -213,7 +216,6 @@ class PaymentScreenP2 extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: const CustomNavBar(),
     );
   }
 }

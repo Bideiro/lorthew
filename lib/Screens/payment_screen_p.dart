@@ -11,8 +11,10 @@ TODO:
 */
 
 class PaymentScreenP extends StatefulWidget {
+  const PaymentScreenP({super.key});
+
   @override
-  _PaymentScreenState createState() => _PaymentScreenState();
+  State<PaymentScreenP> createState() => _PaymentScreenState();
 }
 
 class _PaymentScreenState extends State<PaymentScreenP> {
@@ -52,14 +54,14 @@ class _PaymentScreenState extends State<PaymentScreenP> {
           IconButton(
             icon: const Icon(
               Icons.history,
-              color: Color.fromRGBO(16, 48, 89, 1),
+              // color: Color.fromRGBO(16, 48, 89, 1),
             ),
             onPressed: () {},
           ),
           IconButton(
             icon: const Icon(
               Icons.notifications,
-              color: Color.fromRGBO(16, 48, 89, 1),
+              // color: Color.fromRGBO(16, 48, 89, 1),
             ),
             onPressed: () {},
           ),
@@ -110,7 +112,7 @@ class _PaymentScreenState extends State<PaymentScreenP> {
                       });
                     },
                     child: Container(
-                      color: selectedItemIndex == index ? Color.fromARGB(255, 15, 26, 122) : null,
+                      color: selectedItemIndex == index ? const Color.fromARGB(255, 15, 26, 122) : null,
                       child: ListTile(
                         title: Text(
                           items[index],
@@ -127,7 +129,6 @@ class _PaymentScreenState extends State<PaymentScreenP> {
           ),
         ],
       ),
-      bottomNavigationBar: const CustomNavBar(),
     );
   }
 }
