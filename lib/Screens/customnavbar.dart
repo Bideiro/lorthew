@@ -33,16 +33,16 @@ class _CustomNavBarState extends State<CustomNavBar> {
     return GNav(
       rippleColor: Colors.grey[300]!,
       hoverColor: const Color.fromARGB(255, 34, 16, 16),
-      tabActiveBorder: Border.all(color: Color(0xff4cc55c), width: 1),
+      tabActiveBorder: Border.all(color: const Color(0xff4cc55c), width: 1),
       gap: 8,
       iconSize: 24,
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-      duration: Duration(milliseconds: 400),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      duration: const Duration(milliseconds: 400),
       tabs: [
         GButton(
           icon: LineIcons.home,
           text: 'Home',
-          iconColor: Color.fromRGBO(16, 48, 89, 1),
+          iconColor: const Color.fromRGBO(16, 48, 89, 1),
           onPressed: () {
             Navigator.pushNamed(context, '/home');
           },
