@@ -42,7 +42,7 @@ class _PaymentScreenState extends State<PaymentScreenP> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pay Tutor',
+        title: const Text('Pay Tutor',
         style: TextStyle(
                     fontFamily: 'Bebas',
                     fontSize: 30,
@@ -50,14 +50,14 @@ class _PaymentScreenState extends State<PaymentScreenP> {
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.history,
               color: Color.fromRGBO(16, 48, 89, 1),
             ),
             onPressed: () {},
           ),
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.notifications,
               color: Color.fromRGBO(16, 48, 89, 1),
             ),
@@ -127,7 +127,7 @@ class _PaymentScreenState extends State<PaymentScreenP> {
           ),
         ],
       ),
-      bottomNavigationBar: CustomNavBar(),
+      bottomNavigationBar: const CustomNavBar(),
     );
   }
 }

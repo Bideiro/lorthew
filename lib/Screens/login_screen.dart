@@ -26,14 +26,14 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
+              const Text(
                 'Lorthew',
                 style: TextStyle(
                     fontFamily: 'Bebas',
                     fontSize: 40,
                     fontWeight: FontWeight.w400),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               ClipOval(
                 child: SizedBox.fromSize(
                   size: Size.fromRadius(48),
@@ -43,9 +43,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Card(
-                color: Color.fromRGBO(244, 182, 38, 1),
+                color: const Color.fromRGBO(244, 182, 38, 1),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
@@ -54,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      SizedBox(height: 30),
+                      const SizedBox(height: 30),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
@@ -63,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               handleAvatarTap(0);
                             },
                             child: CircleAvatar(
-                              backgroundColor: Color.fromRGBO(16, 48, 89, 1),
+                              backgroundColor: const Color.fromRGBO(16, 48, 89, 1),
                               radius: 30,
                               child: ClipOval(
                                 child:
@@ -76,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               handleAvatarTap(1);
                             },
                             child: CircleAvatar(
-                              backgroundColor: Color.fromRGBO(16, 48, 89, 1),
+                              backgroundColor: const Color.fromRGBO(16, 48, 89, 1),
                               radius: 30,
                               child: ClipOval(
                                 child:
@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               handleAvatarTap(2);
                             },
                             child: CircleAvatar(
-                              backgroundColor: Color.fromRGBO(16, 48, 89, 1),
+                              backgroundColor: const Color.fromRGBO(16, 48, 89, 1),
                               radius: 30,
                               child: ClipOval(
                                 child:
@@ -99,27 +99,27 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 20),
-                      Text(
+                      const SizedBox(height: 20),
+                      const Text(
                         'OR',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 20),
-                      Text(
+                      const SizedBox(height: 20),
+                      const Text(
                         'Login with your email and password:',
                         style: TextStyle(
                           fontSize: 16,
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30.0),
                           color: Colors.grey[200],
                         ),
-                        child: TextField(
+                        child: const TextField(
                           decoration: InputDecoration(
                             labelText: 'Email',
                             contentPadding:
@@ -128,13 +128,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30.0),
                           color: Colors.grey[200],
                         ),
-                        child: TextField(
+                        child: const TextField(
                           decoration: InputDecoration(
                             labelText: 'Password',
                             contentPadding:
@@ -144,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           obscureText: true,
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       DropdownButtonHideUnderline(
                         child: DropdownButton2<String>(
                           isExpanded: true,
@@ -230,7 +230,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       AnimatedButton(
                         height: 40,
                         width: 200,
@@ -238,7 +238,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         isReverse: true,
                         selectedTextColor: Colors.black,
                         transitionType: TransitionType.LEFT_TO_RIGHT,
-                        backgroundColor: Color.fromRGBO(16, 48, 89, 1),
+                        backgroundColor: const Color.fromRGBO(16, 48, 89, 1),
                         borderColor: Colors.white,
                         borderRadius: 50,
                         borderWidth: 2,
@@ -246,13 +246,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.pushNamed(context, '/home');
                         },
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       TextButton(
                         onPressed: () {},
                         style: TextButton.styleFrom(
-                          foregroundColor: Color.fromRGBO(16, 48, 89, 1),
+                          foregroundColor: const Color.fromRGBO(16, 48, 89, 1),
                         ),
-                        child: Text(
+                        child: const Text(
                           "Don't have an account? Click here to Register",
                           style: TextStyle(fontFamily: 'Bebas'),
                         ),

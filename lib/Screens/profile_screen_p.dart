@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'customnavbar.dart';
+
 class ProfileScreenP extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -21,9 +22,19 @@ class ProfilePage extends StatelessWidget {
             onPressed: () {
               // handle the press
             },
+          ),
+          TextButton.icon(
+            icon: const Icon(
+              Icons.mode_edit,
+              // color: Colors.black,
+            ),
+            label: Text("Edit Profile",selectionColor: Colors.black,),
+            onPressed: () {
+              // handle the press
+            },
           )
         ],
-        title: Text(
+        title:const  Text(
           'Profile',
           style: TextStyle(color: Colors.black),
         ),
@@ -31,7 +42,7 @@ class ProfilePage extends StatelessWidget {
         elevation: 0.0,
         backgroundColor: Colors.white,
       ),
-      body: Center(
+      body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -92,7 +103,7 @@ class ProfilePage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: CustomNavBar(),
+      bottomNavigationBar: const CustomNavBar(),
     );
   }
 }

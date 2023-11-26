@@ -12,7 +12,7 @@ class PaymentScreenP2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Pay Tutor',
           style: TextStyle(
             fontFamily: 'Bebas',
@@ -22,14 +22,14 @@ class PaymentScreenP2 extends StatelessWidget {
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.history,
               color: Color.fromRGBO(16, 48, 89, 1),
             ),
             onPressed: () {},
           ),
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.notifications,
               color: Color.fromRGBO(16, 48, 89, 1),
             ),
@@ -47,31 +47,31 @@ class PaymentScreenP2 extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Container(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Pay To:',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Row(
                       children: [
-                        CircleAvatar(
+                        const CircleAvatar(
                           radius: 24,
                           child: Icon(
                             Icons.person,
                             color: Colors.white,
                           ),
                         ),
-                        SizedBox(width: 16),
+                        const SizedBox(width: 16),
                         Text(
                           tutorName,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
                           ),
@@ -82,15 +82,15 @@ class PaymentScreenP2 extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Card(
               elevation: 5,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Container(
-                padding: EdgeInsets.all(16.0),
-                child: Column(
+                padding:const  EdgeInsets.all(16.0),
+                child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
@@ -128,7 +128,7 @@ class PaymentScreenP2 extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Expanded(
               child: Card(
                 elevation: 5,
@@ -136,18 +136,18 @@ class PaymentScreenP2 extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 child: Container(
-                  padding: EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
-                      Text(
+                      const Text(
                         'Payment Details',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
                         ),
                       ),
-                      SizedBox(height: 8),
-                      Row(
+                      const SizedBox(height: 8),
+                      const Row(
                         children: [
                           Text(
                             'Amount:',
@@ -160,17 +160,17 @@ class PaymentScreenP2 extends StatelessWidget {
                           Text('₱1,000.00'),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       Row(
                         children: [
-                          Text(
+                          const Text(
                             'Payment Method:',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
                             ),
                           ),
-                          SizedBox(width: 16),
+                          const SizedBox(width: 16),
                           DropdownButton<String>(
                             value: 'GCASH',
                             items: const [
@@ -189,7 +189,7 @@ class PaymentScreenP2 extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       AnimatedButton(
                         height: 40,
                         width: 200,
@@ -197,7 +197,7 @@ class PaymentScreenP2 extends StatelessWidget {
                         isReverse: true,
                         selectedTextColor: Colors.black,
                         transitionType: TransitionType.LEFT_TO_RIGHT,
-                        backgroundColor: Color.fromRGBO(16, 48, 89, 1),
+                        backgroundColor: const Color.fromRGBO(16, 48, 89, 1),
                         borderColor: Colors.white,
                         borderRadius: 50,
                         borderWidth: 2,
@@ -213,7 +213,7 @@ class PaymentScreenP2 extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: CustomNavBar(),
+      bottomNavigationBar: const CustomNavBar(),
     );
   }
 }

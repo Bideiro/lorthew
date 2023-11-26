@@ -91,7 +91,7 @@ class ScheduleTutor extends StatelessWidget {
                 pw.SizedBox(width: 10),
                 pw.Text(
                   'Schedule: ${info.date}',
-                  style: pw.TextStyle(
+                  style: const pw.TextStyle(
                     fontSize: 16,
                   ),
                 ),
@@ -226,14 +226,14 @@ class ScheduleTutor extends StatelessWidget {
                                     children: [
                                       Row(
                                         children: [
-                                          Icon(
+                                          const Icon(
                                             Icons.brightness_1,
                                             size: 6,
                                           ),
-                                          SizedBox(width: 5.0),
+                                          const SizedBox(width: 5.0),
                                           Text(
                                             '+ $remainingStudents more students',
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 14,
                                               color: Colors.black,
                                             ),
@@ -340,7 +340,7 @@ class ScheduleTutor extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: CustomNavBar(),
+      bottomNavigationBar: const CustomNavBar(),
     );
   }
 }
