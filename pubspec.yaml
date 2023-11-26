@@ -34,7 +34,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/
-    - assets/images/what.jpg #BANDAID FIX, PLACEHOLDER
+    - assets/images/Lorthew_Logo.png #BANDAID FIX, PLACEHOLDER
   
   fonts:
     - family: Bebas

@@ -13,11 +13,21 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.shopping_cart),
+            tooltip: 'Open shopping cart',
+            onPressed: () {
+              // handle the press
+            },
+          )
+        ],
         title: Text(
           'Profile',
           style: TextStyle(color: Colors.black),
         ),
-        centerTitle: true, 
+        centerTitle: true,
         elevation: 0.0,
         backgroundColor: Colors.white,
       ),
