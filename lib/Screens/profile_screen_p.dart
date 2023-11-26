@@ -17,7 +17,7 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
           title: const Text(
-            'Schedule',
+            'Profile',
             style: TextStyle(
                 fontFamily: 'Bebas', fontSize: 30, fontWeight: FontWeight.w400),
           ),

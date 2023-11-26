@@ -1,25 +1,23 @@
-import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
-import 'package:animations/animations.dart';
+import 'package:lorthew/Screens/menu_screen.dart';
 
-void main() {
-  runApp(LoginScreen());
-}
+// void main() {
+//   runApp(LoginScreen());
+// }
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
   final List<String> items = ['Tutor', 'Pupil'];
   String? selectedValue = "Pupil";
-
-  void handleAvatarTap(int avatarIndex) {
-    print('Avatar $avatarIndex clicked'); //testing
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,24 +33,24 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(
+                const Text(
                   'Lorthew',
                   style: TextStyle(
                       fontFamily: 'Bebas',
                       fontSize: 40,
                       fontWeight: FontWeight.w400),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 ClipOval(
                   child: SizedBox.fromSize(
-                    size: Size.fromRadius(48),
+                    size: const Size.fromRadius(48),
                     child: Image.asset(
                       'assets/images/Lorthew_Logo.png',
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Card(
                   color: (const Color(0xFFFDD835)),
                   shape: RoundedRectangleBorder(
@@ -63,45 +61,45 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        SizedBox(height: 30),
-                        Text(
+                        const SizedBox(height: 30),
+                        const Text(
                           'Login with your email and password:',
                           style: TextStyle(
                             fontSize: 16,
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30.0),
                             color: Colors.grey[200],
                           ),
-                          child: TextField(
+                          child: const TextField(
                             decoration: InputDecoration(
                               labelText: 'Email',
                               contentPadding:
-                              EdgeInsets.symmetric(horizontal: 20),
+                                  EdgeInsets.symmetric(horizontal: 20),
                               border: InputBorder.none,
                             ),
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30.0),
                             color: Colors.grey[200],
                           ),
-                          child: TextField(
+                          child: const TextField(
                             decoration: InputDecoration(
                               labelText: 'Password',
                               contentPadding:
-                              EdgeInsets.symmetric(horizontal: 20),
+                                  EdgeInsets.symmetric(horizontal: 20),
                               border: InputBorder.none,
                             ),
                             obscureText: true,
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         DropdownButtonHideUnderline(
                           child: DropdownButton2<String>(
                             isExpanded: true,
@@ -128,17 +126,17 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             items: items
                                 .map((String item) => DropdownMenuItem<String>(
-                              value: item,
-                              child: Text(
-                                item,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ))
+                                      value: item,
+                                      child: Text(
+                                        item,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ))
                                 .toList(),
                             value: selectedValue,
                             onChanged: (String? value) {
@@ -149,7 +147,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             buttonStyleData: ButtonStyleData(
                               height: 50,
                               width: 400,
-                              padding: const EdgeInsets.only(left: 14, right: 14),
+                              padding:
+                                  const EdgeInsets.only(left: 14, right: 14),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(14),
                                 border: Border.all(
@@ -178,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 radius: const Radius.circular(40),
                                 thickness: MaterialStateProperty.all<double>(6),
                                 thumbVisibility:
-                                MaterialStateProperty.all<bool>(true),
+                                    MaterialStateProperty.all<bool>(true),
                               ),
                             ),
                             menuItemStyleData: const MenuItemStyleData(
@@ -187,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         AnimatedButton(
                           height: 40,
                           width: 200,
@@ -195,21 +194,26 @@ class _LoginScreenState extends State<LoginScreen> {
                           isReverse: true,
                           selectedTextColor: Colors.black,
                           transitionType: TransitionType.LEFT_TO_RIGHT,
-                          backgroundColor: Color.fromRGBO(16, 48, 89, 1),
+                          backgroundColor: const Color.fromRGBO(16, 48, 89, 1),
                           borderColor: Colors.white,
                           borderRadius: 50,
                           borderWidth: 2,
                           onPress: () {
-                            Navigator.pushNamed(context, '/home');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const MenuScreen()),
+                            );
                           },
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         TextButton(
                           onPressed: () {},
                           style: TextButton.styleFrom(
-                            foregroundColor: Color.fromRGBO(16, 48, 89, 1),
+                            foregroundColor:
+                                const Color.fromRGBO(16, 48, 89, 1),
                           ),
-                          child: Text(
+                          child: const Text(
                             "Don't have an account? Click here to Register",
                             style: TextStyle(fontFamily: 'Bebas'),
                           ),

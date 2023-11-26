@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
-
 class PaymentScreenP3 extends StatelessWidget {
+  const PaymentScreenP3({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: Container(
+        child: SizedBox(
           width: 500.0, // Adjust the width as needed
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -102,6 +103,13 @@ class PaymentScreenP3 extends StatelessWidget {
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
                       ),
+                    ),
+                    const SizedBox(height: 30.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Add logic to download receipt
+                      },
+                      child: const Text('Download Receipt'),
                     ),
                   ],
                 ),
