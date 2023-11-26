@@ -1,25 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 
-void main() {
-  runApp(
-    MaterialApp(
-      title: 'Profile Page',
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: ProfileEditScreen(),
-    ),
-  );
-}
-
 class ProfileEditScreen extends StatelessWidget {
   const ProfileEditScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ProfileStudent();
+    return const ProfileStudent();
   }
 }
 

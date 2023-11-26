@@ -174,12 +174,12 @@ class PaymentScreenP2 extends StatelessWidget {
                             value: 'GCASH',
                             items: const [
                               DropdownMenuItem(
-                                child: Text('GCASH'),
                                 value: 'GCASH',
+                                child: Text('GCASH'),
                               ),
                               DropdownMenuItem(
-                                child: Text('PAYPAL'),
                                 value: 'PAYPAL',
+                                child: Text('PAYPAL'),
                               ),
                             ],
                             onChanged: (value) {

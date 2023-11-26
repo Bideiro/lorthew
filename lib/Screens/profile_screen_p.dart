@@ -30,7 +30,7 @@ class ProfilePage extends StatelessWidget {
               Icons.mode_edit,
               // color: Colors.black,
             ),
-            label: Text("Edit Profile",selectionColor: Colors.black,),
+            label: const Text("Edit Profile",selectionColor: Colors.black,),
             onPressed: () {
               // handle the press
             },
