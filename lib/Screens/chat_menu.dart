@@ -44,7 +44,8 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        automaticallyImplyLeading: false,
+        title: const Text(
           'Chats',
           style: TextStyle(color: Colors.black),
         ),
@@ -53,7 +54,7 @@ class _ChatScreenState extends State<ChatScreen> {
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
             child: IconButton(
-              icon: Icon(
+              icon:  const Icon(
                 Icons.notifications,
                 color: Colors.yellow,
               ),
@@ -71,7 +72,7 @@ class _ChatScreenState extends State<ChatScreen> {
             child: TextField(
               decoration: InputDecoration(
                 hintText: 'Search users...',
-                prefixIcon: Icon(Icons.search),
+                prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
@@ -97,7 +98,7 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: CustomNavBar(),
+      bottomNavigationBar: const CustomNavBar(),
     );
   }
 
