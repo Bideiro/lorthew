@@ -12,7 +12,7 @@ TODO:
 
 class PaymentScreenP extends StatefulWidget {
   @override
-  _PaymentScreenState createState() => _PaymentScreenState();
+  State<PaymentScreenP> createState() => _PaymentScreenState();
 }
 
 class _PaymentScreenState extends State<PaymentScreenP> {
@@ -110,7 +110,7 @@ class _PaymentScreenState extends State<PaymentScreenP> {
                       });
                     },
                     child: Container(
-                      color: selectedItemIndex == index ? Color.fromARGB(255, 15, 26, 122) : null,
+                      color: selectedItemIndex == index ? const Color.fromARGB(255, 15, 26, 122) : null,
                       child: ListTile(
                         title: Text(
                           items[index],

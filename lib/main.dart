@@ -1,6 +1,5 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:lorthew/Screens/chat_menu.dart';
 
 import 'Screens/all.dart';
 
@@ -13,8 +12,7 @@ class Lorthew extends StatefulWidget {
   State<Lorthew> createState() => _LorthewState();
 }
 
-
-class _LorthewState extends State<Lorthew> {
+class _LorthewState extends State<Lorthew> with AutomaticKeepAliveClientMixin {
   bool isDark = false;
 
   @override
@@ -29,6 +27,7 @@ class _LorthewState extends State<Lorthew> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final ThemeData themeData = ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
@@ -42,10 +41,11 @@ class _LorthewState extends State<Lorthew> {
         '/': (context) => LoginScreen(),
         '/home': (context) => homeScreen(),
         '/schedule': (context) => ScheduleScreenP(),
-        '/chat': (context) => ChatMenu(),
+        // '/chat': (context) => ChatMenu(),
+        '/chat': (context) => const ChatScreen(),
         '/payment': (context) => PaymentScreenP(),
+        '/payment3': (context) => PaymentScreenP3(),
         '/profile': (context) => ProfileScreenP(),
-        '/p3': (context) => PaymentScreenP3(),
       },
     );
   }
@@ -93,7 +93,8 @@ class _LorthewState extends State<Lorthew> {
                 children: [
                   Expanded(
                     child: SearchAnchor(
-                      builder: (BuildContext context, SearchController controller) {
+                      builder:
+                          (BuildContext context, SearchController controller) {
                         return SearchBar(
                           controller: controller,
                           padding: const MaterialStatePropertyAll<EdgeInsets>(
@@ -108,7 +109,8 @@ class _LorthewState extends State<Lorthew> {
                           leading: const Icon(Icons.search),
                         );
                       },
-                      suggestionsBuilder: (BuildContext context, SearchController controller) {
+                      suggestionsBuilder:
+                          (BuildContext context, SearchController controller) {
                         return List<ListTile>.generate(5, (int index) {
                           final String item = 'item $index';
                           return ListTile(
@@ -140,6 +142,9 @@ class _LorthewState extends State<Lorthew> {
       bottomNavigationBar: CustomNavBar(),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class UserInfo {
@@ -189,7 +194,8 @@ class ExpandableCard extends StatelessWidget {
                       height: 100,
                       width: 100,
                       fit: BoxFit.cover,
-                      loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent? loadingProgress) {
                         if (loadingProgress == null) {
                           return child;
                         } else {
@@ -269,7 +275,8 @@ class FullScreenCard extends StatelessWidget {
                   height: 100,
                   width: 100,
                   fit: BoxFit.cover,
-                  loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                  loadingBuilder: (BuildContext context, Widget child,
+                      ImageChunkEvent? loadingProgress) {
                     if (loadingProgress == null) {
                       return child;
                     } else {
@@ -317,7 +324,7 @@ class FullScreenCard extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(
+          const Expanded(
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(15),
@@ -371,4 +378,7 @@ class FullScreenCard extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

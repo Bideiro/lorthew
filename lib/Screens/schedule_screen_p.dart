@@ -16,12 +16,13 @@ class ScheduleScreenP extends StatelessWidget {
     //StudentInfo(name: "Inaaya Cain", date: "9:30 pm - 10:30 pm"),
   ];
 
+  ScheduleScreenP({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ScheduleTutor(tutorDatas: tutorData);
   }
 }
-
 
 class StudentInfo {
   final String name;
@@ -33,8 +34,7 @@ class StudentInfo {
   });
 }
 
-
-class ScheduleTutor extends StatelessWidget {
+class ScheduleTutor extends StatelessWidget  {
   final List<Color> bookmarkColors = [
     (const Color(0xFF4FC3F7)),
     (const Color(0xFF1976D2)),
@@ -42,7 +42,7 @@ class ScheduleTutor extends StatelessWidget {
   ];
   final List<StudentInfo> tutorDatas;
 
-  ScheduleTutor({required this.tutorDatas,});
+  ScheduleTutor({super.key, required this.tutorDatas,});
 
   int colorIndex = 0;
   @override
@@ -55,7 +55,7 @@ class ScheduleTutor extends StatelessWidget {
     int remainingStudents = tutorDatas.length - 4 + 1;
     bool showRemainingStudents = remainingStudents > 1;
 
-    pw.Widget _buildPdfContent() {
+    pw.Widget buildPdfContent() {
       DateTime now = DateTime.now();
       String formattedDate = DateFormat('MMMM dd, yyyy').format(now);
 
@@ -101,13 +101,13 @@ class ScheduleTutor extends StatelessWidget {
       );
     }
 
-    Future<void> _printPdf() async {
+    Future<void> printPdf() async {
       final pdf = pw.Document();
 
       // Add your widget to PDF
       pdf.addPage(pw.MultiPage(
         build: (context) => [
-          _buildPdfContent(),
+          buildPdfContent(),
         ],
       ));
 
@@ -305,7 +305,7 @@ class ScheduleTutor extends StatelessWidget {
                       }).toList(),
                     ),
                     TextButton(
-                      onPressed: _printPdf,
+                      onPressed: printPdf,
                       style: ButtonStyle(
                         overlayColor: MaterialStateProperty.resolveWith((states) {
                           return Colors.transparent;

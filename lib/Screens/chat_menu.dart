@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:lorthew/Screens/all.dart';
 
 class ChatMenu extends StatelessWidget {
+  const ChatMenu({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return ChatScreen();
+    return const ChatScreen();
   }
 }
 
 class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
+
   @override
-  _ChatScreenState createState() => _ChatScreenState();
+  State<ChatScreen> createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _ChatScreenState extends State<ChatScreen> with AutomaticKeepAliveClientMixin{
+  
+  @override
+  bool get wantKeepAlive => true;
+
   final List<String> users = [
     'Alice',
     'Bob',
@@ -42,7 +49,9 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
+      
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Text(
@@ -98,7 +107,6 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: const CustomNavBar(),
     );
   }
 
@@ -106,4 +114,6 @@ class _ChatScreenState extends State<ChatScreen> {
     print('Selected user: $userName');
     // Navigate to the chat screen or perform any action here
   }
+
+  
 }

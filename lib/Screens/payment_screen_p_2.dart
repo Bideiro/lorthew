@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
 
-import 'customnavbar.dart';
-
 class PaymentScreenP2 extends StatelessWidget {
   final String tutorName;
 
-  PaymentScreenP2(this.tutorName);
+  const PaymentScreenP2(this.tutorName, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -202,7 +200,7 @@ class PaymentScreenP2 extends StatelessWidget {
                         borderRadius: 50,
                         borderWidth: 2,
                         onPress: () {
-                          Navigator.pushNamed(context, '/p3');
+                          Navigator.pushNamed(context, '/payment3');
                         },
                       ),
                     ],
@@ -213,7 +211,6 @@ class PaymentScreenP2 extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: const CustomNavBar(),
     );
   }
 }

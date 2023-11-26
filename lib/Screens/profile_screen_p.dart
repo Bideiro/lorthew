@@ -3,13 +3,17 @@ import 'package:flutter/material.dart';
 import 'customnavbar.dart';
 
 class ProfileScreenP extends StatelessWidget {
+  const ProfileScreenP({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return ProfilePage();
+    return const ProfilePage();
   }
 }
 
 class ProfilePage extends StatelessWidget {
+  const ProfilePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
