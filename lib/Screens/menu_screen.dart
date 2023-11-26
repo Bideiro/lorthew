@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:lorthew/Screens/register_p.dart';
 
 import 'all.dart';
 
@@ -20,6 +21,7 @@ class _MenuScreenState extends State<MenuScreen> {
     ScheduleScreenP(),
     PaymentScreenP(),
     const ProfileScreenP(),
+    RegisterScreenForPupil()
     
   ];
 
