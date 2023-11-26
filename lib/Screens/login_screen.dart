@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:lorthew/Screens/menu_screen.dart';
+import 'package:lorthew/Screens/register_p.dart';
+import 'package:lorthew/Screens/register_t.dart';
 
 // void main() {
 //   runApp(LoginScreen());
@@ -208,13 +210,38 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         const SizedBox(height: 20),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const RegisterScreenForPupil(),
+                              ),
+                            );
+                          },
                           style: TextButton.styleFrom(
                             foregroundColor:
                                 const Color.fromRGBO(16, 48, 89, 1),
                           ),
                           child: const Text(
-                            "Don't have an account? Click here to Register",
+                            "Don't have an account? Click here to Register as a Student",
+                            style: TextStyle(fontFamily: 'Bebas'),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const RegisterScreenForTutor(),
+                              ),
+                            );
+                          },
+                          style: TextButton.styleFrom(
+                            foregroundColor:
+                                const Color.fromRGBO(16, 48, 89, 1),
+                          ),
+                          child: const Text(
+                            "Click here to Register as a Tutor",
                             style: TextStyle(fontFamily: 'Bebas'),
                           ),
                         ),
