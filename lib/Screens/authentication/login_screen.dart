@@ -20,7 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   String email = '';
   String pass = '';
-String error = '';
+  String error = '';
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -125,19 +125,20 @@ String error = '';
                             onPress: () async {
                               print('hello');
                               if (_formKey.currentState!.validate()) {
-                                dynamic result = await _auth.signIn(email, pass);
-                                
+                                dynamic result =
+                                    await _auth.signIn(email, pass);
 
                                 if (result == null) {
                                   setState(() => error = 'wrong');
-                                } else {
-                                  
-                                }
+                                } else {}
                               }
                             },
                           ),
                           const SizedBox(height: 20),
-                          Text(error,style: const TextStyle(color: Colors.black),),
+                          Text(
+                            error,
+                            style: const TextStyle(color: Colors.black),
+                          ),
                           TextButton(
                             onPressed: () {
                               Navigator.push(

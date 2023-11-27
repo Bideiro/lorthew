@@ -13,15 +13,13 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-
   int _selectedIndex = 0;
   final List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     ChatMenu(),
     ScheduleScreenP(),
-    const PaymentScreenP(),
-    ProfilePage(),
-    // const ProfileScreenP(),
+    PaymentScreenP(),
+    ProfileScreenP(),
   ];
 
   bool isDark = false;
@@ -108,6 +106,8 @@ class _MenuScreenState extends State<MenuScreen> {
 }
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -313,7 +313,7 @@ class ExpandableCard extends StatelessWidget {
 class FullScreenCard extends StatelessWidget {
   final UserInfo user;
 
-  const FullScreenCard({super.key, required this.user});
+  const FullScreenCard({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -321,119 +321,178 @@ class FullScreenCard extends StatelessWidget {
       appBar: AppBar(
         title: Text(user.name),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(15),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            CircleAvatar(
+              radius: 50.0,
+              backgroundImage: NetworkImage(user.imageUrl),
+            ),
+            SizedBox(height: 10.0),
+            Text(
+              user.name,
+              style: TextStyle(
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 15.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Image(
-                  image: NetworkImage(user.imageUrl),
-                  height: 100,
-                  width: 100,
-                  fit: BoxFit.cover,
-                  loadingBuilder: (BuildContext context, Widget child,
-                      ImageChunkEvent? loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child;
-                    } else {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  },
+                Column(
+                  children: [
+                    CircleAvatar(
+                      radius: 20.0,
+                      backgroundImage: NetworkImage('ImageURL1'),
+                    ),
+                    Text("Subject"),
+                  ],
                 ),
-                Container(width: 20),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(height: 5),
+                SizedBox(width: 50.0),
+                Column(
+                  children: [
+                    CircleAvatar(
+                      radius: 20.0,
+                      backgroundImage: NetworkImage('ImageURL2'),
+                    ),
+                    Text("Experience"),
+                  ],
+                ),
+                SizedBox(width: 50.0),
+                Column(
+                  children: [
+                    CircleAvatar(
+                      radius: 20.0,
+                      backgroundImage: NetworkImage('ImageURL3'),
+                    ),
+                    Text("Price"),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(height: 10.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(Icons.star, color: (Color(0xFFFDD835)), size: 40),
+                Icon(Icons.star, color: (Color(0xFFFDD835)), size: 40),
+                Icon(Icons.star, color: (Color(0xFFFDD835)), size: 40),
+                Icon(Icons.star, color: (Color(0xFFFDD835)), size: 40),
+                Icon(Icons.star, color: (Color(0xFFFDD835)), size: 40),
+              ],
+            ),
+            SizedBox(height: 15.0),
+            Text(
+              'About Me',
+              style: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              child: Text(
+                'I am a passionate software developer with a keen interest in mobile application development.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16.0,
+                ),
+              ),
+            ),
+            SizedBox(height: 15.0),
+            Text(
+              'Contact Information',
+              style: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10.0),
+            ListTile(
+              leading: Icon(Icons.email),
+              title: Text('Email: john.doe@example.com'),
+            ),
+            ListTile(
+              leading: Icon(Icons.phone),
+              title: Text('Phone: +1234567890'),
+            ),
+            ListTile(
+              leading: Icon(Icons.location_on),
+              title: Text('Location: City, Country'),
+            ),
+            SizedBox(height: 10.0),
+            SizedBox(
+              height: 50,
+              width: 300,
+              child: ElevatedButton(
+                onPressed: () {
+                  // Handle button click
+                },
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(const Color(0xFFFDD835)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                  ),
+                ),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(LineIcons.calendarAlt, color: Colors.black),
+                      SizedBox(width: 10),
                       Text(
-                        user.name,
+                        'Schedule a Lesson',
                         style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          color: Colors.grey[800],
-                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: 15,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 10.0),
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Row(
+                  children: <Widget>[
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Call",
+                        style: TextStyle(
+                          color: Colors.blue,
                           fontSize: 16,
                         ),
                       ),
-                      Container(height: 5),
-                      Text(
-                        user.role,
-                        style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          color: Colors.grey[500],
-                          fontSize: 14,
-                        ),
-                      ),
-                      Text(
-                        user.description,
-                        maxLines: 2,
-                        style: TextStyle(
-                          color: Colors.grey[500],
-                          fontSize: 14,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-          const Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.all(15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Sample Text:",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
                     ),
-                    Text(
-                      "Sample description",
-                      style: TextStyle(fontSize: 16),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Message",
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 16,
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(15),
-            child: Row(
-              children: <Widget>[
-                TextButton(
-                  child: const Text(
-                    "Call",
-                    style: TextStyle(
-                      color: Colors.green,
-                      fontSize: 16,
-                    ),
-                  ),
-                  onPressed: () {},
-                ),
-                TextButton(
-                  child: const Text(
-                    "Message",
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontSize: 16,
-                    ),
-                  ),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

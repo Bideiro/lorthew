@@ -33,7 +33,7 @@ import '../services/auth.dart';
 //   return documentSnapshot;
 // }
 
-class ProfilePage extends StatelessWidget {
+class ProfileScreenP extends StatelessWidget {
   // final Map<String, dynamic>? userData;
 
   // const ProfilePage({super.key, required this.userData});

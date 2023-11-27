@@ -1,19 +1,15 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:lorthew/services/auth.dart';
 
-import '../../firebase_options.dart';
-
-void main(List<String> args) async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
-  runApp(MaterialApp(home: const RegisterInfoPupil()));
-}
+// void main(List<String> args) async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await Firebase.initializeApp(
+//     options: DefaultFirebaseOptions.currentPlatform,
+//   );
+//   runApp(MaterialApp(home: const RegisterInfoPupil()));
+// }
 
 class RegisterInfoPupil extends StatefulWidget {
   const RegisterInfoPupil({Key? key}) : super(key: key);
@@ -171,7 +167,6 @@ class _RegisterScreenForPupilState extends State<RegisterInfoPupil> {
                                 borderRadius: 50,
                                 borderWidth: 2,
                                 onPress: () async {
-                                  
                                   if (_formKey.currentState!.validate()) {
                                     print(email + pass + lname + fname);
                                     dynamic result = await _auth

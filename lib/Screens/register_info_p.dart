@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
 
-void main(List<String> args) {
-  runApp(MaterialApp(home: const RegisterInfoPupil()));
-}
+// void main(List<String> args) {
+//   runApp(MaterialApp(home: const RegisterInfoPupil()));
+// }
 
 class RegisterInfoPupil extends StatefulWidget {
   const RegisterInfoPupil({Key? key}) : super(key: key);
