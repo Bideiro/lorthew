@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
+import 'package:lorthew/Screens/authentication/authenticate.dart';
 import 'package:lorthew/services/auth.dart';
 
 class RegisterInfoPupil extends StatefulWidget {
@@ -168,6 +169,26 @@ class _RegisterScreenForPupilState extends State<RegisterInfoPupil> {
                                   }
                                 },
                               ),
+                              const SizedBox(height: 20),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Authenticate(),
+                              ),
+                            );
+                          },
+                          style: TextButton.styleFrom(
+                            foregroundColor:
+                                const Color.fromRGBO(16, 48, 89, 1),
+                          ),
+                          child: const Text(
+                            'Already have an account? Click here to Login',
+                            style: TextStyle(fontFamily: 'Bebas'),
+                          ),
+                        ),
+
                             ],
                           )),
                     )),

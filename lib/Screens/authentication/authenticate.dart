@@ -5,9 +5,9 @@ import 'package:provider/provider.dart';
 import '../../models/cuser.dart';
 import '../authentication/login_screen.dart';
 
-void main(List<String> args) {
-  runApp(MaterialApp(home: Authenticate()));
-}
+// void main(List<String> args) {
+//   runApp(MaterialApp(home: Authenticate()));
+// }
 
 class Authenticate extends StatefulWidget {
   @override
@@ -21,10 +21,9 @@ class _AuthenticateState extends State<Authenticate> {
     print(user);
 
     if (user == null) {
-      return LoginScreen();
+      return const LoginScreen();
     } else {
-      return MenuScreen();
+      return const MenuScreen();
     }
-
   }
 }
