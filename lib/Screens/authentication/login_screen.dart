@@ -4,10 +4,8 @@ import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:lorthew/loading.dart';
 
 import '../../services/auth.dart';
-import '../all.dart';
-// void main() {
-//   runApp(LoginScreen());
-// }
+import '../authentication/register_info_p.dart';
+import '../authentication/register_info_t.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -131,10 +129,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   onPress: () async {
                                     print('hello');
                                     if (_formKey.currentState!.validate()) {
-                                      setState(() => loading = true);
+                                      // setState(() => loading = true);
                                       dynamic result =
                                           await _auth.signIn(email, pass);
-                                      if (result.user == null) {
+                                      if (result == null) {
                                         setState(() {
                                           error = 'wrong';
                                           loading = false;

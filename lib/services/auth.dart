@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:lorthew/services/database.dart';
 
 import '../models/cuser.dart';
 
@@ -29,7 +28,7 @@ class AuthService {
           email: email, password: pass);
 
       User? user = result.user!; //yung exclamation mark need wala ata idfk
-      await DatabaseService(uid:user.uid).updateUserData(fname, lname);
+      // await DatabaseService(uid:user.uid).updateUserData(fname, lname);
       return _userFromFirebase(user);
     } catch (e) {
       print(e.toString());

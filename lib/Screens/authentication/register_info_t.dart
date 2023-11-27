@@ -3,27 +3,16 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:lorthew/services/auth.dart';
 
-// void main(List<String> args) async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   await Firebase.initializeApp(
-//     options: DefaultFirebaseOptions.currentPlatform,
-//   );
-//   runApp(MaterialApp(home: const RegisterInfoPupil()));
-// }
-
-class RegisterInfoPupil extends StatefulWidget {
-  const RegisterInfoPupil({Key? key}) : super(key: key);
+class RegisterInfoTutor extends StatefulWidget {
+  const RegisterInfoTutor({super.key});
 
   @override
-  State<RegisterInfoPupil> createState() => _RegisterScreenForPupilState();
+  State<RegisterInfoTutor> createState() => _RegisterInfoTutorState();
 }
 
-class _RegisterScreenForPupilState extends State<RegisterInfoPupil> {
+class _RegisterInfoTutorState extends State<RegisterInfoTutor> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
-
-  // final List<String> items = ['Tutor', 'Pupil'];
-  // String? selectedValue = "Pupil";
   String email = '';
   String pass = '';
   String fname = '';

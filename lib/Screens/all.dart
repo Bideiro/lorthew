@@ -1,5 +1,4 @@
 export 'chat_menu.dart';
-export 'login_screen.dart';
 export 'menu_screen.dart';
 // export 'sched_t.dart';
 // export 'payment_history_p.dart';
@@ -12,8 +11,8 @@ export 'profile_edit_p.dart';
 export 'profile_screen_p.dart';
 // export 'profile_view_t.dart';
 // export 'register.dart';
-export 'register_info_p.dart';
-export 'register_info_t.dart';
+// export 'register_info_p.dart';
+// export 'register_info_t.dart';
 export 'schedule_screen_p.dart';
 
 
