@@ -1,18 +1,16 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
+import 'package:provider/provider.dart';
 
+import '../models/cuser.dart';
+import '../services/auth.dart';
+import 'all.dart';
 // void main() {
 //   runApp(LoginScreen());
 // }
 
-FirebaseAuth auth = FirebaseAuth.instance;
-
-
 class LoginScreen extends StatefulWidget {
-  
   const LoginScreen({super.key});
 
   @override
@@ -20,224 +18,185 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  
-  
-  final List<String> items = ['Tutor', 'Pupil'];
-  String? selectedValue = "Pupil";
-
-  void handleAvatarTap(int avatarIndex) {
-    print('Avatar $avatarIndex clicked'); //testing
-  }
+  final AuthService _auth = AuthService();
+  final _formKey = GlobalKey<FormState>();
+  String email = '';
+  String pass = '';
+  String error = 'asdasdasdsa';
 
   @override
   Widget build(BuildContext context) {
-    
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).requestFocus(FocusNode());
-      },
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text(
-                  'Lorthew',
-                  style: TextStyle(
-                      fontFamily: 'Bebas',
-                      fontSize: 40,
-                      fontWeight: FontWeight.w400),
-                ),
-                const SizedBox(height: 10),
-                ClipOval(
-                  child: SizedBox.fromSize(
-                    size: const Size.fromRadius(48),
-                    child: Image.asset(
-                      'assets/images/Lorthew_Logo.png',
-                      fit: BoxFit.cover,
+    final cUser? user = Provider.of<cUser?>(context);
+    print(user);
+    print('objectdsadasdasd');
+    if (user == null) {
+      return HomeScreen();
+    } else {
+      return GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const Text(
+                    'Lorthew',
+                    style: TextStyle(
+                        fontFamily: 'Bebas',
+                        fontSize: 40,
+                        fontWeight: FontWeight.w400),
+                  ),
+                  const SizedBox(height: 10),
+                  ClipOval(
+                    child: SizedBox.fromSize(
+                      size: const Size.fromRadius(48),
+                      child: Image.asset(
+                        'assets/images/Lorthew_Logo.png',
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                Card(
-                  color: (const Color(0xFFFDD835)),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        const SizedBox(height: 30),
-                        const Text(
-                          'Login with your email and password:',
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30.0),
-                            color: Colors.grey[200],
-                          ),
-                          child: const TextField(
-                            decoration: InputDecoration(
-                              labelText: 'Email',
-                              contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 20),
-                              border: InputBorder.none,
+                  const SizedBox(height: 10),
+                  Card(
+                    color: (const Color(0xFFFDD835)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            const SizedBox(height: 30),
+                            const Text(
+                              'Login with your email and password:',
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
                             ),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30.0),
-                            color: Colors.grey[200],
-                          ),
-                          child: const TextField(
-                            decoration: InputDecoration(
-                              labelText: 'Password',
-                              contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 20),
-                              border: InputBorder.none,
-                            ),
-                            obscureText: true,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        DropdownButtonHideUnderline(
-                          child: DropdownButton2<String>(
-                            isExpanded: true,
-                            hint: const Row(
-                              children: [
-                                Icon(
-                                  Icons.list,
-                                  size: 16,
-                                  color: Colors.yellow,
-                                ),
-                                SizedBox(width: 4),
-                                Expanded(
-                                  child: Text(
-                                    'Select',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.yellow,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            items: items
-                                .map((String item) => DropdownMenuItem<String>(
-                                      value: item,
-                                      child: Text(
-                                        item,
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ))
-                                .toList(),
-                            value: selectedValue,
-                            onChanged: (String? value) {
-                              setState(() {
-                                selectedValue = value;
-                              });
-                            },
-                            buttonStyleData: ButtonStyleData(
-                              height: 50,
-                              width: 400,
-                              padding:
-                                  const EdgeInsets.only(left: 14, right: 14),
+                            const SizedBox(height: 10),
+                            Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(14),
-                                border: Border.all(
-                                  color: Colors.black26,
+                                borderRadius: BorderRadius.circular(30.0),
+                                color: Colors.grey[200],
+                              ),
+                              child: TextFormField(
+                                decoration: const InputDecoration(
+                                  labelText: 'Email',
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 20),
+                                  border: InputBorder.none,
                                 ),
-                                color: const Color.fromRGBO(16, 48, 89, 1),
+                                onChanged: (val) {
+                                  setState(() => email = val);
+                                },
                               ),
-                              elevation: 2,
                             ),
-                            iconStyleData: const IconStyleData(
-                              icon: Icon(
-                                Icons.arrow_forward_ios_outlined,
-                              ),
-                              iconSize: 14,
-                              iconEnabledColor: Colors.yellow,
-                              iconDisabledColor: Colors.grey,
-                            ),
-                            dropdownStyleData: DropdownStyleData(
-                              maxHeight: 200,
-                              width: 350, //400 width dati
+                            const SizedBox(height: 10),
+                            Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(14),
-                                color: const Color.fromRGBO(16, 48, 89, 1),
+                                borderRadius: BorderRadius.circular(30.0),
+                                color: Colors.grey[200],
                               ),
-                              scrollbarTheme: ScrollbarThemeData(
-                                radius: const Radius.circular(40),
-                                thickness: MaterialStateProperty.all<double>(6),
-                                thumbVisibility:
-                                    MaterialStateProperty.all<bool>(true),
+                              child: TextFormField(
+                                decoration: const InputDecoration(
+                                  labelText: 'Password',
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 20),
+                                  border: InputBorder.none,
+                                ),
+                                obscureText: true,
+                                onChanged: (val) {
+                                  setState(() => pass = val);
+                                },
                               ),
                             ),
-                            menuItemStyleData: const MenuItemStyleData(
+                            // const SizedBox(height: 20),
+                            Text(
+                              error,
+                              style: const TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                            AnimatedButton(
                               height: 40,
-                              padding: EdgeInsets.only(left: 14, right: 14),
+                              width: 200,
+                              text: 'LOGIN',
+                              isReverse: true,
+                              selectedTextColor: Colors.black,
+                              transitionType: TransitionType.LEFT_TO_RIGHT,
+                              backgroundColor:
+                                  const Color.fromRGBO(16, 48, 89, 1),
+                              borderColor: Colors.white,
+                              borderRadius: 50,
+                              borderWidth: 2,
+                              onPress: () async {
+                                print('hello');
+                                if (_formKey.currentState!.validate()) {
+                                  dynamic result = _auth.signIn(email, pass);
+                                  if (result == null) {
+                                    setState(() => error = 'wrong');
+                                  }
+                                }
+                              },
                             ),
-                          ),
+                            const SizedBox(height: 20),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const RegisterInfoPupil(),
+                                  ),
+                                );
+                              },
+                              style: TextButton.styleFrom(
+                                foregroundColor:
+                                    const Color.fromRGBO(16, 48, 89, 1),
+                              ),
+                              child: const Text(
+                                "Don't have an account? Click here to Register as a Student",
+                                style: TextStyle(fontFamily: 'Bebas'),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const RegisterInfoTutor(),
+                                  ),
+                                );
+                              },
+                              style: TextButton.styleFrom(
+                                foregroundColor:
+                                    const Color.fromRGBO(16, 48, 89, 1),
+                              ),
+                              child: const Text(
+                                "Click here to Register as a Tutor",
+                                style: TextStyle(fontFamily: 'Bebas'),
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 20),
-                        AnimatedButton(
-                          height: 40,
-                          width: 200,
-                          text: 'LOGIN',
-                          isReverse: true,
-                          selectedTextColor: Colors.black,
-                          transitionType: TransitionType.LEFT_TO_RIGHT,
-                          backgroundColor: const Color.fromRGBO(16, 48, 89, 1),
-                          borderColor: Colors.white,
-                          borderRadius: 50,
-                          borderWidth: 2,
-                          onPress: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //       builder: (context) => const MenuScreen()),
-                            // );
-                          },
-                        ),
-                        const SizedBox(height: 20),
-                        TextButton(
-                          onPressed: () {},
-                          style: TextButton.styleFrom(
-                            foregroundColor:
-                                const Color.fromRGBO(16, 48, 89, 1),
-                          ),
-                          child: const Text(
-                            "Don't have an account? Click here to Register",
-                            style: TextStyle(fontFamily: 'Bebas'),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ).animate().fadeIn().scale().move(delay: 500.ms, duration: 600.ms),
+                ],
+              ),
+            ).animate().fadeIn().scale().move(delay: 500.ms, duration: 600.ms),
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 }

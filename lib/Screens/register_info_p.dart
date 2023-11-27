@@ -14,8 +14,15 @@ class RegisterInfoPupil extends StatefulWidget {
 }
 
 class _RegisterScreenForPupilState extends State<RegisterInfoPupil> {
-  final List<String> items = ['Tutor', 'Pupil'];
-  String? selectedValue = "Pupil";
+
+
+
+  // final List<String> items = ['Tutor', 'Pupil'];
+  // String? selectedValue = "Pupil";
+  String email = '';
+  String pass = '';
+  String fname = '';
+  String lname = '';
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +80,9 @@ class _RegisterScreenForPupilState extends State<RegisterInfoPupil> {
                                     EdgeInsets.symmetric(horizontal: 20),
                                 border: InputBorder.none,
                               ),
+                              onChanged: (val) {
+                                setState(() => email = val);
+                              },
                             ),
                           ),
                           const SizedBox(height: 20),
@@ -88,9 +98,13 @@ class _RegisterScreenForPupilState extends State<RegisterInfoPupil> {
                                     EdgeInsets.symmetric(horizontal: 20),
                                 border: InputBorder.none,
                               ),
+                              onChanged: (val) {
+                                setState(() => pass = val);
+                              },
                             ),
                           ),
-                          const SizedBox(height: 20),Container(
+                          const SizedBox(height: 20),
+                          Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30.0),
                               color: Colors.grey[200],
@@ -102,9 +116,13 @@ class _RegisterScreenForPupilState extends State<RegisterInfoPupil> {
                                     EdgeInsets.symmetric(horizontal: 20),
                                 border: InputBorder.none,
                               ),
+                              onChanged: (val) {
+                                setState(() => fname = val);
+                              },
                             ),
                           ),
-                          const SizedBox(height: 20),Container(
+                          const SizedBox(height: 20),
+                          Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30.0),
                               color: Colors.grey[200],
@@ -116,36 +134,34 @@ class _RegisterScreenForPupilState extends State<RegisterInfoPupil> {
                                     EdgeInsets.symmetric(horizontal: 20),
                                 border: InputBorder.none,
                               ),
+                              onChanged: (val) {
+                                setState(() => lname = val);
+                              },
                             ),
                           ),
                           const SizedBox(height: 20),
                           AnimatedButton(
-                          height: 40,
-                          width: 200,
-                          text: 'REGISTER',
-                          isReverse: true,
-                          selectedTextColor: Colors.black,
-                          transitionType: TransitionType.LEFT_TO_RIGHT,
-                          backgroundColor: const Color.fromRGBO(16, 48, 89, 1),
-                          borderColor: Colors.white,
-                          borderRadius: 50,
-                          borderWidth: 2,
-                          onPress: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => const MenuScreen(),
-                            //   ),
-                            // );
-
-
-
-
-
-
-
-                          },
-                        ),
+                            height: 40,
+                            width: 200,
+                            text: 'REGISTER',
+                            isReverse: true,
+                            selectedTextColor: Colors.black,
+                            transitionType: TransitionType.LEFT_TO_RIGHT,
+                            backgroundColor:
+                                const Color.fromRGBO(16, 48, 89, 1),
+                            borderColor: Colors.white,
+                            borderRadius: 50,
+                            borderWidth: 2,
+                            onPress: () async {
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => const MenuScreen(),
+                              //   ),
+                              // );
+                              print(email + pass + lname + fname);
+                            },
+                          ),
                         ],
                       )),
                     )),
