@@ -22,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   String email = '';
   String pass = '';
-  String error = 'asdasdasdsa';
+  String error = '';
 
   @override
   Widget build(BuildContext context) {
@@ -115,13 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               },
                             ),
                           ),
-                          // const SizedBox(height: 20),
-                          Text(
-                            error,
-                            style: const TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
+                          const SizedBox(height: 20),
                           AnimatedButton(
                             height: 40,
                             width: 200,
@@ -138,12 +132,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               print('hello');
                               if (_formKey.currentState!.validate()) {
                                 dynamic result = _auth.signIn(email, pass);
+                                print(result);
                                 if (result == null) {
                                   setState(() => error = 'wrong');
                                 }
                               }
                             },
                           ),
+                          Text(error),
                           const SizedBox(height: 20),
                           TextButton(
                             onPressed: () {
