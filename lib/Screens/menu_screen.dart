@@ -13,13 +13,15 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
+
   int _selectedIndex = 0;
   final List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     ChatMenu(),
     ScheduleScreenP(),
-    PaymentScreenP(),
-    const ProfileScreenP(),
+    const PaymentScreenP(),
+    ProfilePage(),
+    // const ProfileScreenP(),
   ];
 
   bool isDark = false;

@@ -1,46 +1,47 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lorthew/Screens/all.dart';
 
-class ProfileScreenP extends StatelessWidget {
-  const ProfileScreenP({super.key});
+import '../services/auth.dart';
 
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<DocumentSnapshot>(
-      future: getUserDataFromFirestore(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          Map<String, dynamic>? data =
-              snapshot.data?.data() as Map<String, dynamic>?;
-          print("User Data: $data");
-          return ProfilePage(userData: data);
-        } else {
-          print("Loading User Data...");
-          return CircularProgressIndicator();
-        }
-      },
-    );
-  }
-}
+// class ProfileScreenP extends StatelessWidget {
+//   const ProfileScreenP({super.key});
 
-Future<DocumentSnapshot> getUserDataFromFirestore() async {
-  User? user = FirebaseAuth.instance.currentUser;
-  final documentSnapshot =
-      await FirebaseFirestore.instance.collection('users').doc(user?.uid).get();
-  print("User ID: ${user?.uid}");
-  return documentSnapshot;
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return FutureBuilder<DocumentSnapshot>(
+//       future: getUserDataFromFirestore(),
+//       builder: (context, snapshot) {
+//         if (snapshot.connectionState == ConnectionState.done) {
+//           Map<String, dynamic>? data =
+//               snapshot.data?.data() as Map<String, dynamic>?;
+//           print("User Data: $data");
+//           return ProfilePage(userData: data);
+//         } else {
+//           print("Loading User Data...");
+//           return CircularProgressIndicator();
+//         }
+//       },
+//     );
+//   }
+// }
+
+// Future<DocumentSnapshot> getUserDataFromFirestore() async {
+//   User? user = FirebaseAuth.instance.currentUser;
+//   final documentSnapshot =
+//       await FirebaseFirestore.instance.collection('users').doc(user?.uid).get();
+//   print("User ID: ${user?.uid}");
+//   return documentSnapshot;
+// }
 
 class ProfilePage extends StatelessWidget {
-  final Map<String, dynamic>? userData;
+  // final Map<String, dynamic>? userData;
 
-  const ProfilePage({super.key, required this.userData});
+  // const ProfilePage({super.key, required this.userData});
+  final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
-    print("Building Profile Page with User Data: $userData");
+    // print("Building Profile Page with User Data: $userData");
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -56,13 +57,7 @@ class ProfilePage extends StatelessWidget {
           ),
           tooltip: 'Logout',
           onPressed: () async {
-            print('called');
-            if (FirebaseAuth.instance.currentUser != null) {
-              await FirebaseAuth.instance.signOut();
-              print("User Logged Out");
-            } else {
-              print("User is not authenticated");
-            }
+            await _auth.signMeOut();
           },
         ),
         actions: <Widget>[
