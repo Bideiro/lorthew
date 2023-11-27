@@ -1,20 +1,61 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lorthew/Screens/profile_edit_student.dart';
+
+void main() {
+  runApp(MyApp());
+  print('running');
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: ProfileScreenP(),
+    );
+  }
+}
 
 class ProfileScreenP extends StatelessWidget {
   const ProfileScreenP({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const ProfilePage();
+    return FutureBuilder<DocumentSnapshot>(
+      future: getUserDataFromFirestore(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic>? data = snapshot.data?.data() as Map<
+              String,
+              dynamic>?;
+          print("User Data: $data");
+          return ProfilePage(userData: data);
+        } else {
+          print("Loading User Data...");
+          return CircularProgressIndicator();
+        }
+      },
+    );
   }
 }
 
+Future<DocumentSnapshot> getUserDataFromFirestore() async {
+  User? user = FirebaseAuth.instance.currentUser;
+  final documentSnapshot =
+  await FirebaseFirestore.instance.collection('users').doc(user?.uid).get();
+  print("User ID: ${user?.uid}");
+  return documentSnapshot;
+}
+
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  final Map<String, dynamic>? userData;
+
+  const ProfilePage({super.key, required this.userData});
 
   @override
   Widget build(BuildContext context) {
+    print("Building Profile Page with User Data: $userData");
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -31,7 +72,14 @@ class ProfilePage extends StatelessWidget {
             size: 30,
           ),
           tooltip: 'Logout',
-          onPressed: () {
+          onPressed: () async {
+            print('called');
+            if (FirebaseAuth.instance.currentUser != null) {
+              await FirebaseAuth.instance.signOut();
+              print("User Logged Out");
+            } else {
+              print("User is not authenticated");
+            }
           },
         ),
         actions: <Widget>[

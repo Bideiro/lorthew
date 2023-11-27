@@ -1,6 +1,21 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:psgc_picker/psgc_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: EditStudent(),
+    );
+  }
+}
 
 class EditStudent extends StatelessWidget {
   @override
@@ -32,6 +47,25 @@ class _StudentEditState extends State<StudentEdit> {
     _phoneController = TextEditingController();
     _locationController = TextEditingController();
   }
+
+  Future<void> saveUserDataToFirestore() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+          'firstName': _firstNameController.text,
+          'lastName': _lastNameController.text,
+          'aboutMe': _aboutMeController.text,
+          'email': _emailController.text,
+          'phone': _phoneController.text,
+          'location': _locationController.text,
+        });
+      }
+    } catch (e) {
+      print("Error saving user data: $e");
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -105,10 +139,9 @@ class _StudentEditState extends State<StudentEdit> {
                 height: 50,
                 width: 300,
                 child: ElevatedButton(
-                  onPressed: () {
-
+                  onPressed: () async {
+                    await saveUserDataToFirestore();
                   },
-
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFFDD835)),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
