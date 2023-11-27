@@ -1,12 +1,15 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
-import 'package:lorthew/Screens/menu_screen.dart';
 
 // void main() {
 //   runApp(LoginScreen());
 // }
+
+FirebaseAuth auth = FirebaseAuth.instance;
+
 
 class LoginScreen extends StatefulWidget {
   
@@ -207,11 +210,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderRadius: 50,
                           borderWidth: 2,
                           onPress: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const MenuScreen()),
-                            );
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => const MenuScreen()),
+                            // );
                           },
                         ),
                         const SizedBox(height: 20),
