@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 import 'all.dart';
-
-/*
-TODO:
-1. Hiwalay ang hover to another dart file
-2. Find a better way to improve visibility sa list
-3. Better hover animation, current one sucks and feels slow and janky
-*/
 
 class PaymentScreenP extends StatefulWidget {
   const PaymentScreenP({super.key});
@@ -120,7 +113,14 @@ class _PaymentScreenState extends State<PaymentScreenP> {
               Icons.history,
               // color: Color.fromRGBO(16, 48, 89, 1),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PaymentHistoryScreen()
+                ),
+              );
+            },
           ),
           IconButton(
             icon: const Icon(
