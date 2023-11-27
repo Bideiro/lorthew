@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1046479576619",
+    "project_id": "lorthew-43da7",
+    "storage_bucket": "lorthew-43da7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1046479576619:android:f54a85b5bd4d1dd5f1946e",
+        "android_client_info": {
+          "package_name": "com.example.lorthew"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYREX8euLnrUAfJOdTBAqPfydnm3m_Fpc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,16 +1,18 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
-import 'package:lorthew/Screens/menu_screen.dart';
-import 'package:lorthew/Screens/register_p.dart';
-import 'package:lorthew/Screens/register_t.dart';
 
 // void main() {
 //   runApp(LoginScreen());
 // }
 
+FirebaseAuth auth = FirebaseAuth.instance;
+
+
 class LoginScreen extends StatefulWidget {
+  
   const LoginScreen({super.key});
 
   @override
@@ -18,11 +20,18 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  
+  
   final List<String> items = ['Tutor', 'Pupil'];
   String? selectedValue = "Pupil";
 
+  void handleAvatarTap(int avatarIndex) {
+    print('Avatar $avatarIndex clicked'); //testing
+  }
+
   @override
   Widget build(BuildContext context) {
+    
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
@@ -201,47 +210,22 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderRadius: 50,
                           borderWidth: 2,
                           onPress: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const MenuScreen()),
-                            );
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => const MenuScreen()),
+                            // );
                           },
                         ),
                         const SizedBox(height: 20),
                         TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const RegisterScreenForPupil(),
-                              ),
-                            );
-                          },
+                          onPressed: () {},
                           style: TextButton.styleFrom(
                             foregroundColor:
                                 const Color.fromRGBO(16, 48, 89, 1),
                           ),
                           child: const Text(
-                            "Don't have an account? Click here to Register as a Student",
-                            style: TextStyle(fontFamily: 'Bebas'),
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const RegisterScreenForTutor(),
-                              ),
-                            );
-                          },
-                          style: TextButton.styleFrom(
-                            foregroundColor:
-                                const Color.fromRGBO(16, 48, 89, 1),
-                          ),
-                          child: const Text(
-                            "Click here to Register as a Tutor",
+                            "Don't have an account? Click here to Register",
                             style: TextStyle(fontFamily: 'Bebas'),
                           ),
                         ),
