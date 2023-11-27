@@ -1,54 +1,86 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lorthew/Screens/all.dart';
 
 class ProfileScreenP extends StatelessWidget {
   const ProfileScreenP({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const ProfilePage();
+    return FutureBuilder<DocumentSnapshot>(
+      future: getUserDataFromFirestore(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic>? data =
+              snapshot.data?.data() as Map<String, dynamic>?;
+          print("User Data: $data");
+          return ProfilePage(userData: data);
+        } else {
+          print("Loading User Data...");
+          return CircularProgressIndicator();
+        }
+      },
+    );
   }
 }
 
+Future<DocumentSnapshot> getUserDataFromFirestore() async {
+  User? user = FirebaseAuth.instance.currentUser;
+  final documentSnapshot =
+      await FirebaseFirestore.instance.collection('users').doc(user?.uid).get();
+  print("User ID: ${user?.uid}");
+  return documentSnapshot;
+}
+
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  final Map<String, dynamic>? userData;
+
+  const ProfilePage({super.key, required this.userData});
 
   @override
   Widget build(BuildContext context) {
+    print("Building Profile Page with User Data: $userData");
     return Scaffold(
       appBar: AppBar(
-          title: const Text(
-            'Schedule',
-            style: TextStyle(
-                fontFamily: 'Bebas', fontSize: 30, fontWeight: FontWeight.w400),
+        title: const Text(
+          'Profile',
+          style: TextStyle(
+              fontFamily: 'Bebas', fontSize: 30, fontWeight: FontWeight.w400),
+        ),
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.logout,
+            size: 30,
           ),
-          automaticallyImplyLeading: false,
-          actions: <Widget>[
-            // icon with text code is below
-
-            // TextButton.icon(
-            //   icon: const Icon(
-            //     Icons.mode_edit,
-            //     color: Colors.black,
-            //     size: 30,
-            //   ),
-            //   label: const Text(
-            //     "Edit Profile",
-            //     style: TextStyle(color: Colors.black,fontFamily: 'Bebas', fontSize: 30, fontWeight: FontWeight.w400),
-            //   ),
-            //   onPressed: () {
-            //     // handle the press
-            //   },)
-
-            IconButton(
-                icon: const Icon(
-                  Icons.mode_edit,
-                  size: 30,
-                ),
-                tooltip: 'Increase volume by 10',
-                onPressed: () {
-                  //enter functionality code
-                })
-          ]),
+          tooltip: 'Logout',
+          onPressed: () async {
+            print('called');
+            if (FirebaseAuth.instance.currentUser != null) {
+              await FirebaseAuth.instance.signOut();
+              print("User Logged Out");
+            } else {
+              print("User is not authenticated");
+            }
+          },
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.mode_edit,
+              size: 30,
+            ),
+            tooltip: 'Edit Profile',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfileEditP()),
+              );
+            },
+          ),
+        ],
+      ),
       body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
