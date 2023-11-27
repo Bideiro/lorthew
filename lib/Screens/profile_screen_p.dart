@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lorthew/Screens/profile_edit_student.dart';
 
 class ProfileScreenP extends StatelessWidget {
   const ProfileScreenP({super.key});
@@ -41,7 +42,10 @@ class ProfilePage extends StatelessWidget {
             ),
             tooltip: 'Edit Profile',
             onPressed: () {
-              // Enter functionality code for editing the profile
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => EditStudent()),
+              );
             },
           ),
         ],

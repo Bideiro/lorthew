@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:lorthew/Screens/all.dart';
 
 class ChatMenu extends StatelessWidget {
+  const ChatMenu({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return ChatScreen();
+    return const ChatScreen();
   }
 }
 
 class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
+
   @override
-  _ChatScreenState createState() => _ChatScreenState();
+  State<ChatScreen> createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _ChatScreenState extends State<ChatScreen>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   final List<String> users = [
     'Alice',
     'Bob',
@@ -42,20 +49,23 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        automaticallyImplyLeading: false,
+        title: const Text(
           'Chats',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(
+              fontFamily: 'Bebas', fontSize: 30, fontWeight: FontWeight.w400),
         ),
-        centerTitle: true, // Aligns the title in the center of the AppBar
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
             child: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.notifications,
-                color: Colors.yellow,
+                // color: Colors.yellow,
+                size: 30,
               ),
               onPressed: () {
                 // Add functionality for the notification icon
@@ -66,18 +76,54 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       body: Column(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Search users...',
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: SearchAnchor(
+                        builder:
+                            (BuildContext context, SearchController controller) {
+                          return SearchBar(
+                            controller: controller,
+                            padding: const MaterialStatePropertyAll<EdgeInsets>(
+                              EdgeInsets.symmetric(horizontal: 16.0),
+                            ),
+                            onTap: () {
+                              controller.openView();
+                            },
+                            onChanged: (_) {
+                              controller.openView();
+                            },
+                            leading: const Icon(Icons.search),
+                          );
+                        },
+                        suggestionsBuilder:
+                            (BuildContext context, SearchController controller) {
+                          return List<ListTile>.generate(5, (int index) {
+                            final String item = 'item $index';
+                            return ListTile(
+                              title: Text(item),
+                              onTap: () {
+                                setState(() {
+                                  controller.closeView(item);
+                                });
+                              },
+                            );
+                          });
+                        },
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.filter_list),
+                      onPressed: () {},
+                    ),
+                  ],
                 ),
               ),
-              onChanged: _filterUsers,
-            ),
+            ],
           ),
           Expanded(
             child: ListView.builder(
@@ -97,7 +143,6 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: CustomNavBar(),
     );
   }
 
