@@ -171,13 +171,7 @@ class _RegisterScreenForPupilState extends State<RegisterInfoPupil> {
                                 borderRadius: 50,
                                 borderWidth: 2,
                                 onPress: () async {
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) => const MenuScreen(),
-                                  //   ),
-                                  // );
-
+                                  
                                   if (_formKey.currentState!.validate()) {
                                     print(email + pass + lname + fname);
                                     dynamic result = await _auth

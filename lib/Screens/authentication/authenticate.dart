@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lorthew/Screens/authentication/login_screen.dart';
+import 'package:lorthew/Screens/all.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/cuser.dart';
@@ -18,8 +18,11 @@ class _AuthenticateState extends State<Authenticate> {
   Widget build(BuildContext context) {
     final cUser? user = Provider.of<cUser?>(context);
     print(user);
-    return Container(
-      child: LoginScreen(),
-    );
+
+    if (user == null) {
+      return LoginScreen();
+    } else {
+      return MenuScreen();
+    }
   }
 }
