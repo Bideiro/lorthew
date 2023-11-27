@@ -109,7 +109,7 @@ String error = '';
                               },
                             ),
                           ),
-                          // const SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           AnimatedButton(
                             height: 40,
                             width: 200,
