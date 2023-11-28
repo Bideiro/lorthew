@@ -7,66 +7,66 @@ class DatabaseService {
   DatabaseService({this.uid}); //yung required dito
 //collection reference
 
-  final CollectionReference pupilUserdataCollection =
-      FirebaseFirestore.instance.collection('PuData');
+  // final CollectionReference pupilUserdataCollection =
+  //     FirebaseFirestore.instance.collection('PuData');
 
-  final CollectionReference tutorUserdataCollection =
-      FirebaseFirestore.instance.collection('TuData');
+  // final CollectionReference tutorUserdataCollection =
+  //     FirebaseFirestore.instance.collection('TuData');
+
+  final CollectionReference userdataCollection =
+      FirebaseFirestore.instance.collection('UData');
+
   //initial pupil data
-  Future initPUserData(String fname, String lname) async {
-    return await pupilUserdataCollection
-        .doc(uid)
-        .set({'fname': fname, 'lname': lname});
+  Future initPUserData(String fname, String lname, String email) async {
+    return await userdataCollection.doc(uid).set({
+      'fname': fname,
+      'lname': lname,
+      'isTuTor': false,
+      'uid': uid,
+      'email': email
+    });
   }
 
   // initial tutor data
-  Future initTUserData(String fname, String lname) async {
-    return await tutorUserdataCollection
-        .doc(uid)
-        .set({'fname': fname, 'lname': lname});
+  Future initTUserData(String fname, String lname, String email) async {
+    return await userdataCollection.doc(uid).set({
+      'fname': fname,
+      'lname': lname,
+      'isTutor': true,
+      'uid': uid,
+      'email': email
+    });
   }
 
   //changing main user data for pupil
   Future updatePUserData(String fname, String lname, String aboutMe,
       String email, String phoneNum, String location) async {
-    return await pupilUserdataCollection.doc(uid).set({
+    return await userdataCollection.doc(uid).set({
       'fname': fname,
       'lname': lname,
       'abtme': aboutMe,
       'email': email,
       'phono': phoneNum,
       'loc': location,
+      'uid': uid,
     });
   }
 
 //changing main user data for pupil
   Future updateTUserData(String fname, String lname, String aboutMe,
-      String email, String phoneNum, String location) async {
-    return await pupilUserdataCollection.doc(uid).set({
+      String email, String phoneNum, String location, String subj) async {
+    return await userdataCollection.doc(uid).set({
       'fname': fname,
       'lname': lname,
       'abtme': aboutMe,
       'email': email,
       'phono': phoneNum,
       'loc': location,
+      'subj': subj,
     });
   }
 
-//list of the data in docs for pupil
-
-  List<pupilUserinfo>? _pupiluDataFromSnapsho(QuerySnapshot snapshot) {
-    return snapshot.docs.map((doc) {
-      return pupilUserinfo(
-        uid: uid,
-        fname: doc.get('fname') ?? '',
-        lname: doc.get('lname') ?? '',
-        abtme: doc.get('abtme') ?? '',
-        email: doc.get('email') ?? '',
-        phono: doc.get('phono') ?? '',
-        loc: doc.get('loc') ?? '',
-      );
-    }).toList();
-  }
+// //list of the data in docs for pupil
 
 //user data from snpashot
 
@@ -84,10 +84,7 @@ class DatabaseService {
 
 // get pupil data stream
   Stream<pupilUserinfo?> get PuDatadoc {
-    return pupilUserdataCollection
-        .doc(uid)
-        .snapshots()
-        .map(_pupiluDataFromSnapshot);
+    return userdataCollection.doc(uid).snapshots().map(_pupiluDataFromSnapshot);
   }
 
 // // get tutor data stream

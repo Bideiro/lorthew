@@ -1,6 +1,5 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:lorthew/Screens/authentication/authenticate.dart';
 import 'package:lorthew/services/auth.dart';
@@ -173,7 +172,7 @@ class _RegisterScreenForPupilState extends State<RegisterInfoPupil> {
                                     return null;
                                   },
                                   onChanged: (val) {
-                                    setState(() => fname = val);
+                                    setState(() => lname = val);
                                   },
                                 ),
                               ),
@@ -232,7 +231,9 @@ class _RegisterScreenForPupilState extends State<RegisterInfoPupil> {
                     )),
               ],
             ),
-          ).animate().fadeIn().scale().move(delay: 500.ms, duration: 600.ms),
+          )
+          // .animate().fadeIn().scale().move(delay: 500.ms, duration: 600.ms)
+          ,
         ),
       ),
     );

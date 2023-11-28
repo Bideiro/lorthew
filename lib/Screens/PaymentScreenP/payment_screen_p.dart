@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:lorthew/Screens/PaymentScreenP/payment_history_t.dart';
+import 'package:lorthew/Screens/PaymentScreenP/payment_screen_p_2.dart';
 
 import '../../filedependencies/profilescreenpall.dart';
+
 class PaymentScreenP extends StatefulWidget {
-  const PaymentScreenP({super.key});
+  const PaymentScreenP({Key? key});
 
   @override
   State<PaymentScreenP> createState() => _PaymentScreenState();
@@ -95,7 +98,7 @@ class _PaymentScreenState extends State<PaymentScreenP> {
     'Aaliyah Wright',
   ];
 
-  List <String> filteredItems = [];
+  List<String> filteredItems = [];
   int? selectedItemIndex;
 
   @override
@@ -106,10 +109,10 @@ class _PaymentScreenState extends State<PaymentScreenP> {
 
   void _filterItems(String query) {
     setState(() {
-          filteredItems = items
-              .where((item) => item.toLowerCase().contains(query.toLowerCase()))
-              .toList();
-        });
+      filteredItems = items
+          .where((item) => item.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    });
   }
 
   @override
@@ -127,7 +130,14 @@ class _PaymentScreenState extends State<PaymentScreenP> {
               Icons.history,
               // color: Color.fromRGBO(16, 48, 89, 1),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PaymentHistoryScreen()
+                ),
+              );
+            },
           ),
           IconButton(
             icon: const Icon(
@@ -141,57 +151,47 @@ class _PaymentScreenState extends State<PaymentScreenP> {
       ),
       body: Column(
         children: <Widget>[
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: SearchAnchor(
-                        builder: (BuildContext context,
-                            SearchController controller) {
-                          return SearchBar(
-                            controller: controller,
-                            padding: const MaterialStatePropertyAll<EdgeInsets>(
-                              EdgeInsets.symmetric(horizontal: 16.0),
-                            ),
-                            onTap: () {
-                              controller.openView();
-                            },
-                            onChanged: (_) {
-                              controller.openView();
-                            },
-                            leading: const Icon(Icons.search),
-                          );
-                        },
-                        suggestionsBuilder: (BuildContext context,
-                            SearchController controller) {
-                          return filteredItems.map((item){
-                            return ListTile(
-                              title: Text(item),
-                              onTap: () {
-                                setState(() {
-                                    controller.closeView(item);                         
-                                });
-                              },
-                            );
-                          }).toList();
-                        },
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.filter_list),
-                      onPressed: () {},
-                    ),
-                  ],
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: SearchAnchor(
+                    builder: (BuildContext context, SearchController controller) {
+                      return SearchBar(
+                        controller: controller,
+                        padding: const MaterialStatePropertyAll<EdgeInsets>(
+                          EdgeInsets.symmetric(horizontal: 16.0),
+                        ),
+                        onTap: () {},
+                        onChanged: _filterItems,
+                        leading: const Icon(Icons.search),
+                      );
+                    },
+                    suggestionsBuilder: (BuildContext context, SearchController controller) {
+                      return filteredItems.map((item) {
+                        return ListTile(
+                          title: Text(item),
+                          onTap: () {
+                            setState(() {
+                              controller.closeView(item);
+                            });
+                          },
+                        );
+                      }).toList();
+                    },
+                  ),
                 ),
-              ),
-            ],
+                IconButton(
+                  icon: const Icon(Icons.filter_list),
+                  onPressed: () {},
+                ),
+              ],
+            ),
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: items.length,
+              itemCount: filteredItems.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
@@ -201,7 +201,7 @@ class _PaymentScreenState extends State<PaymentScreenP> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => PaymentScreenP2(items[index]),
+                        builder: (context) => PaymentScreenP2(filteredItems[index]),
                       ),
                     );
                   },
@@ -222,7 +222,7 @@ class _PaymentScreenState extends State<PaymentScreenP> {
                           : null,
                       child: ListTile(
                         title: Text(
-                          items[index],
+                          filteredItems[index],
                           style: TextStyle(
                             color: selectedItemIndex == index
                                 ? Colors.white

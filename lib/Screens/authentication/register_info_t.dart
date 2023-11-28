@@ -1,6 +1,5 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:lorthew/Screens/authentication/authenticate.dart';
 import 'package:lorthew/services/auth.dart';
@@ -194,7 +193,7 @@ class _RegisterInfoTutorState extends State<RegisterInfoTutor> {
                                     print(email + pass + lname + fname);
                                     dynamic result = await _auth
                                         .registerTutor(
-                                            email, pass, fname, lname);
+                                            email, pass, fname, lname, '');
                                     if (result == null) {
                                       setState(() => error = 'please god');
                                     } else {
@@ -232,7 +231,9 @@ class _RegisterInfoTutorState extends State<RegisterInfoTutor> {
                     )),
               ],
             ),
-          ).animate().fadeIn().scale().move(delay: 500.ms, duration: 600.ms),
+          )
+          // .animate().fadeIn().scale().move(delay: 500.ms, duration: 600.ms)
+          ,
         ),
       ),
     );

@@ -15,7 +15,7 @@ void main() async {
 
   runApp(
     StreamProvider<cUser?>.value(
-      catchError: (_,__) {},
+      catchError: (_, __) {},
       value: AuthService().user,
       initialData: null,
       child: MaterialApp(

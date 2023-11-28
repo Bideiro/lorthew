@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lorthew/Screens/profile_edit_t.dart';
+import 'package:lorthew/Screens/ProfileScreenT/profile_edit_t.dart';
 
-import '../services/auth.dart';
+import '../../services/auth.dart';
 
 class ProfileScreenT extends StatelessWidget {
   final AuthService _auth = AuthService();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lorthew/Screens/ScheduleScreenT/schedule_edit_t.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
@@ -33,17 +34,18 @@ class StudentInfo {
 }
 
 class ScheduleTutor extends StatelessWidget {
+  ScheduleTutor({
+    super.key,
+    required this.tutorDatas,
+  });
+
   final List<Color> bookmarkColors = [
     (const Color(0xFF4FC3F7)),
     (const Color(0xFF1976D2)),
     (const Color(0xFF0D47A1)),
   ];
-  final List<StudentInfo> tutorDatas;
 
-  ScheduleTutor({
-    super.key,
-    required this.tutorDatas,
-  });
+  final List<StudentInfo> tutorDatas;
 
   int colorIndex = 0;
   @override
@@ -119,12 +121,47 @@ class ScheduleTutor extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text(
           'Schedule',
           style: TextStyle(
               fontFamily: 'Bebas', fontSize: 30, fontWeight: FontWeight.w400),
         ),
-        automaticallyImplyLeading: false,
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ScheduleEditT()),
+              );
+            },
+            style: ButtonStyle(
+              overlayColor: MaterialStateProperty.resolveWith((states) {
+                return Colors.transparent;
+              }),
+            ),
+            child: const Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.mode_edit,
+                    color: Colors.black,
+                    size: 25,
+                  ),
+                  SizedBox(width: 5.0),
+                  Text("Edit Sched",
+                      style: TextStyle(
+                        fontFamily: 'Bebas',
+                        fontSize: 25,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                      )),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         physics: tutorDatas.length <= 4

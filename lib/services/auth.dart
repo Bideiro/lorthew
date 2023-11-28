@@ -30,7 +30,7 @@ class AuthService {
           email: email, password: pass);
 
       User? user = result.user!; //yung exclamation mark need wala ata idfk
-      await DatabaseService(uid: user.uid).initPUserData(fname, lname);
+      await DatabaseService(uid: user.uid).initPUserData(fname, lname,email);
       await DatabaseService(uid: user.uid)
           .updatePUserData(fname, lname, '', email, '', '');
       return _userFromFirebase(user);
@@ -42,15 +42,15 @@ class AuthService {
 
   //register tutor
   Future registerTutor(
-      String email, String pass, String fname, String lname) async {
+      String email, String pass, String fname, String lname, String subj) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: pass);
 
       User? user = result.user!; //yung exclamation mark need wala ata idfk
-      await DatabaseService(uid: user.uid).initTUserData(fname, lname);
+      await DatabaseService(uid: user.uid).initTUserData(fname, lname,email);
       await DatabaseService(uid: user.uid)
-          .updateTUserData(fname, lname, '', email, '', '');
+          .updateTUserData(fname, lname, '', email, '', '', subj);
       return _userFromFirebase(user);
     } catch (e) {
       print(e.toString());
