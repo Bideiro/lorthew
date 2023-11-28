@@ -106,38 +106,44 @@ class _MenuScreenState extends State<MenuScreen> {
 }
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<UserInfo> users = [
+    UserInfo(
+      name: "Ezra Sebastiansdadsada",
+      role: "Math Tutor",
+      description: "Sample description",
+      imageUrl: 'https://imageio.forbes.com/specials-images/imageserve/646a275546cda47733a0589b/Lee-Do-hyun/0x0.jpg?format=jpg&crop=1000,905,x0,y123,safe&width=960',
+    ),
+    UserInfo(
+      name: "Mr. Ming",
+      role: "Meowing 101",
+      description: "Sample description",
+      imageUrl: "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSGfpQ3m-QWiXgCBJJbrcUFdNdWAhj7rcUqjeNUC6eKcXZDAtWm",
+    )
+  ];
+
+  late List<UserInfo> filteredUsers;
+  UserInfo? selectedUser;
+
+  @override
+  void initState() {
+    super.initState();
+    filteredUsers = List.from(users); // Initialize with the full list of users
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<UserInfo> users = [
-      UserInfo(
-        name: "Ezra Sebastiansdadsada",
-        role: "Math Tutor",
-        description: "Sample description",
-        imageUrl:
-            'https://imageio.forbes.com/specials-images/imageserve/646a275546cda47733a0589b/Lee-Do-hyun/0x0.jpg?format=jpg&crop=1000,905,x0,y123,safe&width=960',
-      ),
-      UserInfo(
-        name: "Mr. Ming",
-        role: "Meowing 101",
-        description: "Sample description",
-        imageUrl:
-            "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSGfpQ3m-QWiXgCBJJbrcUFdNdWAhj7rcUqjeNUC6eKcXZDAtWm",
-      )
-    ];
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           'Home',
-          style: TextStyle(
-              fontFamily: 'Bebas', fontSize: 30, fontWeight: FontWeight.w400),
+          style: TextStyle(fontFamily: 'Bebas', fontSize: 30, fontWeight: FontWeight.w400),
         ),
         automaticallyImplyLeading: false,
         actions: <Widget>[
@@ -156,8 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Expanded(
                     child: SearchAnchor(
-                      builder:
-                          (BuildContext context, SearchController controller) {
+                      builder: (BuildContext context, SearchController controller) {
                         return SearchBar(
                           controller: controller,
                           padding: const MaterialStatePropertyAll<EdgeInsets>(
@@ -166,21 +171,27 @@ class _HomeScreenState extends State<HomeScreen> {
                           onTap: () {
                             controller.openView();
                           },
-                          onChanged: (_) {
+                          onChanged: (query) {
+                            setState(() {
+                              filteredUsers = users
+                                  .where((user) => user.name.toLowerCase().contains(query.toLowerCase()))
+                                  .toList();
+                            });
                             controller.openView();
                           },
                           leading: const Icon(Icons.search),
                         );
                       },
-                      suggestionsBuilder:
-                          (BuildContext context, SearchController controller) {
-                        return List<ListTile>.generate(5, (int index) {
-                          final String item = 'item $index';
+                      suggestionsBuilder: (BuildContext context, SearchController controller) {
+                        return List<ListTile>.generate(filteredUsers.length, (int index) {
+                          final UserInfo user = filteredUsers[index];
                           return ListTile(
-                            title: Text(item),
+                            title: Text(user.name),
                             onTap: () {
                               setState(() {
-                                controller.closeView(item);
+                                selectedUser = user;
+                                filteredUsers = [user]; // Show only the selected user
+                                controller.closeView(user.name);
                               });
                             },
                           );
@@ -195,16 +206,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            for (var user in users)
+            if (selectedUser != null)
               ExpandableCard(
-                user: user,
-              ),
+                user: selectedUser!,
+              )
+            else
+              for (var user in filteredUsers)
+                ExpandableCard(
+                  user: user,
+                ),
           ],
         ),
       ),
     );
   }
 }
+
 
 class UserInfo {
   final String name;
