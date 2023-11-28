@@ -4,6 +4,21 @@ import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:lorthew/Screens/payment_history_t.dart';
 import 'package:lorthew/Screens/payment_screen_p_3.dart';
 
+bool isNumeric(String? str) {
+  if (str == null) {
+    return false;
+  }
+  return double.tryParse(str) != null;
+}
+
+  String generateReferenceNumber() {
+    Random random = Random();
+    int referenceNumber = random.nextInt(9000000) + 1000000;
+    return referenceNumber.toString();
+  }
+
+
+
 class PaymentScreenP2 extends StatefulWidget {
   final String tutorName;
 
@@ -227,13 +242,15 @@ class _PaymentScreenP2State extends State<PaymentScreenP2> {
                       borderRadius: 50,
                       borderWidth: 2,
                       onPress: () {
-                        if (amountController.text.isEmpty) {
+                        String enteredAmount = amountController.text.trim();
+
+                        if (enteredAmount.isEmpty || !isNumeric(enteredAmount)) {
                           showDialog(
                             context: context,
                             builder: (context) {
                               return AlertDialog(
                                 title: const Text('Error'),
-                                content: const Text('No amount added.'),
+                                content: const Text('Invalid amount.'),
                                 actions: [
                                   TextButton(
                                     onPressed: () {
@@ -253,7 +270,7 @@ class _PaymentScreenP2State extends State<PaymentScreenP2> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => PaymentScreenP3(
-                                amountPaid: amountController.text,
+                                amountPaid: enteredAmount,
                                 referenceNumber: referenceNumber,
                                 paymentTime: paymentTime,
                                 paymentMethod: selectedPaymentMethod,
@@ -272,11 +289,5 @@ class _PaymentScreenP2State extends State<PaymentScreenP2> {
         ),
       ),
     );
-  }
-
-  String generateReferenceNumber() {
-    Random random = Random();
-    int referenceNumber = random.nextInt(9000000) + 1000000;
-    return referenceNumber.toString();
   }
 }
