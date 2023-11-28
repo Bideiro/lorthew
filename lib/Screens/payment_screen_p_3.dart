@@ -2,7 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:lorthew/Screens/payment_history_t.dart';
 
 class PaymentScreenP3 extends StatelessWidget {
-  const PaymentScreenP3({super.key});
+  final String amountPaid;
+  final String referenceNumber;
+  final String paymentTime;
+  final String paymentMethod;
+  final String clientName;
+
+  const PaymentScreenP3({
+    required this.amountPaid,
+    required this.referenceNumber,
+    required this.paymentTime,
+    required this.paymentMethod,
+    required this.clientName,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +23,7 @@ class PaymentScreenP3 extends StatelessWidget {
       appBar: AppBar(),
       body: Center(
         child: SizedBox(
-          width: 500.0, // Adjust the width as needed
+          width: 500.0,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Card(
@@ -40,8 +53,8 @@ class PaymentScreenP3 extends StatelessWidget {
                         fontSize: 18.0,
                       ),
                     ),
-                    const Text(
-                      '\u20B1 1000',
+                    Text(
+                      '₱$amountPaid',
                       style: TextStyle(
                         fontSize: 50.0,
                         fontWeight: FontWeight.bold,
@@ -56,8 +69,8 @@ class PaymentScreenP3 extends StatelessWidget {
                         fontSize: 18.0,
                       ),
                     ),
-                    const Text(
-                      '99999999999999999',
+                    Text(
+                      referenceNumber,
                       style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
@@ -70,8 +83,8 @@ class PaymentScreenP3 extends StatelessWidget {
                         fontSize: 18.0,
                       ),
                     ),
-                    const Text(
-                      'Date and Time',
+                    Text(
+                      paymentTime,
                       style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
@@ -84,8 +97,8 @@ class PaymentScreenP3 extends StatelessWidget {
                         fontSize: 18.0,
                       ),
                     ),
-                    const Text(
-                      'GCASH',
+                    Text(
+                      paymentMethod,
                       style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
@@ -98,8 +111,8 @@ class PaymentScreenP3 extends StatelessWidget {
                         fontSize: 18.0,
                       ),
                     ),
-                    const Text(
-                      'Client Name',
+                    Text(
+                      clientName,
                       style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
@@ -109,11 +122,11 @@ class PaymentScreenP3 extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PaymentHistoryScreen()
-                ),
-              );
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PaymentHistoryScreen(),
+                          ),
+                        );
                       },
                       child: const Text('View History'),
                     ),
