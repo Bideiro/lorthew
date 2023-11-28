@@ -21,9 +21,12 @@ class _AuthenticateState extends State<Authenticate> {
     print(user);
 
     if (user == null) {
-      return const LoginScreen();
+      print("going to login");
+      return LoginScreen();
+      
     } else {
-      return const MenuScreen();
+      print("going to hime");
+      return  MenuScreen();
     }
   }
 }

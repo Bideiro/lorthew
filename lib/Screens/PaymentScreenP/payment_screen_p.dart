@@ -95,7 +95,22 @@ class _PaymentScreenState extends State<PaymentScreenP> {
     'Aaliyah Wright',
   ];
 
+  List <String> filteredItems = [];
   int? selectedItemIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    filteredItems = List.from(items);
+  }
+
+  void _filterItems(String query) {
+    setState(() {
+          filteredItems = items
+              .where((item) => item.toLowerCase().contains(query.toLowerCase()))
+              .toList();
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -152,17 +167,16 @@ class _PaymentScreenState extends State<PaymentScreenP> {
                         },
                         suggestionsBuilder: (BuildContext context,
                             SearchController controller) {
-                          return List<ListTile>.generate(5, (int index) {
-                            final String item = 'item $index';
+                          return filteredItems.map((item){
                             return ListTile(
                               title: Text(item),
                               onTap: () {
                                 setState(() {
-                                  controller.closeView(item);
+                                    controller.closeView(item);                         
                                 });
                               },
                             );
-                          });
+                          }).toList();
                         },
                       ),
                     ),

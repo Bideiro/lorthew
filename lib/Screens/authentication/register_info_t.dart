@@ -1,8 +1,11 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:lorthew/Screens/authentication/authenticate.dart';
 import 'package:lorthew/services/auth.dart';
+
+import '../../models/allowedDomains.dart';
 
 class RegisterInfoTutor extends StatefulWidget {
   const RegisterInfoTutor({super.key});
@@ -77,7 +80,19 @@ class _RegisterInfoTutorState extends State<RegisterInfoTutor> {
                                         EdgeInsets.symmetric(horizontal: 20),
                                     border: InputBorder.none,
                                   ),
-                                  // validator: (val) => val!.isEmpty ? 'Enter a last name' : null,
+                                  validator: (email) {
+                                    if (email == null || email.isEmpty) {
+                                      return 'Enter an email address';
+                                    } else if (!EmailValidator.validate(email)) {
+                                      return 'Enter a valid email address';
+                                    } else {
+                                      String domain = email.split('@').last.toLowerCase();
+                                      if (!allowedDomains.any((allowedDomain) => domain.endsWith(allowedDomain))) {
+                                        return 'Enter a valid email address with an allowed domain';
+                                      }
+                                    }
+                                    return null;
+                                  },
                                   onChanged: (val) {
                                     setState(() => email = val);
                                   },
@@ -96,7 +111,14 @@ class _RegisterInfoTutorState extends State<RegisterInfoTutor> {
                                         EdgeInsets.symmetric(horizontal: 20),
                                     border: InputBorder.none,
                                   ),
-                                  // validator: (val) => val!.length ? 'Enter at least 6 characters' : null,
+                                  validator: (val) {
+                                    if (val == null || val.isEmpty) {
+                                      return 'Enter a password';
+                                    } else if (val.length < 6) {
+                                      return 'Password must be at least 6 characters long';
+                                    }
+                                    return null;
+                                  },
                                   onChanged: (val) {
                                     setState(() => pass = val);
                                   },
@@ -115,9 +137,14 @@ class _RegisterInfoTutorState extends State<RegisterInfoTutor> {
                                         EdgeInsets.symmetric(horizontal: 20),
                                     border: InputBorder.none,
                                   ),
-                                  validator: (val) => val!.isEmpty
-                                      ? 'Enter a first name'
-                                      : null,
+                                  validator: (val) {
+                                    if (val!.isEmpty) {
+                                      return 'Enter a first name';
+                                    } else if (val.contains(RegExp(r'[0-9]'))) {
+                                      return 'First name should not contain numbers';
+                                    }
+                                    return null;
+                                  },
                                   onChanged: (val) {
                                     setState(() => fname = val);
                                   },
@@ -136,8 +163,14 @@ class _RegisterInfoTutorState extends State<RegisterInfoTutor> {
                                         EdgeInsets.symmetric(horizontal: 20),
                                     border: InputBorder.none,
                                   ),
-                                  validator: (val) =>
-                                      val!.isEmpty ? 'Enter a last name' : null,
+                                  validator: (val) {
+                                    if (val!.isEmpty) {
+                                      return 'Enter a Last name';
+                                    } else if (val.contains(RegExp(r'[0-9]'))) {
+                                      return 'Last name should not contain numbers';
+                                    }
+                                    return null;
+                                  },
                                   onChanged: (val) {
                                     setState(() => lname = val);
                                   },

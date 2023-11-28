@@ -10,7 +10,7 @@ class DatabaseService {
   final CollectionReference pupilUserdataCollection =
       FirebaseFirestore.instance.collection('PuData');
 
-        final CollectionReference pupilPserdataCollection =
+  final CollectionReference tutorUserdataCollection =
       FirebaseFirestore.instance.collection('TuData');
   //initial pupil data
   Future initPUserData(String fname, String lname) async {
@@ -18,51 +18,86 @@ class DatabaseService {
         .doc(uid)
         .set({'fname': fname, 'lname': lname});
   }
+
   // initial tutor data
   Future initTUserData(String fname, String lname) async {
-    return await pupilUserdataCollection
+    return await tutorUserdataCollection
         .doc(uid)
         .set({'fname': fname, 'lname': lname});
   }
+
   //changing main user data for pupil
   Future updatePUserData(String fname, String lname, String aboutMe,
       String email, String phoneNum, String location) async {
     return await pupilUserdataCollection.doc(uid).set({
       'fname': fname,
       'lname': lname,
-      'aboutMe': aboutMe,
+      'abtme': aboutMe,
       'email': email,
-      'phoneNum': phoneNum,
-      'location': location,
+      'phono': phoneNum,
+      'loc': location,
     });
   }
 
-  
 //changing main user data for pupil
   Future updateTUserData(String fname, String lname, String aboutMe,
       String email, String phoneNum, String location) async {
     return await pupilUserdataCollection.doc(uid).set({
       'fname': fname,
       'lname': lname,
-      'aboutMe': aboutMe,
+      'abtme': aboutMe,
       'email': email,
-      'phoneNum': phoneNum,
-      'location': location,
+      'phono': phoneNum,
+      'loc': location,
     });
   }
 
-//list of the data in docs
+//list of the data in docs for pupil
 
-  List<Userinfo>? _udataFromSnapshot(QuerySnapshot snapshot) {
+  List<pupilUserinfo>? _pupiluDataFromSnapsho(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
-      return Userinfo(
-          fname: doc.get('fname') ?? '', lname: doc.get('lname') ?? '');
+      return pupilUserinfo(
+        uid: uid,
+        fname: doc.get('fname') ?? '',
+        lname: doc.get('lname') ?? '',
+        abtme: doc.get('abtme') ?? '',
+        email: doc.get('email') ?? '',
+        phono: doc.get('phono') ?? '',
+        loc: doc.get('loc') ?? '',
+      );
     }).toList();
   }
 
-// get UData stream
+//user data from snpashot
 
-  Stream<List<Userinfo>?> get UData {
-    return pupilUserdataCollection.snapshots().map(_udataFromSnapshot);
+  pupilUserinfo _pupiluDataFromSnapshot(DocumentSnapshot snapshot) {
+    return pupilUserinfo(
+      uid: uid,
+      fname: snapshot.get('fname'),
+      lname: snapshot.get('lname'),
+      abtme: snapshot.get('abtme'),
+      email: snapshot.get('email'),
+      phono: snapshot.get('phono'),
+      loc: snapshot.get('loc'),
+    );
   }
+
+// get pupil data stream
+  Stream<pupilUserinfo?> get PuDatadoc {
+    return pupilUserdataCollection
+        .doc(uid)
+        .snapshots()
+        .map(_pupiluDataFromSnapshot);
+  }
+
+// // get tutor data stream
+//   Stream<List<tutorUserinfo>?> get TuData {
+//     return pupilUserdataCollection.snapshots().map(_udataFromSnapshot);
+//   }
+
+  //get userdata firebase doc
+
+  // Stream<DocumentSnapshot> get PuDatadoc {
+  //   return pupilUserdataCollection.doc(uid).snapshots();
+  // }
 }

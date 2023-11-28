@@ -1,8 +1,11 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:lorthew/Screens/authentication/authenticate.dart';
 import 'package:lorthew/services/auth.dart';
+
+import '../../models/allowedDomains.dart';
 
 class RegisterInfoPupil extends StatefulWidget {
   const RegisterInfoPupil({super.key});
@@ -75,10 +78,22 @@ class _RegisterScreenForPupilState extends State<RegisterInfoPupil> {
                                   decoration: const InputDecoration(
                                     labelText: 'Email',
                                     contentPadding:
-                                        EdgeInsets.symmetric(horizontal: 20),
+                                    EdgeInsets.symmetric(horizontal: 20),
                                     border: InputBorder.none,
                                   ),
-                                  // validator: (val) => val!.isEmpty ? 'Enter a last name' : null,
+                                  validator: (email) {
+                                    if (email == null || email.isEmpty) {
+                                      return 'Enter an email address';
+                                    } else if (!EmailValidator.validate(email)) {
+                                      return 'Enter a valid email address';
+                                    } else {
+                                      String domain = email.split('@').last.toLowerCase();
+                                      if (!allowedDomains.any((allowedDomain) => domain.endsWith(allowedDomain))) {
+                                        return 'Enter a valid email address with an allowed domain';
+                                      }
+                                    }
+                                    return null;
+                                  },
                                   onChanged: (val) {
                                     setState(() => email = val);
                                   },
@@ -94,10 +109,17 @@ class _RegisterScreenForPupilState extends State<RegisterInfoPupil> {
                                   decoration: const InputDecoration(
                                     labelText: 'Password',
                                     contentPadding:
-                                        EdgeInsets.symmetric(horizontal: 20),
+                                    EdgeInsets.symmetric(horizontal: 20),
                                     border: InputBorder.none,
                                   ),
-                                  // validator: (val) => val!.length ? 'Enter at least 6 characters' : null,
+                                  validator: (val) {
+                                    if (val == null || val.isEmpty) {
+                                      return 'Enter a password';
+                                    } else if (val.length < 6) {
+                                      return 'Password must be at least 6 characters long';
+                                    }
+                                    return null;
+                                  },
                                   onChanged: (val) {
                                     setState(() => pass = val);
                                   },
@@ -113,12 +135,17 @@ class _RegisterScreenForPupilState extends State<RegisterInfoPupil> {
                                   decoration: const InputDecoration(
                                     labelText: 'First Name',
                                     contentPadding:
-                                        EdgeInsets.symmetric(horizontal: 20),
+                                    EdgeInsets.symmetric(horizontal: 20),
                                     border: InputBorder.none,
                                   ),
-                                  validator: (val) => val!.isEmpty
-                                      ? 'Enter a first name'
-                                      : null,
+                                  validator: (val) {
+                                    if (val!.isEmpty) {
+                                      return 'Enter a first name';
+                                    } else if (val.contains(RegExp(r'[0-9]'))) {
+                                      return 'First name should not contain numbers';
+                                    }
+                                    return null;
+                                  },
                                   onChanged: (val) {
                                     setState(() => fname = val);
                                   },
@@ -134,13 +161,19 @@ class _RegisterScreenForPupilState extends State<RegisterInfoPupil> {
                                   decoration: const InputDecoration(
                                     labelText: 'Last Name',
                                     contentPadding:
-                                        EdgeInsets.symmetric(horizontal: 20),
+                                    EdgeInsets.symmetric(horizontal: 20),
                                     border: InputBorder.none,
                                   ),
-                                  validator: (val) =>
-                                      val!.isEmpty ? 'Enter a last name' : null,
+                                  validator: (val) {
+                                    if (val!.isEmpty) {
+                                      return 'Enter a Last name';
+                                    } else if (val.contains(RegExp(r'[0-9]'))) {
+                                      return 'Last name should not contain numbers';
+                                    }
+                                    return null;
+                                  },
                                   onChanged: (val) {
-                                    setState(() => lname = val);
+                                    setState(() => fname = val);
                                   },
                                 ),
                               ),
@@ -153,16 +186,14 @@ class _RegisterScreenForPupilState extends State<RegisterInfoPupil> {
                                 selectedTextColor: Colors.black,
                                 transitionType: TransitionType.LEFT_TO_RIGHT,
                                 backgroundColor:
-                                    const Color.fromRGBO(16, 48, 89, 1),
+                                const Color.fromRGBO(16, 48, 89, 1),
                                 borderColor: Colors.white,
                                 borderRadius: 50,
                                 borderWidth: 2,
                                 onPress: () async {
                                   if (_formKey.currentState!.validate()) {
                                     print(email + pass + lname + fname);
-                                    dynamic result = await _auth
-                                        .registerPupil(
-                                            email, pass, fname, lname);
+                                    dynamic result = await _auth.registerPupil(email, pass, fname, lname);
                                     if (result == null) {
                                       setState(() => error = 'please god');
                                     } else {
@@ -188,13 +219,14 @@ class _RegisterScreenForPupilState extends State<RegisterInfoPupil> {
                                 },
                                 style: TextButton.styleFrom(
                                   foregroundColor:
-                                      const Color.fromRGBO(16, 48, 89, 1),
+                                  const Color.fromRGBO(16, 48, 89, 1),
                                 ),
                                 child: const Text(
                                   'Already have an account? Click here to Login',
                                   style: TextStyle(fontFamily: 'Bebas'),
                                 ),
                               ),
+
                             ],
                           )),
                     )),
