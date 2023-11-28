@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:lorthew/services/database.dart';
 
 import '../models/cuser.dart';
 
@@ -15,20 +16,22 @@ class AuthService {
     return cUser(uid: user.uid);
   }
 
-
   Stream<cUser?> get user {
     return _auth
         .authStateChanges()
         .map((User? user) => _userFromFirebase(user!));
   }
 
-  Future registerWithEmailAndPassword(String email, String pass,String fname, String lname) async {
+  Future registerWithEmailAndPassword(
+      String email, String pass, String fname, String lname) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: pass);
 
       User? user = result.user!; //yung exclamation mark need wala ata idfk
-      // await DatabaseService(uid:user.uid).updateUserData(fname, lname);
+      await DatabaseService(uid: user.uid).updateUserData(fname, lname);
+      await DatabaseService(uid: user.uid)
+          .updateProfileData(fname, lname, '', email, '', '');
       return _userFromFirebase(user);
     } catch (e) {
       print(e.toString());

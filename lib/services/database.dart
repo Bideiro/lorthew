@@ -1,24 +1,45 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../models/userinf.dart';
+
 class DatabaseService {
-  final String uid;
-  DatabaseService({required this.uid}); //yung required dito
+  final String? uid;
+  DatabaseService({this.uid}); //yung required dito
 //collection reference
 
   final CollectionReference userdataCollection =
       FirebaseFirestore.instance.collection('UData');
 
+  Future updateUserData(String fname, String lname) async {
+    return await userdataCollection
+        .doc(uid)
+        .set({'fname': fname, 'lname': lname});
+  }
 
+  Future updateProfileData(String fname, String lname, String aboutMe,
+      String email, String phoneNum, String location) async {
+    return await userdataCollection.doc(uid).set({
+      'fname': fname,
+      'lname': lname,
+      'aboutMe': aboutMe,
+      'email': email,
+      'phoneNum': phoneNum,
+      'location': location,
+    });
+  }
 
+//list of the data in docs
 
-  Future updateUserData( String fname, String lname) async {
+  List<Userinfo>? _udataFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return Userinfo(
+          fname: doc.get('fname') ?? '', lname: doc.get('lname') ?? '');
+    }).toList();
+  }
 
+// get UData stream
 
-    return await userdataCollection.doc(uid).set(
-      {
-        'fname' : fname,
-        'lname' : lname
-      }
-    );
+  Stream<List<Userinfo>?> get UData {
+    return userdataCollection.snapshots().map(_udataFromSnapshot);
   }
 }

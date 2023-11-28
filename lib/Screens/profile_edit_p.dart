@@ -1,8 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
-
+import 'package:lorthew/services/auth.dart';
 
 class ProfileEditP extends StatefulWidget {
   @override
@@ -10,41 +8,33 @@ class ProfileEditP extends StatefulWidget {
 }
 
 class _ProfileEditPState extends State<ProfileEditP> {
-  late TextEditingController _firstNameController;
-  late TextEditingController _lastNameController;
-  late TextEditingController _aboutMeController;
-  late TextEditingController _emailController;
-  late TextEditingController _phoneController;
-  late TextEditingController _locationController;
+  final _formKey = GlobalKey<FormState>();
+  final AuthService _auth = AuthService();
 
-  @override
-  void initState() {
-    super.initState();
-    _firstNameController = TextEditingController();
-    _lastNameController = TextEditingController();
-    _aboutMeController = TextEditingController();
-    _emailController = TextEditingController();
-    _phoneController = TextEditingController();
-    _locationController = TextEditingController();
-  }
+  String fname = '';
+  String lname = '';
+  String aboutMe = '';
+  String email = '';
+  String phoneNum = '';
+  String location = '';
 
-  Future<void> saveUserDataToFirestore() async {
-    try {
-      User? user = FirebaseAuth.instance.currentUser;
-      if (user != null) {
-        FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-          'firstName': _firstNameController.text,
-          'lastName': _lastNameController.text,
-          'aboutMe': _aboutMeController.text,
-          'email': _emailController.text,
-          'phone': _phoneController.text,
-          'location': _locationController.text,
-        });
-      }
-    } catch (e) {
-      print("Error saving user data: $e");
-    }
-  }
+  // late TextEditingController _firstNameController;
+  // late TextEditingController _lastNameController;
+  // late TextEditingController _aboutMeController;
+  // late TextEditingController _emailController;
+  // late TextEditingController _phoneController;
+  // late TextEditingController _locationController;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _firstNameController = TextEditingController();
+  //   _lastNameController = TextEditingController();
+  //   _aboutMeController = TextEditingController();
+  //   _emailController = TextEditingController();
+  //   _phoneController = TextEditingController();
+  //   _locationController = TextEditingController();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +50,7 @@ class _ProfileEditPState extends State<ProfileEditP> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text(
+              child:const  Text(
                 'Cancel',
                 style: TextStyle(
                   color: (Color(0xFFFDD835)),
@@ -69,7 +59,7 @@ class _ProfileEditPState extends State<ProfileEditP> {
                 ),
               ),
             ),
-            Text(
+            const Text(
               'Edit Profile',
               style: TextStyle(
                 fontFamily: 'Bebas',
@@ -87,9 +77,9 @@ class _ProfileEditPState extends State<ProfileEditP> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              SizedBox(height: 25.0),
+              const SizedBox(height: 25.0),
               Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Color.fromARGB(44, 132, 157, 188),
                   shape: BoxShape.circle,
                   image: DecorationImage(image: NetworkImage('Usericon')),
@@ -104,30 +94,174 @@ class _ProfileEditPState extends State<ProfileEditP> {
                   onPressed: () {},
                 ),
               ),
-              SizedBox(height: 10.0),
-              buildEditableField("First Name", _firstNameController,
-                  maxLength: 50, textAlign: TextAlign.left),
-              buildEditableField("Last Name", _lastNameController,
-                  maxLength: 50, textAlign: TextAlign.left),
-              buildEditableField("About Me", _aboutMeController,
-                  maxLines: 6, textAlign: TextAlign.left),
-              buildEditableField("Email", _emailController,
-                  maxLength: 50, textAlign: TextAlign.left),
-              buildEditableField("Phone", _phoneController,
-                  textAlign: TextAlign.left),
-              buildEditableField("Location", _locationController,
-                  textAlign: TextAlign.left),
+              const SizedBox(height: 10.0),
+              // buildEditableField("First Name", _firstNameController,
+              //     maxLength: 50, textAlign: TextAlign.left),
+              // buildEditableField("Last Name", _lastNameController,
+              //     maxLength: 50, textAlign: TextAlign.left),
+              // buildEditableField("About Me", _aboutMeController,
+              //     maxLines: 6, textAlign: TextAlign.left),
+              // buildEditableField("Email", _emailController,
+              //     maxLength: 50, textAlign: TextAlign.left),
+              // buildEditableField("Phone", _phoneController,
+              //     textAlign: TextAlign.left),
+              // buildEditableField("Location", _locationController,
+              //     textAlign: TextAlign.left),
+              Padding (
+                padding: const EdgeInsets.all(16.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      const SizedBox(height: 20),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30.0),
+                          color: Colors.grey[200],
+                        ),
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            labelText: 'First Name',
+                            contentPadding:
+                            EdgeInsets.symmetric(horizontal: 20),
+                            border: InputBorder.none,
+                          ),
+                          onChanged: (val) {
+                            setState(() => fname = val);
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30.0),
+                          color: Colors.grey[200],
+                        ),
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            labelText: 'Last Name',
+                            contentPadding:
+                            EdgeInsets.symmetric(horizontal: 20),
+                            border: InputBorder.none,
+                          ),
+                          onChanged: (val) {
+                            setState(() => lname = val);
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30.0),
+                          color: Colors.grey[200],
+                        ),
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            labelText: 'About Me',
+                            contentPadding:
+                            EdgeInsets.symmetric(horizontal: 20),
+                            border: InputBorder.none,
+                          ),
+                          onChanged: (val) {
+                            setState(() => aboutMe = val);
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30.0),
+                          color: Colors.grey[200],
+                        ),
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            labelText: 'Email',
+                            contentPadding:
+                            EdgeInsets.symmetric(horizontal: 20),
+                            border: InputBorder.none,
+                          ),
+                          onChanged: (val) {
+                            setState(() => email = val);
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30.0),
+                          color: Colors.grey[200],
+                        ),
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            labelText: 'Phone',
+                            contentPadding:
+                            EdgeInsets.symmetric(horizontal: 20),
+                            border: InputBorder.none,
+                          ),
+                          onChanged: (val) {
+                            setState(() => phoneNum = val);
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30.0),
+                          color: Colors.grey[200],
+                        ),
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            labelText: 'Last Name',
+                            contentPadding:
+                            EdgeInsets.symmetric(horizontal: 20),
+                            border: InputBorder.none,
+                          ),
+                          onChanged: (val) {
+                            setState(() => lname = val);
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30.0),
+                          color: Colors.grey[200],
+                        ),
+                        child: TextFormField(
+                          decoration: const InputDecoration(
+                            labelText: 'Location',
+                            contentPadding:
+                            EdgeInsets.symmetric(horizontal: 20),
+                            border: InputBorder.none,
+                          ),
+                          onChanged: (val) {
+                            setState(() => location = val);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               SizedBox(height: 50.0),
               SizedBox(
                 height: 50,
                 width: 300,
                 child: ElevatedButton(
                   onPressed: () async {
-                    await saveUserDataToFirestore();
+                    if (_formKey.currentState!.validate()) {
+                      print(fname + lname + aboutMe + email + phoneNum + location);
+                      // dynamic result = await _auth
+                      //     .updateProfileData(
+                      //     fname, lname ,aboutMe, email, phoneNum , location);
+                      // if (result == null) {
+                      //   //setState(() => error = 'please god');
+                      // }
+                    }
                   },
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(Color(0xFFFDD835)),
+                    MaterialStateProperty.all<Color>(Color(0xFFFDD835)),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
@@ -160,46 +294,46 @@ class _ProfileEditPState extends State<ProfileEditP> {
     );
   }
 
-  Widget buildEditableField(String label, TextEditingController controller,
-      {int maxLines = 1,
-      TextAlign textAlign = TextAlign.left,
-      int maxLength = 160}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-          ),
-          SizedBox(width: 10),
-          Container(
-            width: 280,
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(12),
-            ),
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: TextFormField(
-              controller: controller,
-              maxLines: maxLines,
-              textAlign: textAlign,
-              maxLength: maxLength,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Enter your $label',
-                fillColor: Colors.grey[200],
-                hintStyle: TextStyle(fontSize: 14.0),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+// Widget buildEditableField(String label, TextEditingController controller,
+//     {int maxLines = 1,
+//       TextAlign textAlign = TextAlign.left,
+//       int maxLength = 160}) {
+//   return Padding(
+//     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+//     child: Row(
+//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//       children: [
+//         Text(
+//           label,
+//           style: TextStyle(
+//             fontSize: 16.0,
+//             fontWeight: FontWeight.bold,
+//             color: Colors.black,
+//           ),
+//         ),
+//         SizedBox(width: 10),
+//         Container(
+//           width: 280,
+//           decoration: BoxDecoration(
+//             color: Colors.grey[200],
+//             borderRadius: BorderRadius.circular(12),
+//           ),
+//           padding: EdgeInsets.symmetric(horizontal: 16),
+//           child: TextFormField(
+//             controller: controller,
+//             maxLines: maxLines,
+//             textAlign: textAlign,
+//             maxLength: maxLength,
+//             decoration: InputDecoration(
+//               border: InputBorder.none,
+//               hintText: 'Enter your $label',
+//               fillColor: Colors.grey[200],
+//               hintStyle: TextStyle(fontSize: 14.0),
+//             ),
+//           ),
+//         ),
+//       ],
+//     ),
+//   );
+// }
 }

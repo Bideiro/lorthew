@@ -162,33 +162,39 @@ class _RegisterScreenForPupilState extends State<RegisterInfoPupil> {
                                     print(email + pass + lname + fname);
                                     dynamic result = await _auth
                                         .registerWithEmailAndPassword(
-                                            email, pass,fname,lname);
+                                            email, pass, fname, lname);
                                     if (result == null) {
                                       setState(() => error = 'please god');
+                                    } else {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => Authenticate(),
+                                        ),
+                                      );
                                     }
                                   }
                                 },
                               ),
                               const SizedBox(height: 20),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Authenticate(),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Authenticate(),
+                                    ),
+                                  );
+                                },
+                                style: TextButton.styleFrom(
+                                  foregroundColor:
+                                      const Color.fromRGBO(16, 48, 89, 1),
+                                ),
+                                child: const Text(
+                                  'Already have an account? Click here to Login',
+                                  style: TextStyle(fontFamily: 'Bebas'),
+                                ),
                               ),
-                            );
-                          },
-                          style: TextButton.styleFrom(
-                            foregroundColor:
-                                const Color.fromRGBO(16, 48, 89, 1),
-                          ),
-                          child: const Text(
-                            'Already have an account? Click here to Login',
-                            style: TextStyle(fontFamily: 'Bebas'),
-                          ),
-                        ),
-
                             ],
                           )),
                     )),

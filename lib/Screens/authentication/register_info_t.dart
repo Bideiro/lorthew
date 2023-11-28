@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:lorthew/Screens/authentication/authenticate.dart';
 import 'package:lorthew/services/auth.dart';
+
 class RegisterInfoTutor extends StatefulWidget {
   const RegisterInfoTutor({super.key});
 
@@ -160,32 +161,39 @@ class _RegisterInfoTutorState extends State<RegisterInfoTutor> {
                                     print(email + pass + lname + fname);
                                     dynamic result = await _auth
                                         .registerWithEmailAndPassword(
-                                            email, pass,fname,lname);
+                                            email, pass, fname, lname);
                                     if (result == null) {
                                       setState(() => error = 'please god');
+                                    } else {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => Authenticate(),
+                                        ),
+                                      );
                                     }
                                   }
                                 },
                               ),
                               const SizedBox(height: 20),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>  Authenticate(),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Authenticate(),
+                                    ),
+                                  );
+                                },
+                                style: TextButton.styleFrom(
+                                  foregroundColor:
+                                      const Color.fromRGBO(16, 48, 89, 1),
+                                ),
+                                child: const Text(
+                                  'Already have an account? Click here to Login',
+                                  style: TextStyle(fontFamily: 'Bebas'),
+                                ),
                               ),
-                            );
-                          },
-                          style: TextButton.styleFrom(
-                            foregroundColor:
-                                const Color.fromRGBO(16, 48, 89, 1),
-                          ),
-                          child: const Text(
-                            'Already have an account? Click here to Login',
-                            style: TextStyle(fontFamily: 'Bebas'),
-                          ),
-                        ),
                             ],
                           )),
                     )),

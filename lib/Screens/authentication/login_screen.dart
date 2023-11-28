@@ -21,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   String email = '';
   String pass = '';
-  String error = 'asdasdasdsa';
+  String error = '';
 
   @override
   Widget build(BuildContext context) {
