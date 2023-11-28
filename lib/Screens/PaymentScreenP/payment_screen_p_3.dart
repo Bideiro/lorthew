@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lorthew/Screens/PaymentScreenP/payment_history_t.dart';
 
+
 class PaymentScreenP3 extends StatelessWidget {
   final String amountPaid;
   final String referenceNumber;
@@ -58,7 +59,7 @@ class PaymentScreenP3 extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 50.0,
                         fontWeight: FontWeight.bold,
-                        fontFamily: 'Bebas',
+                        fontFamily: 'Roboto',
                         color: Color.fromRGBO(16, 48, 89, 1),
                       ),
                     ),
