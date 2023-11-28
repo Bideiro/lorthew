@@ -134,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    filteredUsers = List.from(users); // Initialize with the full list of users
+    filteredUsers = List.from(users);
   }
 
   @override
@@ -190,7 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             onTap: () {
                               setState(() {
                                 selectedUser = user;
-                                filteredUsers = [user]; // Show only the selected user
+                                filteredUsers = [user];
                                 controller.closeView(user.name);
                               });
                             },
@@ -198,10 +198,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         });
                       },
                     ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.filter_list),
-                    onPressed: () {},
                   ),
                 ],
               ),
