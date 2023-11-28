@@ -161,7 +161,7 @@ class _RegisterScreenForPupilState extends State<RegisterInfoPupil> {
                                   if (_formKey.currentState!.validate()) {
                                     print(email + pass + lname + fname);
                                     dynamic result = await _auth
-                                        .registerWithEmailAndPassword(
+                                        .registerPupil(
                                             email, pass, fname, lname);
                                     if (result == null) {
                                       setState(() => error = 'please god');

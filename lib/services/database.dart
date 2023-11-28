@@ -7,18 +7,41 @@ class DatabaseService {
   DatabaseService({this.uid}); //yung required dito
 //collection reference
 
-  final CollectionReference userdataCollection =
-      FirebaseFirestore.instance.collection('UData');
+  final CollectionReference pupilUserdataCollection =
+      FirebaseFirestore.instance.collection('PuData');
 
-  Future updateUserData(String fname, String lname) async {
-    return await userdataCollection
+        final CollectionReference pupilPserdataCollection =
+      FirebaseFirestore.instance.collection('TuData');
+  //initial pupil data
+  Future initPUserData(String fname, String lname) async {
+    return await pupilUserdataCollection
         .doc(uid)
         .set({'fname': fname, 'lname': lname});
   }
-
-  Future updateProfileData(String fname, String lname, String aboutMe,
+  // initial tutor data
+  Future initTUserData(String fname, String lname) async {
+    return await pupilUserdataCollection
+        .doc(uid)
+        .set({'fname': fname, 'lname': lname});
+  }
+  //changing main user data for pupil
+  Future updatePUserData(String fname, String lname, String aboutMe,
       String email, String phoneNum, String location) async {
-    return await userdataCollection.doc(uid).set({
+    return await pupilUserdataCollection.doc(uid).set({
+      'fname': fname,
+      'lname': lname,
+      'aboutMe': aboutMe,
+      'email': email,
+      'phoneNum': phoneNum,
+      'location': location,
+    });
+  }
+
+  
+//changing main user data for pupil
+  Future updateTUserData(String fname, String lname, String aboutMe,
+      String email, String phoneNum, String location) async {
+    return await pupilUserdataCollection.doc(uid).set({
       'fname': fname,
       'lname': lname,
       'aboutMe': aboutMe,
@@ -40,6 +63,6 @@ class DatabaseService {
 // get UData stream
 
   Stream<List<Userinfo>?> get UData {
-    return userdataCollection.snapshots().map(_udataFromSnapshot);
+    return pupilUserdataCollection.snapshots().map(_udataFromSnapshot);
   }
 }

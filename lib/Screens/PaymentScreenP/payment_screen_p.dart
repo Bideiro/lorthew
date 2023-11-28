@@ -1,14 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'all.dart';
-
-/*
-TODO:
-1. Hiwalay ang hover to another dart file
-2. Find a better way to improve visibility sa list
-3. Better hover animation, current one sucks and feels slow and janky
-*/
-
+import '../../filedependencies/profilescreenpall.dart';
 class PaymentScreenP extends StatefulWidget {
   const PaymentScreenP({super.key});
 

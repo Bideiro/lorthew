@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
-import 'package:lorthew/Screens/all.dart';
 
+import '../../filedependencies/profilescreenpall.dart';
 class PaymentScreenP2 extends StatelessWidget {
   final String tutorName;
 

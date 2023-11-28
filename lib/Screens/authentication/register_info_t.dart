@@ -35,7 +35,7 @@ class _RegisterInfoTutorState extends State<RegisterInfoTutor> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const Text(
-                  'Lorthew Registration for Pupil',
+                  'Lorthew Registration for Tutor',
                   style: TextStyle(
                     fontFamily: 'Bebas',
                     fontSize: 40,
@@ -160,7 +160,7 @@ class _RegisterInfoTutorState extends State<RegisterInfoTutor> {
                                   if (_formKey.currentState!.validate()) {
                                     print(email + pass + lname + fname);
                                     dynamic result = await _auth
-                                        .registerWithEmailAndPassword(
+                                        .registerTutor(
                                             email, pass, fname, lname);
                                     if (result == null) {
                                       setState(() => error = 'please god');

@@ -59,7 +59,7 @@ class ProfileStudent extends StatelessWidget {
               decoration: const BoxDecoration(
                 color: Color.fromARGB(44, 132, 157, 188),
                 shape: BoxShape.circle,
-                image: DecorationImage(image:NetworkImage('Usericon')),
+                image: DecorationImage(image: NetworkImage('Usericon')),
               ),
               child: IconButton(
                 iconSize: 100,
