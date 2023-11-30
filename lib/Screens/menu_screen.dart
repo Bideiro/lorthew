@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
+import 'dart:math' as math;
 
 import 'all.dart';
 import 'profile_page_p.dart';
@@ -105,6 +106,42 @@ class _MenuScreenState extends State<MenuScreen> {
   }
 }
 
+class MyArc extends StatelessWidget {
+  final double diameter;
+
+  const MyArc({Key? key, this.diameter = 200}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+      painter: MyPainter(),
+      size: Size(diameter, diameter),
+    );
+  }
+}
+
+class MyPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint paint = Paint()..color = (const Color(0xFF4FC3F7));
+    canvas.drawArc(
+      Rect.fromCenter(
+        center: Offset(size.width / 2, 0),
+        height: size.height * 1.5,
+        width: size.width * 3,
+      ),
+      0,
+      math.pi,
+      false,
+      paint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
+}
+
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -117,63 +154,92 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text(
-          'Menu',
-          style: TextStyle(
-              fontFamily: 'Bebas', fontSize: 30, fontWeight: FontWeight.w400),
-        ),
-      ),
-      body: Column(
+      body: Stack(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: SearchAnchor(
-                    builder: (BuildContext context, SearchController controller) {
-                      return SearchBar(
-                        controller: controller,
-                        padding: const MaterialStatePropertyAll<EdgeInsets>(
-                          EdgeInsets.symmetric(horizontal: 16.0),
-                        ),
-                        onTap: () {
-                          controller.openView();
-                        },
-                        onChanged: (_) {
-                          controller.openView();
-                        },
-                        leading: const Icon(Icons.search),
-                      );
-                    },
-                    suggestionsBuilder: (BuildContext context, SearchController controller) {
-                      return List<ListTile>.generate(5, (int index) {
-                        final String item = 'item $index';
-                        return ListTile(
-                          title: Text(item),
-                          onTap: () {
-                            setState(() {
-                              controller.closeView(item);
-                            });
-                          },
-                        );
-                      });
-                    },
+          MyArc(diameter: MediaQuery.of(context).size.width),
+          // Main content
+          Column(
+            children: <Widget>[
+              AppBar(
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                automaticallyImplyLeading: false,
+                title: const Text(
+                  'Menu',
+                  style: TextStyle(
+                    fontFamily: 'Bebas',
+                    fontSize: 30,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
                   ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.filter_list),
-                  onPressed: () {
-
-                  },
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 5.0, right: 150.0),
+                      child: Text(
+                        'Find your best tutor and teacher',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: SearchAnchor(
+                            builder: (BuildContext context, SearchController controller) {
+                              return SearchBar(
+                                controller: controller,
+                                padding: const MaterialStatePropertyAll<EdgeInsets>(
+                                  EdgeInsets.symmetric(horizontal: 16.0),
+                                ),
+                                onTap: () {
+                                  controller.openView();
+                                },
+                                onChanged: (_) {
+                                  controller.openView();
+                                },
+                                leading: const Icon(Icons.search),
+                              );
+                            },
+                            suggestionsBuilder: (BuildContext context, SearchController controller) {
+                              return List<ListTile>.generate(5, (int index) {
+                                final String item = 'item $index';
+                                return ListTile(
+                                  title: Text(item),
+                                  onTap: () {
+                                    setState(() {
+                                      controller.closeView(item);
+                                    });
+                                  },
+                                );
+                              });
+                            },
+                          ),
+                        ),
+                        // IconButton(
+                        //   icon: const Icon(Icons.filter_list),
+                        //   onPressed: () {
+                        //     // Add your filter button functionality here
+                        //   },
+                        // ),
+                      ],
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: _buildUserList(),
+              ),
+              Expanded(
+                child: _buildUserList(),
+              ),
+            ],
           ),
         ],
       ),
@@ -213,10 +279,22 @@ class _HomeScreenState extends State<HomeScreen> {
       if (rfullname.isNotEmpty && remail.isNotEmpty) {
         return ListTile(
           leading: CircleAvatar(
+            radius: 30.0,
             child: Text(rfullname[0].toUpperCase()),
           ),
-          title: Text(rfullname),
-          subtitle: Text(remail),
+          title: Text(
+            toTitleCase(rfullname),
+            style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          subtitle: Text(
+              remail,
+            style: TextStyle(
+              fontSize: 12.0,
+            ),
+          ),
           onTap: () {
             //Tutor page
             Navigator.push(
@@ -242,4 +320,15 @@ class _HomeScreenState extends State<HomeScreen> {
       return Container();
     }
   }
+
+  String toTitleCase(String text) {
+    return text.toLowerCase().split(' ').map((word) {
+      if (word.isNotEmpty) {
+        return word[0].toUpperCase() + word.substring(1);
+      } else {
+        return '';
+      }
+    }).join(' ');
+  }
+
 }
