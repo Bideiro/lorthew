@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:lorthew/services/auth.dart';
 import 'package:provider/provider.dart';
 
 import '../../loading.dart';
@@ -10,13 +9,14 @@ import '../../models/userinf.dart';
 import '../../services/database.dart';
 
 class ProfileEditP extends StatefulWidget {
+  const ProfileEditP({super.key});
+
   @override
-  _ProfileEditPState createState() => _ProfileEditPState();
+  State<ProfileEditP> createState() => _ProfileEditPState();
 }
 
 class _ProfileEditPState extends State<ProfileEditP> {
   final _formKey = GlobalKey<FormState>();
-  final AuthService _auth = AuthService();
 
   String fname = '';
   String lname = '';
@@ -63,7 +63,7 @@ class _ProfileEditPState extends State<ProfileEditP> {
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    SizedBox(width: 75.0),
+                    const SizedBox(width: 75.0),
                   ],
                 ),
                 toolbarHeight: 80.0,
@@ -101,11 +101,11 @@ class _ProfileEditPState extends State<ProfileEditP> {
                               const SizedBox(height: 20),
                               Row(
                                 children: [
-                                  Expanded(
+                                  const Expanded(
                                     flex: 2,
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 5),
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 5),
                                       child: Text(
                                         'First Name',
                                         style: TextStyle(
@@ -125,10 +125,9 @@ class _ProfileEditPState extends State<ProfileEditP> {
                                       ),
                                       child: TextFormField(
                                         initialValue: userData!.fname,
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           border: InputBorder.none,
-                                          contentPadding:
-                                              const EdgeInsets.all(12.0),
+                                          contentPadding: EdgeInsets.all(12.0),
                                         ),
                                         onChanged: (val) {
                                           setState(() => fname = val);
@@ -142,11 +141,11 @@ class _ProfileEditPState extends State<ProfileEditP> {
                               const SizedBox(height: 20),
                               Row(
                                 children: [
-                                  Expanded(
+                                  const Expanded(
                                     flex: 2,
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 5),
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 5),
                                       child: Text(
                                         'Last Name',
                                         style: TextStyle(
@@ -165,11 +164,11 @@ class _ProfileEditPState extends State<ProfileEditP> {
                                         color: Colors.grey[200],
                                       ),
                                       child: TextFormField(
-                                        initialValue: userData!.lname,
-                                        decoration: InputDecoration(
+                                        initialValue: userData.lname,
+                                        decoration: const InputDecoration(
                                           border: InputBorder.none,
                                           contentPadding:
-                                              const EdgeInsets.all(12.0),
+                                              EdgeInsets.all(12.0),
                                         ),
                                         onChanged: (val) {
                                           setState(() => lname = val);
@@ -183,10 +182,10 @@ class _ProfileEditPState extends State<ProfileEditP> {
                               const SizedBox(height: 20),
                               Row(
                                 children: [
-                                  Expanded(
+                                  const Expanded(
                                     flex: 2,
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(
+                                      padding: EdgeInsets.symmetric(
                                           horizontal: 5),
                                       child: Text(
                                         'About Me',
@@ -206,11 +205,11 @@ class _ProfileEditPState extends State<ProfileEditP> {
                                         color: Colors.grey[200],
                                       ),
                                       child: TextFormField(
-                                        initialValue: userData!.abtme,
-                                        decoration: InputDecoration(
+                                        initialValue: userData.abtme,
+                                        decoration: const InputDecoration(
                                           border: InputBorder.none,
                                           contentPadding:
-                                              const EdgeInsets.all(12.0),
+                                              EdgeInsets.all(12.0),
                                         ),
                                         onChanged: (val) {
                                           setState(() => abtme = val);
@@ -225,10 +224,10 @@ class _ProfileEditPState extends State<ProfileEditP> {
                               const SizedBox(height: 20),
                               Row(
                                 children: [
-                                  Expanded(
+                                  const Expanded(
                                     flex: 2,
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(
+                                      padding: EdgeInsets.symmetric(
                                           horizontal: 5),
                                       child: Text(
                                         'Mobile Number',
@@ -248,11 +247,11 @@ class _ProfileEditPState extends State<ProfileEditP> {
                                         color: Colors.grey[200],
                                       ),
                                       child: TextFormField(
-                                        initialValue: userData!.phono,
-                                        decoration: InputDecoration(
+                                        initialValue: userData.phono,
+                                        decoration: const InputDecoration(
                                           border: InputBorder.none,
                                           contentPadding:
-                                              const EdgeInsets.all(12.0),
+                                              EdgeInsets.all(12.0),
                                           prefixText: '+63 9',
                                         ),
                                         onChanged: (val) {
@@ -273,10 +272,10 @@ class _ProfileEditPState extends State<ProfileEditP> {
                               const SizedBox(height: 20),
                               Row(
                                 children: [
-                                  Expanded(
+                                  const Expanded(
                                     flex: 2,
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(
+                                      padding: EdgeInsets.symmetric(
                                           horizontal: 5),
                                       child: Text(
                                         'Location',
@@ -296,11 +295,11 @@ class _ProfileEditPState extends State<ProfileEditP> {
                                         color: Colors.grey[200],
                                       ),
                                       child: TextFormField(
-                                        initialValue: userData!.loc,
-                                        decoration: InputDecoration(
+                                        initialValue: userData.loc,
+                                        decoration:const InputDecoration(
                                           border: InputBorder.none,
                                           contentPadding:
-                                              const EdgeInsets.all(12.0),
+                                              EdgeInsets.all(12.0),
                                         ),
                                         onChanged: (val) {
                                           setState(() => loc = val);
@@ -315,7 +314,7 @@ class _ProfileEditPState extends State<ProfileEditP> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 50.0),
+                      const SizedBox(height: 50.0),
                       SizedBox(
                         height: 50,
                         width: 300,
@@ -324,12 +323,12 @@ class _ProfileEditPState extends State<ProfileEditP> {
                             if (_formKey.currentState!.validate()) {
                               await DatabaseService(uid: user!.uid)
                                   .updatePUserData(
-                                fname.isEmpty ? userData!.fname : fname,
-                                lname.isEmpty ? userData!.lname : lname,
-                                abtme.isEmpty ? userData!.abtme : abtme,
-                                email.isEmpty ? userData!.email : email,
-                                phono.isEmpty ? userData!.phono : phono,
-                                loc.isEmpty ? userData!.loc : loc,
+                                fname.isEmpty ? userData.fname : fname,
+                                lname.isEmpty ? userData.lname : lname,
+                                abtme.isEmpty ? userData.abtme : abtme,
+                                email.isEmpty ? userData.email : email,
+                                phono.isEmpty ? userData.phono : phono,
+                                loc.isEmpty ? userData.loc : loc,
                               );
 
                               print('User data updated successfully');
@@ -340,7 +339,7 @@ class _ProfileEditPState extends State<ProfileEditP> {
                           },
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
-                                Color(0xFFFDD835)),
+                                const Color(0xFFFDD835)),
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(
                               RoundedRectangleBorder(

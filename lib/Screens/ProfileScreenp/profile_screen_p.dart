@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lorthew/Screens/ProfileScreenp/dynamic_profilescreenp.dart';
 import 'package:lorthew/Screens/all.dart';
 import 'package:provider/provider.dart';
 
@@ -69,21 +68,21 @@ class ProfileScreenP extends StatelessWidget {
                       radius: 50.0,
                       child: Text(
                           userData!.fname[0].toUpperCase(),
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 50.0
                         ),
                       ),
                     ),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     Text(
-                      userData!.fname+ ' ' +userData!.lname,
-                      style: TextStyle(
+                      '${userData.fname} ${userData.lname}',
+                      style: const TextStyle(
                         fontSize: 24.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 20.0),
-                    Text(
+                    const SizedBox(height: 20.0),
+                    const Text(
                       'About Me',
                       style: TextStyle(
                         fontSize: 20.0,
@@ -91,17 +90,17 @@ class ProfileScreenP extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.all(20.0),
                       child: Text(
-                        userData!.abtme,
+                        userData.abtme,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16.0,
                         ),
                       ),
                     ),
-                    Divider(),
-                    dynamicprofilescreenp(),
+                    const Divider(),
+                    // dynamicprofilescreenp(),
                     SizedBox(height: 20.0),
                     Text(
                       'Contact Information',
@@ -113,17 +112,17 @@ class ProfileScreenP extends StatelessWidget {
                     SizedBox(height: 10.0),
                     ListTile(
                       leading: Icon(Icons.email),
-                      title: Text('Email: ${userData!.email}'),
+                      title: Text('Email: ${userData.email}'),
                     ),
                     Divider(),
                     ListTile(
                       leading: Icon(Icons.phone),
-                      title: Text('Phone: +63 9${userData!.phono}'),
+                      title: Text('Phone: +63 9${userData.phono}'),
                     ),
                     Divider(),
                     ListTile(
                       leading: Icon(Icons.location_on),
-                      title: Text('Location: ${userData!.loc}'),
+                      title: Text('Location: ${userData.loc}'),
                     ),
                   ],
                 ),

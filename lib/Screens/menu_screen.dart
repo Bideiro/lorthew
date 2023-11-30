@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
-import 'Profile_page_p.dart';
 import 'all.dart';
+import 'profile_page_p.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
