@@ -22,7 +22,7 @@ class _ScheduleEditTState extends State<ScheduleEditT> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Pay Tutor',
+          'Edit Schedule',
           style: TextStyle(
             fontFamily: 'Bebas',
             fontSize: 30,

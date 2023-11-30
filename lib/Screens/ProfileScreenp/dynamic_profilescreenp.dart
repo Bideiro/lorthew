@@ -13,12 +13,12 @@ class dynamicprofilescreenp extends StatefulWidget {
 class _dynamicprofilescreenpState extends State<dynamicprofilescreenp> {
   @override
   Widget build(BuildContext context) {
-    final uData = Provider.of<List<pupilUserinfo>?>(context);
+    final uData = Provider.of<List<PupilUserinfo>?>(context);
 
-    uData?.forEach((pupilUserinfo) {
-      print(pupilUserinfo.fname);
-      print(pupilUserinfo.lname);
-      print(pupilUserinfo.email);
+    uData?.forEach((PupilUserinfo) {
+      print(PupilUserinfo.fname);
+      print(PupilUserinfo.lname);
+      print(PupilUserinfo.email);
     });
     return  Container();
   }

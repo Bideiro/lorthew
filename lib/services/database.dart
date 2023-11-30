@@ -70,8 +70,8 @@ class DatabaseService {
 
 //user data from snpashot
 
-  pupilUserinfo _pupiluDataFromSnapshot(DocumentSnapshot snapshot) {
-    return pupilUserinfo(
+  PupilUserinfo _pupiluDataFromSnapshot(DocumentSnapshot snapshot) {
+    return PupilUserinfo(
       uid: uid,
       fname: snapshot.get('fname'),
       lname: snapshot.get('lname'),
@@ -83,7 +83,7 @@ class DatabaseService {
   }
 
 // get pupil data stream
-  Stream<pupilUserinfo?> get PuDatadoc {
+  Stream<PupilUserinfo?> get PuDatadoc {
     return userdataCollection.doc(uid).snapshots().map(_pupiluDataFromSnapshot);
   }
 

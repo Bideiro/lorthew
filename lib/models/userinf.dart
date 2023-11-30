@@ -6,7 +6,7 @@
 
 // }
 
-class pupilUserinfo {
+class PupilUserinfo {
   final String? uid;
   final String fname;
   final String lname;
@@ -15,7 +15,7 @@ class pupilUserinfo {
   final String phono;
   final String loc;
 
-  pupilUserinfo({
+  PupilUserinfo({
     required this.uid,
     required this.fname,
     required this.lname,
@@ -26,15 +26,16 @@ class pupilUserinfo {
   });
 }
 
-class tutorUserinfo {
+class TutorUserinfo {
   final String fname;
   final String lname;
   final String abtme;
   final String email;
   final String phono;
   final String loc;
+  // final String 
 
-  tutorUserinfo({
+  TutorUserinfo({
     required this.fname,
     required this.lname,
     required this.abtme,

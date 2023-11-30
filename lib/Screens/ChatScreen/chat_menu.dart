@@ -103,7 +103,7 @@ class _ChatMenuState extends State<ChatMenu> {
   Widget _buildUserListItem(DocumentSnapshot document) {
     Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
 
-    if (_auth.currentUser!.email != data['email']) {
+    if (_auth.currentUser!.uid != data['uid']) {
       String rfullname = data['fname'] + ' ' + data['lname'];
       String remail = data['email'];
 

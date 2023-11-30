@@ -1,4 +1,3 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:line_icons/line_icons.dart';
@@ -6,7 +5,6 @@ import 'package:lorthew/services/auth.dart';
 import 'package:provider/provider.dart';
 
 import '../../loading.dart';
-import '../../models/allowedDomains.dart';
 import '../../models/cuser.dart';
 import '../../models/userinf.dart';
 import '../../services/database.dart';
@@ -30,11 +28,11 @@ class _ProfileEditPState extends State<ProfileEditP> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<cUser?>(context);
-    return StreamBuilder<pupilUserinfo?>(
+    return StreamBuilder<PupilUserinfo?>(
         stream: DatabaseService(uid: user?.uid).PuDatadoc,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            pupilUserinfo? userData = snapshot.data;
+            PupilUserinfo? userData = snapshot.data;
 
             return Scaffold(
               appBar: AppBar(
@@ -219,66 +217,6 @@ class _ProfileEditPState extends State<ProfileEditP> {
                                         },
                                         maxLength: 160,
                                         maxLines: 5,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 20),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    flex: 2,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 5),
-                                      child: Text(
-                                        'Email',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 5,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                        color: Colors.grey[200],
-                                      ),
-                                      child: TextFormField(
-                                        initialValue: userData!.email,
-                                        decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          contentPadding:
-                                              const EdgeInsets.all(12.0),
-                                        ),
-                                        validator: (email) {
-                                          if (email == null || email.isEmpty) {
-                                            return 'Enter an email address';
-                                          } else if (!EmailValidator.validate(
-                                              email)) {
-                                            return 'Enter a valid email address';
-                                          } else {
-                                            String domain = email
-                                                .split('@')
-                                                .last
-                                                .toLowerCase();
-                                            if (!allowedDomains.any(
-                                                (allowedDomain) => domain
-                                                    .endsWith(allowedDomain))) {
-                                              return 'Enter a valid email address with an allowed domain';
-                                            }
-                                          }
-                                          return null;
-                                        },
-                                        onChanged: (val) {
-                                          setState(() => email = val);
-                                        },
-                                        maxLength: 50,
                                       ),
                                     ),
                                   ),

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
+import 'Profile_page_p.dart';
 import 'all.dart';
-import 'menu_page.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -194,20 +194,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
         return ListView(
           children: snapshot.data!.docs
-              .map<Widget>((doc) => _buildUserListItem(doc))
+              .map<Widget>((doc) => _buildTutorList(doc))
               .toList(),
         );
       },
     );
   }
-
-  Widget _buildUserListItem(DocumentSnapshot document) {
+  // Main menu list
+  Widget _buildTutorList(DocumentSnapshot document) {
     Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
 
+    //getting non current user data
     if (_auth.currentUser!.email != data['email']) {
       String rfullname = data['fname'] + ' ' + data['lname'];
       String remail = data['email'];
 
+      //displaying non current user data
       if (rfullname.isNotEmpty && remail.isNotEmpty) {
         return ListTile(
           leading: CircleAvatar(
@@ -216,13 +218,18 @@ class _HomeScreenState extends State<HomeScreen> {
           title: Text(rfullname),
           subtitle: Text(remail),
           onTap: () {
+            //Tutor page
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => MenuPage(
-                  receiverfullname: rfullname,
-                  receiverUserEmail: remail,
-                  receiverUserID: data['uid'],
+                builder: (context) => TutorPage(
+                  lname: data['lname'],
+                  fname: data['fname'],
+                  abtme: data['abtme'],
+                  email: data['email'],
+                  phono: data['phono'],
+                  loc: data['loc'],
+                  uid: data['uid'],
                 ),
               ),
             );

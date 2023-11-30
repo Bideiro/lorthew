@@ -1,37 +1,31 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:lorthew/services/chat_service.dart';
+import 'package:lorthew/services/profile_service.dart';
 
-class MenuPage extends StatefulWidget {
-  final String receiverUserEmail;
-  final String receiverUserID;
-  final String receiverfullname;
-  const MenuPage(
+class TutorPage extends StatefulWidget {
+  final String fname;
+  final String lname;
+  final String abtme;
+  final String email;
+  final String phono;
+  final String loc;
+  final String uid;
+  const TutorPage(
       {super.key,
-        required this.receiverUserEmail,
-        required this.receiverUserID,
-        required this.receiverfullname});
+        required this.fname,
+        required this.lname,
+        required this.abtme,
+        required this.email,
+        required this.phono,
+        required this.loc,
+        required this.uid});
 
   @override
-  State<MenuPage> createState() => _MenuPageState();
+  State<TutorPage> createState() => _TutorPageState();
 }
 
-class _MenuPageState extends State<MenuPage> {
-  final TextEditingController _messageController = TextEditingController();
-  final ChatService _chatService = ChatService();
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final FocusNode _focusNode = FocusNode();
-
-  void sendMessage() async {
-    String trimmedMessage = _messageController.text.trim();
-    if (trimmedMessage.isNotEmpty) {
-      await _chatService.sendMessage(widget.receiverUserID, trimmedMessage,widget.receiverfullname);
-      _messageController.clear();
-    }
-  }
+class _TutorPageState extends State<TutorPage> {
 
   @override
   Widget build(BuildContext context) {
@@ -40,23 +34,21 @@ class _MenuPageState extends State<MenuPage> {
         FocusScope.of(context).requestFocus(FocusNode());
       },
       child: Scaffold(
-        appBar: AppBar(title: Text(widget.receiverfullname)),
+        appBar: AppBar(title: Text(widget.lname)),
         body: Column(
           children: [
             Expanded(
-              child: _buildMessageList(),
+              child: _buildProfileView(),
             ),
-            _buildMessageInput(),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildMessageList() {
-    return StreamBuilder(
-      stream: _chatService.getMessages(
-          widget.receiverUserID, _firebaseAuth.currentUser!.uid),
+  Widget _buildProfileView() {
+    return StreamBuilder<DocumentSnapshot>(
+      stream: ProfileService().PuDatadoc,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text('Error' + snapshot.error.toString());
@@ -65,7 +57,6 @@ class _MenuPageState extends State<MenuPage> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
         }
-        List reversedMessages = List.from(snapshot.data!.docs.reversed);
         return Scaffold(
       body: Center(
         child: Column(
@@ -77,7 +68,7 @@ class _MenuPageState extends State<MenuPage> {
             ),
             SizedBox(height: 10.0),
             Text(
-              'test',
+              widget.fname + widget.lname,
               style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
@@ -143,35 +134,35 @@ class _MenuPageState extends State<MenuPage> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
-                'I am a passionate software developer with a keen interest in mobile application development.',
+                widget.abtme,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16.0,
                 ),
               ),
             ),
-            SizedBox(height: 15.0),
-            Text(
+            const SizedBox(height: 15.0),
+            const Text(
               'Contact Information',
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
             ListTile(
-              leading: Icon(Icons.email),
-              title: Text('Email: john.doe@example.com'),
+              leading: const Icon(Icons.email),
+              title: Text('Email: ' + widget.email),
             ),
             ListTile(
-              leading: Icon(Icons.phone),
-              title: Text('Phone: +1234567890'),
+              leading: const Icon(Icons.phone),
+              title: Text('Phone: +36 9' +  widget.phono),
             ),
             ListTile(
               leading: Icon(Icons.location_on),
-              title: Text('Location: City, Country'),
+              title: Text('Location: ' + widget.loc),
             ),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
             SizedBox(
               height: 50,
               width: 300,
@@ -188,7 +179,7 @@ class _MenuPageState extends State<MenuPage> {
                     ),
                   ),
                 ),
-                child: Center(
+                child: const Center(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -206,7 +197,7 @@ class _MenuPageState extends State<MenuPage> {
                 ),
               ),
             ),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
             Align(
               alignment: Alignment.bottomLeft,
               child: Padding(
@@ -215,7 +206,7 @@ class _MenuPageState extends State<MenuPage> {
                   children: <Widget>[
                     TextButton(
                       onPressed: () {},
-                      child: Text(
+                      child: const Text(
                         "Call",
                         style: TextStyle(
                           color: Colors.blue,
@@ -225,7 +216,7 @@ class _MenuPageState extends State<MenuPage> {
                     ),
                     TextButton(
                       onPressed: () {},
-                      child: Text(
+                      child: const Text(
                         "Message",
                         style: TextStyle(
                           color: Colors.blue,
@@ -244,75 +235,4 @@ class _MenuPageState extends State<MenuPage> {
       },
     );
   }
-
-
-  Widget _buildMessageItem(DocumentSnapshot document) {
-    Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-
-    var isCurrentUser = (data['senderId'] == _firebaseAuth.currentUser!.uid);
-    var alignment = isCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start;
-    var backgroundColor = isCurrentUser ? Colors.blue : Colors.grey[200];
-    var textColor = isCurrentUser ? Colors.white : Colors.black;
-
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: alignment,
-        children: [
-          Container(
-            constraints: BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width * 0.75,
-            ),
-            padding: EdgeInsets.all(8.0),
-            decoration: BoxDecoration(
-              color: backgroundColor,
-              borderRadius: BorderRadius.only(
-                topLeft: isCurrentUser ? Radius.circular(12.0) : Radius.circular(0.0),
-                topRight: isCurrentUser ? Radius.circular(0.0) : Radius.circular(12.0),
-                bottomLeft: Radius.circular(12.0),
-                bottomRight: Radius.circular(12.0),
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Text(
-                //   data['senderEmail'],
-                //   style: TextStyle(
-                //     fontWeight: FontWeight.bold,
-                //     color: textColor,
-                //   ),
-                // ),
-                SizedBox(height: 4.0),
-                Text(
-                  data['message'],
-                  style: TextStyle(color: textColor),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 4.0),
-          Text(
-            _formatTimestamp(data['timestamp']),
-            style: TextStyle(fontSize: 12.0, color: Colors.grey),
-          ),
-        ],
-      ),
-    );
-  }
-
-  String _formatTimestamp(Timestamp timestamp) {
-    DateTime dateTime = timestamp.toDate();
-    String formattedTime = DateFormat('h:mm a').format(dateTime);
-    return formattedTime;
-  }
-
-
-  Widget _buildMessageInput() {
-    return Container(
-      padding: EdgeInsets.all(8.0),
-      color: Colors.white,
-    );
-  }
-
 }

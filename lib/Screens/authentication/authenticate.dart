@@ -25,7 +25,7 @@ class _AuthenticateState extends State<Authenticate> {
       return LoginScreen();
       
     } else {
-      print("going to hime");
+      print("going to home");
       return  MenuScreen();
     }
   }

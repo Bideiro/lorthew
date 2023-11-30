@@ -19,11 +19,11 @@ class ProfileScreenP extends StatelessWidget {
     final user = Provider.of<cUser?>(context);
 
     // print("Building Profile Page with User Data: $userData");
-    return StreamBuilder<pupilUserinfo?>(
+    return StreamBuilder<PupilUserinfo?>(
         stream: DatabaseService(uid: user?.uid).PuDatadoc,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            pupilUserinfo? userData = snapshot.data;
+            PupilUserinfo? userData = snapshot.data;
 
             return Scaffold(
               appBar: AppBar(
@@ -118,7 +118,7 @@ class ProfileScreenP extends StatelessWidget {
                     Divider(),
                     ListTile(
                       leading: Icon(Icons.phone),
-                      title: Text('Phone: ${userData!.phono}'),
+                      title: Text('Phone: +63 9${userData!.phono}'),
                     ),
                     Divider(),
                     ListTile(
