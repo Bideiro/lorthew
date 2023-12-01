@@ -14,21 +14,33 @@ bool isNumeric(String? str) {
   return double.tryParse(str) != null;
 }
 
-  String generateReferenceNumber() {
-    Random random = Random();
-    int referenceNumber = random.nextInt(9000000) + 1000000;
-    return referenceNumber.toString();
-  }
-
-
+String generateReferenceNumber() {
+  Random random = Random();
+  int referenceNumber = random.nextInt(9000000) + 1000000;
+  return referenceNumber.toString();
+}
 
 class PaymentScreenP2 extends StatefulWidget {
-  final String tutorName;
-
-  const PaymentScreenP2(this.tutorName, {Key? key}) : super(key: key);
-
+  final String tutorfname;
+  final String tutorlname;
+  final String currfname;
+  final String currlname;
+  final String tutoremail;
+  final String currphono;
+  final String tutorphono;
+  // final String uid;
+  const PaymentScreenP2({
+    super.key,
+    required this.currfname,
+    required this.currlname,
+    required this.tutoremail,
+    required this.currphono,
+    required this.tutorphono,
+    required this.tutorfname,
+    required this.tutorlname,
+  });
   @override
-  _PaymentScreenP2State createState() => _PaymentScreenP2State();
+  State<PaymentScreenP2> createState() => _PaymentScreenP2State();
 }
 
 class _PaymentScreenP2State extends State<PaymentScreenP2> {
@@ -104,7 +116,7 @@ class _PaymentScreenP2State extends State<PaymentScreenP2> {
                         ),
                         const SizedBox(width: 16),
                         Text(
-                          widget.tutorName,
+                          '${widget.tutorfname} ${widget.tutorlname}',
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
@@ -124,36 +136,36 @@ class _PaymentScreenP2State extends State<PaymentScreenP2> {
               ),
               child: Container(
                 padding: const EdgeInsets.all(16.0),
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Client Name:',
+                    const Text(
+                      'Tutor Name: ',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text(
-                      "Client Name",
-                      style: TextStyle(
+                      "${widget.tutorfname} ${widget.currlname}",
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
                     ),
-                    SizedBox(height: 16),
-                    Text(
+                    const SizedBox(height: 16),
+                    const Text(
                       'Mobile Number:',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text(
-                      "mobile number",
-                      style: TextStyle(
+                      "+63 9${widget.currphono}",
+                      style: const  TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
@@ -182,19 +194,19 @@ class _PaymentScreenP2State extends State<PaymentScreenP2> {
                     const SizedBox(height: 8),
                     Row(
                       children: [
-                        Text(
+                        const Text(
                           'Amount:',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
                           ),
                         ),
-                        SizedBox(width: 16),
+                        const SizedBox(width: 16),
                         Expanded(
                           child: TextFormField(
                             controller: amountController,
                             keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: 'Enter amount',
                             ),
                           ),
@@ -247,7 +259,8 @@ class _PaymentScreenP2State extends State<PaymentScreenP2> {
                       onPress: () {
                         String enteredAmount = amountController.text.trim();
 
-                        if (enteredAmount.isEmpty || !isNumeric(enteredAmount)) {
+                        if (enteredAmount.isEmpty ||
+                            !isNumeric(enteredAmount)) {
                           showDialog(
                             context: context,
                             builder: (context) {

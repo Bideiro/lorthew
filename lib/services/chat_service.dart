@@ -47,4 +47,19 @@ class ChatService extends ChangeNotifier {
         .orderBy('timestamp', descending: false)
         .snapshots();
   }
+  
+  Future<bool> hasSentMessage(String userId, String otherUserId) async {
+    List<String> ids = [userId, otherUserId];
+    ids.sort();
+    String chatRoomId = ids.join("_");
+
+    final QuerySnapshot result = await _fireStore
+        .collection('chat_rooms')
+        .doc(chatRoomId)
+        .collection('messages')
+        .limit(1)
+        .get();
+
+    return result.docs.isNotEmpty;
+  }
 }

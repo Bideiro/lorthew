@@ -2,7 +2,6 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:lorthew/services/auth.dart';
 
 import '../../../models/allowedDomains.dart';
 
@@ -14,7 +13,6 @@ class ProfileEditT extends StatefulWidget {
 
 class _ProfileEditTState extends State<ProfileEditT> {
   final _formKey = GlobalKey<FormState>();
-  final AuthService _auth = AuthService();
 
   String fname = '';
   String lname = '';

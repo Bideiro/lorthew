@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:lorthew/services/auth.dart';
 
-import '../../../models/allowedDomains.dart';
+import '../../../../models/allowedDomains.dart';
 
 
 class ProfileEditT extends StatefulWidget {

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lorthew/Screens/PaymentScreenP/payment_history_t.dart';
 import 'package:lorthew/Screens/PaymentScreenP/payment_screen_p_2.dart';
@@ -5,97 +7,17 @@ import 'package:lorthew/Screens/PaymentScreenP/payment_screen_p_2.dart';
 import '../../filedependencies/profilescreenpall.dart';
 
 class PaymentScreenP extends StatefulWidget {
-  const PaymentScreenP({Key? key});
+  const PaymentScreenP({super.key});
 
   @override
   State<PaymentScreenP> createState() => _PaymentScreenState();
 }
 
 class _PaymentScreenState extends State<PaymentScreenP> {
-  final List<String> items = [
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  List<String> items = [
     'John Smith',
     'Alice Johnson',
-    'Bob Brown',
-    'Sarah Davis',
-    'Michael Wilson',
-    'Emily Evans',
-    'Daniel Anderson',
-    'Paolo Banchero',
-    'Jacob Taylor',
-    'Ava White',
-    'Ethan Harris',
-    'Sophia Clark',
-    'Mia Lewis',
-    'Noah Hall',
-    'Charlotte Young',
-    'Liam Turner',
-    'Amelia Walker',
-    'Harper Harris',
-    'Evelyn Jackson',
-    'Logan White',
-    'Abigail Scott',
-    'Elijah Adams',
-    'Elizabeth Baker',
-    'James Lewis',
-    'Sofia Wright',
-    'Grace King',
-    'Lucas Mitchell',
-    'Chloe Lee',
-    'Benjamin Green',
-    'Victoria Carter',
-    'Henry Hill',
-    'Lily Morris',
-    'Zoe Phillips',
-    'Aiden Cook',
-    'Nora Parker',
-    'Hannah Hall',
-    'Lionel Messi',
-    'Grace Bell',
-    'Ella Murphy',
-    'Alexander Stewart',
-    'Avery Scott',
-    'William Hughes',
-    'Scarlett Edwards',
-    'Aaron James',
-    'Oliver Howard',
-    'Addison Ward',
-    'Lucy Price',
-    'Michael Rogers',
-    'Natalie Long',
-    'Brooklyn Collins',
-    'David Foster',
-    'Anna Reed',
-    'Victoria Miller',
-    'Sophia Sanders',
-    'James Bennett',
-    'Ella Gray',
-    'Aria Russell',
-    'Joseph Hayes',
-    'Layla Reed',
-    'Luna Sanders',
-    'Daniel Rivera',
-    'Mila Ward',
-    'Aurora Scott',
-    'Adolf Hitler',
-    'Penelope Turner',
-    'Hazel Perez',
-    'Christopher Ross',
-    'Zoe Rivera',
-    'Aubrey Coleman',
-    'Evelyn Patterson',
-    'Lydia Simmons',
-    'Samuel Murphy',
-    'Claire Turner',
-    'Audrey Henderson',
-    'Eli Wood',
-    'Skylar Ivorra',
-    'Lebron James',
-    'Joshua Brooks',
-    'Paisley Phillips',
-    'Lillian Hayes',
-    'Isaac Simmons',
-    'Charlie Wright',
-    'Aaliyah Wright',
   ];
 
   List<String> filteredItems = [];
@@ -133,9 +55,7 @@ class _PaymentScreenState extends State<PaymentScreenP> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => PaymentHistoryScreen()
-                ),
+                MaterialPageRoute(builder: (context) => PaymentHistoryScreen()),
               );
             },
           ),
@@ -157,7 +77,8 @@ class _PaymentScreenState extends State<PaymentScreenP> {
               children: [
                 Expanded(
                   child: SearchAnchor(
-                    builder: (BuildContext context, SearchController controller) {
+                    builder:
+                        (BuildContext context, SearchController controller) {
                       return SearchBar(
                         controller: controller,
                         padding: const MaterialStatePropertyAll<EdgeInsets>(
@@ -168,7 +89,8 @@ class _PaymentScreenState extends State<PaymentScreenP> {
                         leading: const Icon(Icons.search),
                       );
                     },
-                    suggestionsBuilder: (BuildContext context, SearchController controller) {
+                    suggestionsBuilder:
+                        (BuildContext context, SearchController controller) {
                       return filteredItems.map((item) {
                         return ListTile(
                           title: Text(item),
@@ -189,55 +111,120 @@ class _PaymentScreenState extends State<PaymentScreenP> {
               ],
             ),
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: filteredItems.length,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedItemIndex = index;
-                    });
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PaymentScreenP2(filteredItems[index]),
-                      ),
-                    );
-                  },
-                  child: MouseRegion(
-                    onEnter: (_) {
-                      setState(() {
-                        selectedItemIndex = index;
-                      });
-                    },
-                    onExit: (_) {
-                      setState(() {
-                        selectedItemIndex = null;
-                      });
-                    },
-                    child: Container(
-                      color: selectedItemIndex == index
-                          ? const Color.fromARGB(255, 15, 26, 122)
-                          : null,
-                      child: ListTile(
-                        title: Text(
-                          filteredItems[index],
-                          style: TextStyle(
-                            color: selectedItemIndex == index
-                                ? Colors.white
-                                : Colors.black,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
+          Expanded(child: _buildUserListPayment())
+          // Expanded(
+          //   child: ListView.builder(
+          //     itemCount: filteredItems.length,
+          //     itemBuilder: (context, index) {
+          //       return GestureDetector(
+          //         onTap: () {
+          //           setState(() {
+          //             selectedItemIndex = index;
+          //           });
+          //           Navigator.push(
+          //             context,
+          //             MaterialPageRoute(
+          //               builder: (context) =>
+          //                   _buildUserListPayment(),
+          //             ),
+          //           );
+          //         },
+          //         child: MouseRegion(
+          //           onEnter: (_) {
+          //             setState(() {
+          //               selectedItemIndex = index;
+          //             });
+          //           },
+          //           onExit: (_) {
+          //             setState(() {
+          //               selectedItemIndex = null;
+          //             });
+          //           },
+          //           child: Container(
+          //             color: selectedItemIndex == index
+          //                 ? const Color.fromARGB(255, 15, 26, 122)
+          //                 : null,
+          //             child: ListTile(
+          //               title: Text(
+          //                 filteredItems[index],
+          //                 style: TextStyle(
+          //                   color: selectedItemIndex == index
+          //                       ? Colors.white
+          //                       : Colors.black,
+          //                 ),
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //       );
+          //     },
+          //   ),
+          // ),
         ],
       ),
     );
+  }
+
+  Widget _buildUserListPayment() {
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('UData').snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return const Text('error');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Text('loading...');
+        }
+
+        return ListView(
+          children: snapshot.data!.docs
+              .map<Widget>((doc) => _buildTutorList(doc))
+              .toList(),
+        );
+      },
+    );
+  }
+
+  Widget _buildTutorList(DocumentSnapshot document) {
+    Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+
+    //getting non current user data
+    if (_auth.currentUser!.email != data['email'] && data['isTutor'] == true) {
+      String rfullname = data['fname'] + ' ' + data['lname'];
+      String remail = data['email'];
+
+      //displaying non current user data
+      if (rfullname.isNotEmpty && remail.isNotEmpty) {
+        return ListTile(
+          leading: CircleAvatar(
+            child: Text(rfullname[0].toUpperCase()),
+          ),
+          title: Text(rfullname),
+          subtitle: Text(remail),
+          onTap: () {
+            //Tutor page
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PaymentScreenP2(
+                  tutorfname: data['fname'],
+                  tutorlname: data['lname'],
+                  currfname: 'test',
+                  currlname: 'test',
+                  tutoremail: data['email'],
+                  currphono: 'testest',
+                  tutorphono: data['phono'],
+                ),
+              ),
+            );
+          },
+        );
+      } else {
+        return Container();
+      }
+    } else {
+      return Container();
+    }
   }
 }

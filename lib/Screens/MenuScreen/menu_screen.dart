@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
-import 'all.dart';
+import '../all.dart';
 import 'profile_page_p.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -205,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
 
     //getting non current user data
-    if (_auth.currentUser!.email != data['email']) {
+    if (_auth.currentUser!.email != data['email']&& data['isTutor'] == true) {
       String rfullname = data['fname'] + ' ' + data['lname'];
       String remail = data['email'];
 

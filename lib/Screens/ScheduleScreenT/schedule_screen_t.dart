@@ -46,7 +46,6 @@ class ScheduleTutor extends StatelessWidget {
   ];
 
   final List<StudentInfo> tutorDatas;
-
   int colorIndex = 0;
   @override
   Widget build(BuildContext context) {

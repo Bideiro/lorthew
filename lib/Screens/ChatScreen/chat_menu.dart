@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:lorthew/Screens/ChatScreen/chat_page.dart';
+
+import '../../services/chat_service.dart';
 
 class ChatMenu extends StatefulWidget {
   const ChatMenu({super.key});
@@ -12,6 +15,7 @@ class ChatMenu extends StatefulWidget {
 
 class _ChatMenuState extends State<ChatMenu> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final ChatService _chatService = ChatService();
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +23,7 @@ class _ChatMenuState extends State<ChatMenu> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Text(
-          'Chat Menu',
+          'Chats',
           style: TextStyle(
               fontFamily: 'Bebas', fontSize: 30, fontWeight: FontWeight.w400),
         ),
@@ -113,7 +117,55 @@ class _ChatMenuState extends State<ChatMenu> {
             child: Text(rfullname[0].toUpperCase()),
           ),
           title: Text(rfullname),
-          subtitle: Text(remail),
+          subtitle: StreamBuilder<QuerySnapshot>(
+            stream: _chatService.getMessages(
+              _auth.currentUser!.uid,
+              data['uid'],
+            ),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              }
+
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Text('loading...');
+              }
+
+              var messages = snapshot.data!.docs;
+              if (messages.isNotEmpty) {
+                var latestMessage = messages.last['message'];
+                var timestamp = messages.last['timestamp'];
+                var formattedTime = _formatRelativeTime(timestamp);
+
+                bool isCurrentUserSender = messages.last['senderId'] == _auth.currentUser!.uid;
+
+                bool shouldAdjustWidth = latestMessage.length > 20;
+
+                return Row(
+                  children: [
+                    Container(
+                      width: shouldAdjustWidth ? MediaQuery.of(context).size.width * 0.45 : null,
+                      child: Text(
+                        isCurrentUserSender ? 'You: $latestMessage' : latestMessage,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    SizedBox(width: 8.0),
+                    Text(
+                      formattedTime,
+                      style: TextStyle(fontSize: 12.0, color: Colors.grey),
+                    ),
+                  ],
+                );
+              } else {
+                return Text(
+                  'Say hi! 👋',
+                  style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+                );
+              }
+            },
+          ),
           onTap: () {
             Navigator.push(
               context,
@@ -132,6 +184,21 @@ class _ChatMenuState extends State<ChatMenu> {
       }
     } else {
       return Container();
+    }
+  }
+
+  String _formatRelativeTime(Timestamp timestamp) {
+    DateTime dateTime = timestamp.toDate();
+    Duration difference = DateTime.now().difference(dateTime);
+
+    if (difference.inDays > 0) {
+      return DateFormat('MMM d, yyyy').format(dateTime);
+    } else if (difference.inHours > 0) {
+      return '${difference.inHours}h';
+    } else if (difference.inMinutes > 0) {
+      return '${difference.inMinutes}m';
+    } else {
+      return 'Just now';
     }
   }
 
