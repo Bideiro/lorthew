@@ -1,12 +1,16 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
-import 'dart:math' as math;
+import 'package:carousel_slider/carousel_slider.dart';
+
 
 import 'all.dart';
-import 'profile_page_p.dart';
+import 'Profile_page_t.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -106,40 +110,75 @@ class _MenuScreenState extends State<MenuScreen> {
   }
 }
 
-class MyArc extends StatelessWidget {
+class CurvePainter extends CustomPainter{
+  Color colorOne = const Color(0xFF2196F3);
+  Color colorTwo = const Color(0xFF1976D2);
+  Color colorThree = const Color(0xFF1565C0);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Path path = Path();
+    Paint paint = Paint();
+
+
+    path.lineTo(0, size.height *0.75);
+    path.quadraticBezierTo(size.width* 0.10, size.height*0.70,   size.width*0.17, size.height*0.90);
+    path.quadraticBezierTo(size.width*0.20, size.height, size.width*0.25, size.height*0.90);
+    path.quadraticBezierTo(size.width*0.40, size.height*0.40, size.width*0.50, size.height*0.70);
+    path.quadraticBezierTo(size.width*0.60, size.height*0.85, size.width*0.65, size.height*0.65);
+    path.quadraticBezierTo(size.width*0.70, size.height*0.90, size.width, 0);
+    path.close();
+
+    paint.color = colorThree!;
+    canvas.drawPath(path, paint);
+
+    path = Path();
+    path.lineTo(0, size.height*0.50);
+    path.quadraticBezierTo(size.width*0.10, size.height*0.80, size.width*0.15, size.height*0.60);
+    path.quadraticBezierTo(size.width*0.20, size.height*0.45, size.width*0.27, size.height*0.60);
+    path.quadraticBezierTo(size.width*0.45, size.height, size.width*0.50, size.height*0.80);
+    path.quadraticBezierTo(size.width*0.55, size.height*0.45, size.width*0.75, size.height*0.75);
+    path.quadraticBezierTo(size.width*0.85, size.height*0.93, size.width, size.height*0.60);
+    path.lineTo(size.width, 0);
+    path.close();
+
+    paint.color = colorTwo!;
+    canvas.drawPath(path, paint);
+
+    path =Path();
+    path.lineTo(0, size.height*0.75);
+    path.quadraticBezierTo(size.width*0.10, size.height*0.55, size.width*0.22, size.height*0.70);
+    path.quadraticBezierTo(size.width*0.30, size.height*0.90, size.width*0.40, size.height*0.75);
+    path.quadraticBezierTo(size.width*0.52, size.height*0.50, size.width*0.65, size.height*0.70);
+    path.quadraticBezierTo(size.width*0.75, size.height*0.85, size.width, size.height*0.60);
+    path.lineTo(size.width, 0);
+    path.close();
+
+    paint.color = colorOne;
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return oldDelegate != this;
+  }
+
+}
+
+class CurvePainterBackground extends StatelessWidget {
   final double diameter;
 
-  const MyArc({Key? key, this.diameter = 200}) : super(key: key);
+  const CurvePainterBackground({Key? key, this.diameter = 200}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      painter: MyPainter(),
+      painter: CurvePainter(),
       size: Size(diameter, diameter),
     );
   }
 }
 
-class MyPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()..color = (const Color(0xFF4FC3F7));
-    canvas.drawArc(
-      Rect.fromCenter(
-        center: Offset(size.width / 2, 0),
-        height: size.height * 1.5,
-        width: size.width * 3,
-      ),
-      0,
-      math.pi,
-      false,
-      paint,
-    );
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => false;
-}
 
 
 class HomeScreen extends StatefulWidget {
@@ -151,100 +190,149 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  List<String> synonyms = [
+    'Lorthew',
+    'Instructor',
+    'Professor',
+    'Tutor',
+    'Lecturer',
+    'Educator',
+    'Mentor',
+    'Coach',
+    'Guide',
+    'Facilitator',
+    'Trainer',
+    'Preceptor',
+    'Teacher',
+    'Disciplinarian',
+    'Scholar',
+    'Educationist',
+    'Academic',
+    'Adviser',
+    'Counselor',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          MyArc(diameter: MediaQuery.of(context).size.width),
-          // Main content
-          Column(
-            children: <Widget>[
-              AppBar(
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                automaticallyImplyLeading: false,
-                title: const Text(
-                  'Menu',
-                  style: TextStyle(
-                    fontFamily: 'Bebas',
-                    fontSize: 30,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 5.0, right: 150.0),
-                      child: Text(
-                        'Find your best tutor and teacher',
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Color(0xFF2196F3),
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        title: const Text(
+          'Menu',
+          style: TextStyle(
+            fontFamily: 'Bebas',
+            fontSize: 30,
+            fontWeight: FontWeight.w400,
+            color: Colors.black,
+          ),
+        ),
+      ),
+      body: SafeArea(
+        child: Stack(
+          children: <Widget>[
+            CurvePainterBackground(diameter: MediaQuery.of(context).size.width),
+            // Main content
+            Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Find your best',
+                              style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            CarouselSlider(
+                              options: CarouselOptions(
+                                autoPlay: true,
+                                autoPlayInterval: Duration(milliseconds: 1500),
+                                enlargeCenterPage: true,
+                                aspectRatio: 2.0,
+                                height: 50.0,
+                                scrollDirection: Axis.vertical,
+                              ),
+                              items: synonyms.map((item) => Text(
+                                item,
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              )).toList(),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: SearchAnchor(
-                            builder: (BuildContext context, SearchController controller) {
-                              return SearchBar(
-                                controller: controller,
-                                padding: const MaterialStatePropertyAll<EdgeInsets>(
-                                  EdgeInsets.symmetric(horizontal: 16.0),
-                                ),
-                                onTap: () {
-                                  controller.openView();
-                                },
-                                onChanged: (_) {
-                                  controller.openView();
-                                },
-                                leading: const Icon(Icons.search),
-                              );
-                            },
-                            suggestionsBuilder: (BuildContext context, SearchController controller) {
-                              return List<ListTile>.generate(5, (int index) {
-                                final String item = 'item $index';
-                                return ListTile(
-                                  title: Text(item),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: SearchAnchor(
+                              builder: (BuildContext context, SearchController controller) {
+                                return SearchBar(
+                                  controller: controller,
+                                  padding: const MaterialStatePropertyAll<EdgeInsets>(
+                                    EdgeInsets.symmetric(horizontal: 16.0),
+                                  ),
                                   onTap: () {
-                                    setState(() {
-                                      controller.closeView(item);
-                                    });
+                                    controller.openView();
                                   },
+                                  onChanged: (_) {
+                                    controller.openView();
+                                  },
+                                  leading: const Icon(Icons.search),
                                 );
-                              });
-                            },
+                              },
+                              suggestionsBuilder: (BuildContext context, SearchController controller) {
+                                return List<ListTile>.generate(5, (int index) {
+                                  final String item = 'item $index';
+                                  return ListTile(
+                                    title: Text(item),
+                                    onTap: () {
+                                      setState(() {
+                                        controller.closeView(item);
+                                      });
+                                    },
+                                  );
+                                });
+                              },
+                            ),
                           ),
-                        ),
-                        // IconButton(
-                        //   icon: const Icon(Icons.filter_list),
-                        //   onPressed: () {
-                        //     // Add your filter button functionality here
-                        //   },
-                        // ),
-                      ],
-                    ),
-                  ],
+                          // IconButton(
+                          //   icon: const Icon(Icons.filter_list),
+                          //   onPressed: () {
+                          //     // Add your filter button functionality here
+                          //   },
+                          // ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Expanded(
-                child: _buildUserList(),
-              ),
-            ],
-          ),
-        ],
+                Expanded(
+                  child: _buildUserList(),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
+
+
 
   Widget _buildUserList() {
     return StreamBuilder<QuerySnapshot>(
@@ -266,52 +354,77 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     );
   }
+
   // Main menu list
   Widget _buildTutorList(DocumentSnapshot document) {
     Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
 
-    //getting non current user data
+    // Getting non-current user data
     if (_auth.currentUser!.email != data['email']) {
       String rfullname = data['fname'] + ' ' + data['lname'];
       String remail = data['email'];
 
-      //displaying non current user data
+      // Displaying non-current user data
       if (rfullname.isNotEmpty && remail.isNotEmpty) {
-        return ListTile(
-          leading: CircleAvatar(
-            radius: 30.0,
-            child: Text(rfullname[0].toUpperCase()),
+        return Container(
+          height: 100.0,
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.9),
+            borderRadius: BorderRadius.circular(10.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: Offset(0, 2),
+              ),
+            ],
           ),
-          title: Text(
-            toTitleCase(rfullname),
-            style: TextStyle(
-              fontSize: 18.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          subtitle: Text(
-              remail,
-            style: TextStyle(
-              fontSize: 12.0,
-            ),
-          ),
-          onTap: () {
-            //Tutor page
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => TutorPage(
-                  lname: data['lname'],
-                  fname: data['fname'],
-                  abtme: data['abtme'],
-                  email: data['email'],
-                  phono: data['phono'],
-                  loc: data['loc'],
-                  uid: data['uid'],
+          margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Row(
+            children: [
+              // Place the CircleAvatar here
+              CircleAvatar(
+                radius: 40.0,
+                child: Text(rfullname[0].toUpperCase()),
+              ),
+              Expanded(
+                child: ListTile(
+                  title: Text(
+                    toTitleCase(rfullname),
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Text(
+                    remail,
+                    style: TextStyle(
+                      fontSize: 12.0,
+                    ),
+                  ),
+                  onTap: () {
+                    // Tutor page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TutorPage(
+                          lname: data['lname'],
+                          fname: data['fname'],
+                          abtme: data['abtme'],
+                          email: data['email'],
+                          phono: data['phono'],
+                          loc: data['loc'],
+                          uid: data['uid'],
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
-            );
-          },
+            ],
+          ),
         );
       } else {
         return Container();
@@ -320,6 +433,7 @@ class _HomeScreenState extends State<HomeScreen> {
       return Container();
     }
   }
+
 
   String toTitleCase(String text) {
     return text.toLowerCase().split(' ').map((word) {

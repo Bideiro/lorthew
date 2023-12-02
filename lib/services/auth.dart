@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lorthew/services/database.dart';
-
 import '../models/cuser.dart';
 
 class AuthService {
@@ -33,10 +32,10 @@ class AuthService {
       await DatabaseService(uid: user.uid).initPUserData(fname, lname,email);
       await DatabaseService(uid: user.uid)
           .updatePUserData(fname, lname, '', email, '', '');
-      return _userFromFirebase(user);
+    return _userFromFirebase(user);
     } catch (e) {
-      print(e.toString());
-      return null;
+    print(e.toString());
+    return null;
     }
   }
 
@@ -61,7 +60,7 @@ class AuthService {
   Future signIn(String email, String pass) async {
     try {
       UserCredential result =
-          await _auth.signInWithEmailAndPassword(email: email, password: pass);
+      await _auth.signInWithEmailAndPassword(email: email, password: pass);
       User? user = result.user!; //yung exclamation mark need wala ata idfk
       return _userFromFirebase(user);
     } catch (e) {
