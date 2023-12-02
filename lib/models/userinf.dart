@@ -14,8 +14,10 @@ class PupilUserinfo {
   final String email;
   final String phono;
   final String loc;
+  final String iconURL;
 
   PupilUserinfo({
+    required this.iconURL,
     required this.uid,
     required this.fname,
     required this.lname,
@@ -33,7 +35,7 @@ class TutorUserinfo {
   final String email;
   final String phono;
   final String loc;
-  // final String 
+  // final String
 
   TutorUserinfo({
     required this.fname,

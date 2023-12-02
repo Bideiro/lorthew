@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +16,16 @@ class ProfileEditP extends StatefulWidget {
   State<ProfileEditP> createState() => _ProfileEditPState();
 }
 
+
+
 class _ProfileEditPState extends State<ProfileEditP> {
+  // void updateIcon() async {
+  //   Uint8List img = await DatabaseService().updateIconDB(ImageSource.gallery);
+  //   setState(() {
+  //     _image = img;
+  //   });
+  // }
+
   final _formKey = GlobalKey<FormState>();
 
   String fname = '';
@@ -27,13 +37,15 @@ class _ProfileEditPState extends State<ProfileEditP> {
 
   @override
   Widget build(BuildContext context) {
+    
     final user = Provider.of<cUser?>(context);
     return StreamBuilder<PupilUserinfo?>(
         stream: DatabaseService(uid: user?.uid).PuDatadoc,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             PupilUserinfo? userData = snapshot.data;
-
+            String icon = userData!.iconURL;
+            bool hasicon = userData.iconURL.isEmpty;
             return Scaffold(
               appBar: AppBar(
                 automaticallyImplyLeading: false,
@@ -74,23 +86,9 @@ class _ProfileEditPState extends State<ProfileEditP> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       const SizedBox(height: 25.0),
-                      Container(
-                        decoration: const BoxDecoration(
-                          color: Color.fromARGB(44, 132, 157, 188),
-                          shape: BoxShape.circle,
-                          image:
-                              DecorationImage(image: NetworkImage('Usericon')),
-                        ),
-                        child: IconButton(
-                          iconSize: 100,
-                          splashRadius: 1,
-                          icon: const Icon(Icons.add),
-                          splashColor: const Color.fromARGB(102, 255, 0, 0),
-                          tooltip: "Add/Change your icon.",
-                          color: Colors.black,
-                          onPressed: () {},
-                        ),
-                      ),
+                      hasicon
+                          ? _noUserImage(userData!.fname, userData.uid!)
+                          : _UserImage(icon, userData!.fname, userData.uid!),
                       const SizedBox(height: 10.0),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
@@ -167,8 +165,7 @@ class _ProfileEditPState extends State<ProfileEditP> {
                                         initialValue: userData.lname,
                                         decoration: const InputDecoration(
                                           border: InputBorder.none,
-                                          contentPadding:
-                                              EdgeInsets.all(12.0),
+                                          contentPadding: EdgeInsets.all(12.0),
                                         ),
                                         onChanged: (val) {
                                           setState(() => lname = val);
@@ -185,8 +182,8 @@ class _ProfileEditPState extends State<ProfileEditP> {
                                   const Expanded(
                                     flex: 2,
                                     child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 5),
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 5),
                                       child: Text(
                                         'About Me',
                                         style: TextStyle(
@@ -208,8 +205,7 @@ class _ProfileEditPState extends State<ProfileEditP> {
                                         initialValue: userData.abtme,
                                         decoration: const InputDecoration(
                                           border: InputBorder.none,
-                                          contentPadding:
-                                              EdgeInsets.all(12.0),
+                                          contentPadding: EdgeInsets.all(12.0),
                                         ),
                                         onChanged: (val) {
                                           setState(() => abtme = val);
@@ -227,8 +223,8 @@ class _ProfileEditPState extends State<ProfileEditP> {
                                   const Expanded(
                                     flex: 2,
                                     child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 5),
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 5),
                                       child: Text(
                                         'Mobile Number',
                                         style: TextStyle(
@@ -250,8 +246,7 @@ class _ProfileEditPState extends State<ProfileEditP> {
                                         initialValue: userData.phono,
                                         decoration: const InputDecoration(
                                           border: InputBorder.none,
-                                          contentPadding:
-                                              EdgeInsets.all(12.0),
+                                          contentPadding: EdgeInsets.all(12.0),
                                           prefixText: '+63 9',
                                         ),
                                         onChanged: (val) {
@@ -275,8 +270,8 @@ class _ProfileEditPState extends State<ProfileEditP> {
                                   const Expanded(
                                     flex: 2,
                                     child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 5),
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 5),
                                       child: Text(
                                         'Location',
                                         style: TextStyle(
@@ -296,10 +291,9 @@ class _ProfileEditPState extends State<ProfileEditP> {
                                       ),
                                       child: TextFormField(
                                         initialValue: userData.loc,
-                                        decoration:const InputDecoration(
+                                        decoration: const InputDecoration(
                                           border: InputBorder.none,
-                                          contentPadding:
-                                              EdgeInsets.all(12.0),
+                                          contentPadding: EdgeInsets.all(12.0),
                                         ),
                                         onChanged: (val) {
                                           setState(() => loc = val);
@@ -376,5 +370,58 @@ class _ProfileEditPState extends State<ProfileEditP> {
             return const Loading();
           }
         });
+  }
+
+  Widget _noUserImage(String name, String uid) {
+    return Stack(children: <Widget>[
+      CircleAvatar(
+        radius: 65.0,
+        child: Text(
+          name[0].toUpperCase(),
+          style: const TextStyle(fontSize: 50.0),
+        ),
+      ),
+      Positioned(
+        bottom: -10,
+        left: 90,
+        child: IconButton(
+          onPressed: () async {
+            Uint8List img = await DatabaseService(uid: uid).updateIconDB(ImageSource.gallery);
+              String dlURL = await DatabaseService(uid: uid).uploadImage('$uid - $name - Icon', img, uid);
+              await DatabaseService(uid: uid).updateIcon(dlURL, uid);
+          },
+          icon: const Icon(
+            Icons.add_photo_alternate,
+          ),
+          iconSize: 30,
+        ),
+      )
+    ]);
+  }
+
+  Widget _UserImage(String iconURL, String name, String uid) {
+    return Stack(children: <Widget>[
+      CircleAvatar(
+        radius: 64,
+        backgroundImage: NetworkImage(iconURL),
+      ),
+      Positioned(
+        bottom: -10,
+        left: 90,
+        child: IconButton(
+          onPressed: () async {
+            Uint8List img = await DatabaseService(uid: uid).updateIconDB(ImageSource.gallery);
+              String dlURL = await DatabaseService(uid: uid).uploadImage('$uid - $name - Icon', img, uid);
+              setState(() {
+                _UserImage(dlURL,name,uid);
+              });
+          },
+          icon: const Icon(
+            Icons.add_photo_alternate,
+          ),
+          iconSize: 30,
+        ),
+      )
+    ]);
   }
 }

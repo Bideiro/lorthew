@@ -1,136 +1,260 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_animated_button/flutter_animated_button.dart';
+import 'package:flutter/services.dart';
 import 'package:lorthew/Screens/authentication/register_info_p.dart';
 import 'package:lorthew/Screens/authentication/register_info_t.dart';
 
 import '../../services/auth.dart';
-// void main() {
-//   runApp(LoginScreen());
-// }
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  _LoginWidgetState createState() => _LoginWidgetState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginWidgetState extends State<LoginScreen> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   String email = '';
   String pass = '';
   String error = '';
 
+  late TextEditingController _emailController;
+  late TextEditingController _passwordController;
+  late FocusNode _emailFocusNode;
+  late FocusNode _passwordFocusNode;
+  bool _passwordVisibility = false;
+
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+    _emailFocusNode = FocusNode();
+    _passwordFocusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _emailFocusNode.dispose();
+    _passwordFocusNode.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (Theme.of(context).platform == TargetPlatform.iOS) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarBrightness: Theme.of(context).brightness,
+          systemStatusBarContrastEnforced: true,
+        ),
+      );
+    }
+
     return GestureDetector(
       onTap: () {
-        FocusScope.of(context).requestFocus(FocusNode());
+        if (_emailFocusNode.canRequestFocus || _passwordFocusNode.canRequestFocus) {
+          FocusScope.of(context).requestFocus(FocusNode());
+        }
       },
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text(
-                  'Lorthew',
-                  style: TextStyle(
-                      fontFamily: 'Bebas',
-                      fontSize: 40,
-                      fontWeight: FontWeight.w400),
-                ),
-                const SizedBox(height: 10),
-                ClipOval(
-                  child: SizedBox.fromSize(
-                    size: const Size.fromRadius(48),
-                    child: Image.asset(
-                      'assets/images/Lorthew_Logo.png',
-                      fit: BoxFit.cover,
+        key: scaffoldKey,
+        backgroundColor: Color(0xFFF1F4F8),
+        body: SafeArea(
+          top: true,
+          child: Align(
+            alignment: Alignment.center,
+            child: Form(
+              key: _formKey,
+              child: ListView(
+                shrinkWrap: true,
+                physics: ClampingScrollPhysics(),
+                children: [
+                  Align(
+                    alignment: Alignment(0.0, 0.0),
+                    child: Container(
+                      width: 250,
+                      height: 250,
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      child: Image.asset(
+                        'assets/images/Lorthew_Logo.png',
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                Card(
-                  color: (const Color(0xFFFDD835)),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
+                  Align(
+                    alignment: Alignment(0.0, 0.0),
+                    child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Text(
+                        'Lorthew',
+                        style: TextStyle(
+                            fontFamily: 'Bebas',
+                            fontSize: 40,
+                            fontWeight: FontWeight.w400
+                        ),
+                      ),
+                    ),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          const SizedBox(height: 30),
-                          const Text(
-                            'Login with your email and password:',
+                  Align(
+                    alignment: Alignment(0.0, 0.0),
+                    child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Text(
+                        'Login with your email and password',
+                        style: TextStyle(
+                          fontFamily: 'Space Grotesk',
+                          color: Color(0xFF57636C),
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(30, 16, 30, 16),
+                    child: TextFormField(
+                      controller: _emailController,
+                      focusNode: _emailFocusNode,
+                      obscureText: false,
+                      onChanged: (val) {
+                        setState(() => email = val);
+                      },
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        labelStyle: TextStyle(
+                          fontFamily: 'Space Grotesk',
+                          color: Color(0xFF14181B),
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal,
+                        ),
+                        hintText: 'Email',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Space Grotesk',
+                          color: Color(0xFF14181B),
+                          fontSize: 16,
+                          fontWeight: FontWeight.normal,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xFF14181B),
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: (const Color(0xFF1976D2)),
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      style: TextStyle(
+                        fontFamily: 'Space Grotesk',
+                        color: Color(0xFF14181B),
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(30, 16, 30, 16),
+                    child: TextFormField(
+                      controller: _passwordController,
+                      focusNode: _passwordFocusNode,
+                      obscureText: !_passwordVisibility,
+                      onChanged: (val) {
+                        setState(() => pass = val);
+                      },
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        labelStyle: TextStyle(
+                          fontFamily: 'Space Grotesk',
+                          color: Color(0xFF14181B),
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal,
+                        ),
+                        hintText: 'Password',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Space Grotesk',
+                          color: Color(0xFF14181B),
+                          fontSize: 16,
+                          fontWeight: FontWeight.normal,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xFF14181B),
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: (const Color(0xFF1976D2)),
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        suffixIcon: InkWell(
+                          onTap: () {
+                            setState(() {
+                              _passwordVisibility = !_passwordVisibility;
+                            });
+                          },
+                          focusNode: FocusNode(skipTraversal: true),
+                          child: Icon(
+                            _passwordVisibility
+                                ? Icons.visibility_outlined
+                                : Icons.visibility_off_outlined,
+                            color: Color(0xFF57636C),
+                            size: 22,
+                          ),
+                        ),
+                      ),
+                      style: TextStyle(
+                        fontFamily: 'Space Grotesk',
+                        color: Color(0xFF14181B),
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
+                        child: InkWell(
+                          onTap: () async {},
+                          child: Text(
+                            'Forgot Password?',
                             style: TextStyle(
-                              fontSize: 16,
+                              fontFamily: 'Readex Pro',
+                              color: Colors.black,
                             ),
                           ),
-                          const SizedBox(height: 10),
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30.0),
-                              color: Colors.grey[200],
-                            ),
-                            child: TextFormField(
-                              decoration: const InputDecoration(
-                                labelText: 'Email',
-                                contentPadding:
-                                    EdgeInsets.symmetric(horizontal: 20),
-                                border: InputBorder.none,
-                              ),
-                              onChanged: (val) {
-                                setState(() => email = val);
-                              },
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30.0),
-                              color: Colors.grey[200],
-                            ),
-                            child: TextFormField(
-                              decoration: const InputDecoration(
-                                labelText: 'Password',
-                                contentPadding:
-                                    EdgeInsets.symmetric(horizontal: 20),
-                                border: InputBorder.none,
-                              ),
-                              obscureText: true,
-                              onChanged: (val) {
-                                setState(() => pass = val);
-                              },
-                            ),
-                          ),
-                          // const SizedBox(height: 20),
-                          Text(
-                            error,
-                            style: const TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-                          AnimatedButton(
-                            height: 40,
-                            width: 200,
-                            text: 'LOGIN',
-                            isReverse: true,
-                            selectedTextColor: Colors.black,
-                            transitionType: TransitionType.LEFT_TO_RIGHT,
-                            backgroundColor:
-                                const Color.fromRGBO(16, 48, 89, 1),
-                            borderColor: Colors.white,
-                            borderRadius: 50,
-                            borderWidth: 2,
-                            onPress: () async {
+                        ),
+                      ),
+                    ],
+                  ),
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(30, 16, 30, 16),
+                          child: ElevatedButton(
+                            onPressed: () async {
                               print('hello');
                               if (_formKey.currentState!.validate()) {
                                 dynamic result = _auth.signIn(email, pass);
@@ -139,54 +263,78 @@ class _LoginScreenState extends State<LoginScreen> {
                                 }
                               }
                             },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF103059),
+                              textStyle: const TextStyle(
+                                fontFamily: 'Space Grotesk',
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              minimumSize: const Size(double.infinity, 50),
+                            ),
+                            child: const Text('Login',
+                                style: TextStyle(color: Colors.white)),
                           ),
-                          const SizedBox(height: 20),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const RegisterInfoPupil(),
-                                ),
-                              );
-                            },
-                            style: TextButton.styleFrom(
-                              foregroundColor:
-                                  const Color.fromRGBO(16, 48, 89, 1),
-                            ),
-                            child: const Text(
-                              "Don't have an account? Click here to Register as a Student",
-                              style: TextStyle(fontFamily: 'Bebas'),
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const RegisterInfoTutor(),
-                                ),
-                              );
-                            },
-                            style: TextButton.styleFrom(
-                              foregroundColor:
-                                  const Color.fromRGBO(16, 48, 89, 1),
-                            ),
-                            child: const Text(
-                              "Click here to Register as a Tutor",
-                              style: TextStyle(fontFamily: 'Bebas'),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                const RegisterInfoPupil(),
+                              ),
+                            );
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                            child: Text(
+                              'Don\'t have an account? Click here to register as a student',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: 'Space Grotesk',
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontWeight: FontWeight.normal,
+                              ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                const RegisterInfoTutor(),
+                              ),
+                            );
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                            child: Text(
+                              'Click here to register as a tutor',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: 'Space Grotesk',
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ).animate().fadeIn().scale().move(delay: 500.ms, duration: 600.ms),
+          ),
         ),
       ),
     );
