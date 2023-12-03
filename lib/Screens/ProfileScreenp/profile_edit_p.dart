@@ -17,13 +17,6 @@ class ProfileEditP extends StatefulWidget {
 }
 
 class _ProfileEditPState extends State<ProfileEditP> {
-  // void updateIcon() async {
-  //   Uint8List img = await DatabaseService().updateIconDB(ImageSource.gallery);
-  //   setState(() {
-  //     _image = img;
-  //   });
-  // }
-
   final _formKey = GlobalKey<FormState>();
 
   String fname = '';
@@ -249,12 +242,12 @@ class _ProfileEditPState extends State<ProfileEditP> {
                                         onChanged: (val) {
                                           setState(() => phono = val);
                                         },
-                                        maxLength: 11,
+                                        maxLength: 9,
                                         keyboardType: TextInputType.phone,
                                         inputFormatters: [
                                           FilteringTextInputFormatter.allow(
                                               RegExp(r'^\d*')),
-                                          LengthLimitingTextInputFormatter(11),
+                                          LengthLimitingTextInputFormatter(9),
                                         ],
                                       ),
                                     ),

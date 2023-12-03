@@ -14,11 +14,8 @@ class ProfileService extends ChangeNotifier {
     return _fireStore.collection('UData').doc(userId);
   }
 
-  Stream<DocumentSnapshot> get PuDatadoc {
+
+  Stream<DocumentSnapshot> get uDatadoc {
     return userdataCollection.doc(uid).snapshots();
   }
-
-  // Future getUserDoc(String uid) async {
-  //   return userdataCollection.doc(uid);
-  // }
 }

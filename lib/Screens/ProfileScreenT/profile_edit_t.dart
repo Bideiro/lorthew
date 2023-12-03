@@ -2,29 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:lorthew/loading.dart';
+import 'package:lorthew/models/cuser.dart';
+import 'package:lorthew/services/auth.dart';
+import 'package:lorthew/services/database.dart';
 import 'package:provider/provider.dart';
 
-import '../../loading.dart';
-import '../../models/cuser.dart';
 import '../../models/userinf.dart';
-import '../../services/database.dart';
 
 class ProfileEditT extends StatefulWidget {
-  const ProfileEditT({super.key});
-
   @override
-  State<ProfileEditT> createState() => _ProfileEditTState();
+  _ProfileEditTState createState() => _ProfileEditTState();
 }
 
 class _ProfileEditTState extends State<ProfileEditT> {
-  // void updateIcon() async {
-  //   Uint8List img = await DatabaseService().updateIconDB(ImageSource.gallery);
-  //   setState(() {
-  //     _image = img;
-  //   });
-  // }
-
   final _formKey = GlobalKey<FormState>();
+  final AuthService _auth = AuthService();
 
   String fname = '';
   String lname = '';
@@ -33,7 +26,15 @@ class _ProfileEditTState extends State<ProfileEditT> {
   String phono = '';
   String loc = '';
   String subj = '';
-  String exp = '';
+  String pricelvl = '';
+  String experience = 'Entry-Level Tutor'; // Added experience variable
+
+  // List of options for the experience dropdown
+  List<String> experienceOptions = [
+    'Entry-Level Tutor',
+    'Intermediate-Level Tutor',
+    'Advanced-Level Tutor'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +75,7 @@ class _ProfileEditTState extends State<ProfileEditT> {
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    const SizedBox(width: 75.0),
+                    SizedBox(width: 75.0),
                   ],
                 ),
                 toolbarHeight: 80.0,
@@ -89,6 +90,7 @@ class _ProfileEditTState extends State<ProfileEditT> {
                           ? _noUserImage(userData.fname, userData.uid!)
                           : _UserImage(icon, userData.fname, userData.uid!),
                       const SizedBox(height: 10.0),
+                      //pa-wrap to stream builder, itong padding. triny ko hanggang appbar, di lumalabas sa code actions so di pwede
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Form(
@@ -98,11 +100,11 @@ class _ProfileEditTState extends State<ProfileEditT> {
                               const SizedBox(height: 20),
                               Row(
                                 children: [
-                                  const Expanded(
+                                  Expanded(
                                     flex: 2,
                                     child: Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 5),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5),
                                       child: Text(
                                         'First Name',
                                         style: TextStyle(
@@ -122,9 +124,10 @@ class _ProfileEditTState extends State<ProfileEditT> {
                                       ),
                                       child: TextFormField(
                                         initialValue: userData.fname,
-                                        decoration: const InputDecoration(
+                                        decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          contentPadding: EdgeInsets.all(12.0),
+                                          contentPadding:
+                                              const EdgeInsets.all(12.0),
                                         ),
                                         onChanged: (val) {
                                           setState(() => fname = val);
@@ -138,11 +141,11 @@ class _ProfileEditTState extends State<ProfileEditT> {
                               const SizedBox(height: 20),
                               Row(
                                 children: [
-                                  const Expanded(
+                                  Expanded(
                                     flex: 2,
                                     child: Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 5),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5),
                                       child: Text(
                                         'Last Name',
                                         style: TextStyle(
@@ -162,9 +165,10 @@ class _ProfileEditTState extends State<ProfileEditT> {
                                       ),
                                       child: TextFormField(
                                         initialValue: userData.lname,
-                                        decoration: const InputDecoration(
+                                        decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          contentPadding: EdgeInsets.all(12.0),
+                                          contentPadding:
+                                              const EdgeInsets.all(12.0),
                                         ),
                                         onChanged: (val) {
                                           setState(() => lname = val);
@@ -178,139 +182,11 @@ class _ProfileEditTState extends State<ProfileEditT> {
                               const SizedBox(height: 20),
                               Row(
                                 children: [
-                                  const Expanded(
-                                    flex: 2,
-                                    child: Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 5),
-                                      child: Text(
-                                        'About Me',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
                                   Expanded(
-                                    flex: 5,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                        color: Colors.grey[200],
-                                      ),
-                                      child: TextFormField(
-                                        initialValue: userData.abtme,
-                                        decoration: const InputDecoration(
-                                          border: InputBorder.none,
-                                          contentPadding: EdgeInsets.all(12.0),
-                                        ),
-                                        onChanged: (val) {
-                                          setState(() => abtme = val);
-                                        },
-                                        maxLength: 160,
-                                        maxLines: 5,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 20),
-                              Row(
-                                children: [
-                                  const Expanded(
                                     flex: 2,
                                     child: Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 5),
-                                      child: Text(
-                                        'Mobile Number',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 5,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                        color: Colors.grey[200],
-                                      ),
-                                      child: TextFormField(
-                                        initialValue: userData.phono,
-                                        decoration: const InputDecoration(
-                                          border: InputBorder.none,
-                                          contentPadding: EdgeInsets.all(12.0),
-                                          prefixText: '+63 9',
-                                        ),
-                                        onChanged: (val) {
-                                          setState(() => phono = val);
-                                        },
-                                        maxLength: 11,
-                                        keyboardType: TextInputType.phone,
-                                        inputFormatters: [
-                                          FilteringTextInputFormatter.allow(
-                                              RegExp(r'^\d*')),
-                                          LengthLimitingTextInputFormatter(11),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 20),
-                              Row(
-                                children: [
-                                  const Expanded(
-                                    flex: 2,
-                                    child: Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 5),
-                                      child: Text(
-                                        'Location',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 5,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                        color: Colors.grey[200],
-                                      ),
-                                      child: TextFormField(
-                                        initialValue: userData.loc,
-                                        decoration: const InputDecoration(
-                                          border: InputBorder.none,
-                                          contentPadding: EdgeInsets.all(12.0),
-                                        ),
-                                        onChanged: (val) {
-                                          setState(() => loc = val);
-                                        },
-                                        maxLength: 50,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 20),
-                              Row(
-                                children: [
-                                  const Expanded(
-                                    flex: 2,
-                                    child: Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 5),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5),
                                       child: Text(
                                         'Subject',
                                         style: TextStyle(
@@ -330,12 +206,241 @@ class _ProfileEditTState extends State<ProfileEditT> {
                                       ),
                                       child: TextFormField(
                                         initialValue: userData.subj,
-                                        decoration: const InputDecoration(
+                                        decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          contentPadding: EdgeInsets.all(12.0),
+                                          contentPadding:
+                                              const EdgeInsets.all(12.0),
                                         ),
                                         onChanged: (val) {
                                           setState(() => subj = val);
+                                        },
+                                        maxLength: 50,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    flex: 2,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5),
+                                      child: Text(
+                                        'Experience',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 5,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                        color: Colors.grey[200],
+                                      ),
+                                      child: DropdownButtonFormField<String>(
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          contentPadding:
+                                              const EdgeInsets.all(12.0),
+                                        ),
+                                        value: experience,
+                                        items: experienceOptions
+                                            .map((String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
+                                        onChanged: (val) {
+                                          setState(() {
+                                            experience = val!;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    flex: 2,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5),
+                                      child: Text(
+                                        'Price',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 5,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                        color: Colors.grey[200],
+                                      ),
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          contentPadding:
+                                              const EdgeInsets.all(12.0),
+                                          prefixText: '₱',
+                                        ),
+                                        onChanged: (val) {
+                                          setState(() => pricelvl = val);
+                                        },
+                                        maxLength: 11,
+                                        keyboardType:
+                                            TextInputType.numberWithOptions(
+                                                decimal: true),
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.allow(
+                                              RegExp(r'^\d*\.?\d{0,2}')),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    flex: 2,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5),
+                                      child: Text(
+                                        'About Me',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 5,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                        color: Colors.grey[200],
+                                      ),
+                                      child: TextFormField(
+                                        initialValue: userData.abtme,
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          contentPadding:
+                                              const EdgeInsets.all(12.0),
+                                        ),
+                                        onChanged: (val) {
+                                          setState(() => abtme = val);
+                                        },
+                                        maxLength: 160,
+                                        maxLines: 5,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    flex: 2,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5),
+                                      child: Text(
+                                        'Mobile Number',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 5,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                        color: Colors.grey[200],
+                                      ),
+                                      child: TextFormField(
+                                        initialValue: userData.phono,
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          contentPadding:
+                                              const EdgeInsets.all(12.0),
+                                          prefixText: '+63 9',
+                                        ),
+                                        onChanged: (val) {
+                                          setState(() => phono = val);
+                                        },
+                                        maxLength: 9,
+                                        keyboardType: TextInputType.phone,
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.allow(
+                                              RegExp(r'^\d*')),
+                                          LengthLimitingTextInputFormatter(9),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    flex: 2,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5),
+                                      child: Text(
+                                        'Location',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 5,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                        color: Colors.grey[200],
+                                      ),
+                                      child: TextFormField(
+                                        initialValue: userData.loc,
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          contentPadding:
+                                              const EdgeInsets.all(12.0),
+                                        ),
+                                        onChanged: (val) {
+                                          setState(() => loc = val);
                                         },
                                         maxLength: 50,
                                       ),
@@ -347,7 +452,7 @@ class _ProfileEditTState extends State<ProfileEditT> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 50.0),
+                      SizedBox(height: 50.0),
                       SizedBox(
                         height: 50,
                         width: 300,
@@ -356,24 +461,22 @@ class _ProfileEditTState extends State<ProfileEditT> {
                             if (_formKey.currentState!.validate()) {
                               await DatabaseService(uid: user!.uid)
                                   .updateUserData(
-                                fname.isEmpty ? userData.fname : fname,
-                                lname.isEmpty ? userData.lname : lname,
-                                abtme.isEmpty ? userData.abtme : abtme,
-                                phono.isEmpty ? userData.phono : phono,
-                                loc.isEmpty ? userData.loc : loc,
-                                subj.isEmpty ? userData.subj : subj,
-                                ''
-                              );
+                                      fname.isEmpty ? userData.fname : fname,
+                                      lname.isEmpty ? userData.lname : lname,
+                                      abtme.isEmpty ? userData.abtme : abtme,
+                                      phono.isEmpty ? userData.phono : phono,
+                                      loc.isEmpty ? userData.loc : loc,
+                                      subj.isEmpty ? userData.subj : subj,
+                                      experience.isEmpty ? userData.exp : experience);
 
                               print('User data updated successfully');
 
                               // there has an error
-                              Navigator.of(context).pop();
-                            }
+                              Navigator.of(context).pop();}
                           },
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
-                                const Color(0xFFFDD835)),
+                                Color(0xFFFDD835)),
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(
                               RoundedRectangleBorder(
@@ -430,15 +533,8 @@ class _ProfileEditTState extends State<ProfileEditT> {
                 await DatabaseService(uid: uid).updateIcon(ImageSource.gallery);
             await DatabaseService(uid: uid)
                 .uploadImage('$uid - $name - Icon', img, uid);
-            await DatabaseService(uid: uid).updateUserData(
-              fname,
-              lname,
-              abtme,
-              email,
-              phono,
-              subj,
-              exp
-            );
+            await DatabaseService(uid: uid)
+                .updateUserData(fname, lname, abtme, phono, loc, '', '');
           },
           icon: const Icon(
             Icons.add_photo_alternate,
@@ -473,8 +569,4 @@ class _ProfileEditTState extends State<ProfileEditT> {
       )
     ]);
   }
-
-// Widget _expwidget(String exp){
-//   return
-// }
 }

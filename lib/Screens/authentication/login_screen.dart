@@ -228,25 +228,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
-                        child: InkWell(
-                          onTap: () async {},
-                          child: Text(
-                            'Forgot Password?',
-                            style: TextStyle(
-                              fontFamily: 'Readex Pro',
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
                   Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,

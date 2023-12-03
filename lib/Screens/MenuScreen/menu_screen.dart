@@ -5,7 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:lorthew/Screens/MenuScreen/profilerouter.dart';
+import 'package:lorthew/loading.dart';
+import 'package:provider/provider.dart';
 
+import '../../models/cuser.dart';
+import '../../models/userinf.dart';
+import '../../services/database.dart';
 import '../all.dart';
 import 'Profile_page_t.dart';
 
@@ -107,7 +112,7 @@ class _MenuScreenState extends State<MenuScreen> {
   }
 }
 
-class CurvePainter extends CustomPainter{
+class CurvePainter extends CustomPainter {
   Color colorOne = const Color(0xFF2196F3);
   Color colorTwo = const Color(0xFF1976D2);
   Color colorThree = const Color(0xFF1565C0);
@@ -117,37 +122,50 @@ class CurvePainter extends CustomPainter{
     Path path = Path();
     Paint paint = Paint();
 
-
-    path.lineTo(0, size.height *0.75);
-    path.quadraticBezierTo(size.width* 0.10, size.height*0.70,   size.width*0.17, size.height*0.90);
-    path.quadraticBezierTo(size.width*0.20, size.height, size.width*0.25, size.height*0.90);
-    path.quadraticBezierTo(size.width*0.40, size.height*0.40, size.width*0.50, size.height*0.70);
-    path.quadraticBezierTo(size.width*0.60, size.height*0.85, size.width*0.65, size.height*0.65);
-    path.quadraticBezierTo(size.width*0.70, size.height*0.90, size.width, 0);
+    path.lineTo(0, size.height * 0.75);
+    path.quadraticBezierTo(size.width * 0.10, size.height * 0.70,
+        size.width * 0.17, size.height * 0.90);
+    path.quadraticBezierTo(
+        size.width * 0.20, size.height, size.width * 0.25, size.height * 0.90);
+    path.quadraticBezierTo(size.width * 0.40, size.height * 0.40,
+        size.width * 0.50, size.height * 0.70);
+    path.quadraticBezierTo(size.width * 0.60, size.height * 0.85,
+        size.width * 0.65, size.height * 0.65);
+    path.quadraticBezierTo(
+        size.width * 0.70, size.height * 0.90, size.width, 0);
     path.close();
 
     paint.color = colorThree;
     canvas.drawPath(path, paint);
 
     path = Path();
-    path.lineTo(0, size.height*0.50);
-    path.quadraticBezierTo(size.width*0.10, size.height*0.80, size.width*0.15, size.height*0.60);
-    path.quadraticBezierTo(size.width*0.20, size.height*0.45, size.width*0.27, size.height*0.60);
-    path.quadraticBezierTo(size.width*0.45, size.height, size.width*0.50, size.height*0.80);
-    path.quadraticBezierTo(size.width*0.55, size.height*0.45, size.width*0.75, size.height*0.75);
-    path.quadraticBezierTo(size.width*0.85, size.height*0.93, size.width, size.height*0.60);
+    path.lineTo(0, size.height * 0.50);
+    path.quadraticBezierTo(size.width * 0.10, size.height * 0.80,
+        size.width * 0.15, size.height * 0.60);
+    path.quadraticBezierTo(size.width * 0.20, size.height * 0.45,
+        size.width * 0.27, size.height * 0.60);
+    path.quadraticBezierTo(
+        size.width * 0.45, size.height, size.width * 0.50, size.height * 0.80);
+    path.quadraticBezierTo(size.width * 0.55, size.height * 0.45,
+        size.width * 0.75, size.height * 0.75);
+    path.quadraticBezierTo(
+        size.width * 0.85, size.height * 0.93, size.width, size.height * 0.60);
     path.lineTo(size.width, 0);
     path.close();
 
     paint.color = colorTwo;
     canvas.drawPath(path, paint);
 
-    path =Path();
-    path.lineTo(0, size.height*0.75);
-    path.quadraticBezierTo(size.width*0.10, size.height*0.55, size.width*0.22, size.height*0.70);
-    path.quadraticBezierTo(size.width*0.30, size.height*0.90, size.width*0.40, size.height*0.75);
-    path.quadraticBezierTo(size.width*0.52, size.height*0.50, size.width*0.65, size.height*0.70);
-    path.quadraticBezierTo(size.width*0.75, size.height*0.85, size.width, size.height*0.60);
+    path = Path();
+    path.lineTo(0, size.height * 0.75);
+    path.quadraticBezierTo(size.width * 0.10, size.height * 0.55,
+        size.width * 0.22, size.height * 0.70);
+    path.quadraticBezierTo(size.width * 0.30, size.height * 0.90,
+        size.width * 0.40, size.height * 0.75);
+    path.quadraticBezierTo(size.width * 0.52, size.height * 0.50,
+        size.width * 0.65, size.height * 0.70);
+    path.quadraticBezierTo(
+        size.width * 0.75, size.height * 0.85, size.width, size.height * 0.60);
     path.lineTo(size.width, 0);
     path.close();
 
@@ -159,7 +177,6 @@ class CurvePainter extends CustomPainter{
   bool shouldRepaint(CustomPainter oldDelegate) {
     return oldDelegate != this;
   }
-
 }
 
 class CurvePainterBackground extends StatelessWidget {
@@ -176,14 +193,13 @@ class CurvePainterBackground extends StatelessWidget {
   }
 }
 
-
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
+
 class _HomeScreenState extends State<HomeScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -254,20 +270,23 @@ class _HomeScreenState extends State<HomeScreen> {
                             CarouselSlider(
                               options: CarouselOptions(
                                 autoPlay: true,
-                                autoPlayInterval: const Duration(milliseconds: 1500),
+                                autoPlayInterval:
+                                    const Duration(milliseconds: 1500),
                                 enlargeCenterPage: true,
                                 aspectRatio: 2.0,
                                 height: 50.0,
                                 scrollDirection: Axis.vertical,
                               ),
-                              items: synonyms.map((item) => Text(
-                                item,
-                                style: const TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                              )).toList(),
+                              items: synonyms
+                                  .map((item) => Text(
+                                        item,
+                                        style: const TextStyle(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                      ))
+                                  .toList(),
                             ),
                           ],
                         ),
@@ -277,10 +296,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Expanded(
                             child: SearchAnchor(
-                              builder: (BuildContext context, SearchController controller) {
+                              builder: (BuildContext context,
+                                  SearchController controller) {
                                 return SearchBar(
                                   controller: controller,
-                                  padding: const MaterialStatePropertyAll<EdgeInsets>(
+                                  padding: const MaterialStatePropertyAll<
+                                      EdgeInsets>(
                                     EdgeInsets.symmetric(horizontal: 16.0),
                                   ),
                                   onTap: () {
@@ -292,7 +313,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   leading: const Icon(Icons.search),
                                 );
                               },
-                              suggestionsBuilder: (BuildContext context, SearchController controller) {
+                              suggestionsBuilder: (BuildContext context,
+                                  SearchController controller) {
                                 return List<ListTile>.generate(5, (int index) {
                                   final String item = 'item $index';
                                   return ListTile(
@@ -329,8 +351,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
-
   Widget _buildUserList() {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('UData').snapshots(),
@@ -354,75 +374,91 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // Main menu list
   Widget _buildTutorList(DocumentSnapshot document) {
+    final user = Provider.of<cUser?>(context);
     Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-
     // Getting non-current user data
     if (_auth.currentUser!.email != data['email']) {
       String rfullname = data['fname'] + ' ' + data['lname'];
       String remail = data['email'];
 
       // Displaying non-current user data
-      if (rfullname.isNotEmpty && remail.isNotEmpty && data['isTutor'] == true) {
-        return Container(
-          height: 100.0,
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.9),
-            borderRadius: BorderRadius.circular(10.0),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 2,
-                blurRadius: 5,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Row(
-            children: [
-              // Place the CircleAvatar here
-              CircleAvatar(
-                radius: 40.0,
-                child: Text(rfullname[0].toUpperCase()),
-              ),
-              Expanded(
-                child: ListTile(
-                  title: Text(
-                    toTitleCase(rfullname),
-                    style: const TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+      if (rfullname.isNotEmpty &&
+          remail.isNotEmpty &&
+          data['isTutor'] == true) {
+        return StreamBuilder<Userinfo?>(
+            stream: DatabaseService(uid: user?.uid).uDatadoc,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                Userinfo? userData = snapshot.data;
+                bool hasicon = userData!.iconURL.isEmpty;
+                return Container(
+                  height: 100.0,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.9),
+                    borderRadius: BorderRadius.circular(10.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
                   ),
-                  subtitle: Text(
-                    remail,
-                    style: const TextStyle(
-                      fontSize: 12.0,
-                    ),
-                  ),
-                  onTap: () {
-                    // Tutor page
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TutorPage(
-                          lname: data['lname'],
-                          fname: data['fname'],
-                          abtme: data['abtme'],
-                          email: data['email'],
-                          phono: data['phono'],
-                          loc: data['loc'],
-                          uid: data['uid'],
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 8.0, horizontal: 16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Row(
+                    children: [
+                      // Place the CircleAvatar here
+                      CircleAvatar(
+                        radius: 40.0,
+                        child: hasicon
+                            ? _hanosicon(data['fname'])
+                            : _hasicon(data['iconURL']),
+                      ),
+                      Expanded(
+                        child: ListTile(
+                          title: Text(
+                            toTitleCase(rfullname),
+                            style: const TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          subtitle: Text(
+                            remail,
+                            style: const TextStyle(
+                              fontSize: 12.0,
+                            ),
+                          ),
+                          onTap: () {
+                            // Tutor page
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => TutorPage(
+                                  lname: data['lname'],
+                                  fname: data['fname'],
+                                  abtme: data['abtme'],
+                                  email: data['email'],
+                                  phono: data['phono'],
+                                  loc: data['loc'],
+                                  uid: data['uid'],
+                                  iconURL: data['iconURL']
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        );
+                    ],
+                  ),
+                );
+              }else {
+            return const Loading();
+          }
+            });
       } else {
         return Container();
       }
@@ -430,7 +466,6 @@ class _HomeScreenState extends State<HomeScreen> {
       return Container();
     }
   }
-
 
   String toTitleCase(String text) {
     return text.toLowerCase().split(' ').map((word) {
@@ -442,4 +477,16 @@ class _HomeScreenState extends State<HomeScreen> {
     }).join(' ');
   }
 
+  Widget _hasicon(String iconURL) {
+    return CircleAvatar(radius: 65.0, backgroundImage: NetworkImage(iconURL));
+  }
+
+  Widget _hanosicon(String name) {
+    return CircleAvatar(
+        radius: 65.0,
+        child: Text(
+          name[0].toUpperCase(),
+          style: const TextStyle(fontSize: 50.0),
+        ));
+  }
 }

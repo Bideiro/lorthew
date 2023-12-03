@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:lorthew/Screens/ScheduleScreenT/schedule_edit_t.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
+import 'package:provider/provider.dart';
+
+import '../../models/cuser.dart';
+import '../../models/userinf.dart';
+import '../../services/database.dart';
 
 class ScheduleScreenP extends StatelessWidget {
   final List<StudentInfo> tutorData = [
@@ -118,273 +122,249 @@ class ScheduleTutor extends StatelessWidget {
       );
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text(
-          'Schedule',
-          style: TextStyle(
-              fontFamily: 'Bebas', fontSize: 30, fontWeight: FontWeight.w400),
-        ),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ScheduleEditT()),
-              );
-            },
-            style: ButtonStyle(
-              overlayColor: MaterialStateProperty.resolveWith((states) {
-                return Colors.transparent;
-              }),
-            ),
-            child: const Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.mode_edit,
-                    color: Colors.black,
-                    size: 25,
-                  ),
-                  SizedBox(width: 5.0),
-                  Text("Edit Sched",
-                      style: TextStyle(
-                        fontFamily: 'Bebas',
-                        fontSize: 25,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,
-                      )),
-                ],
+    final user = Provider.of<cUser?>(context);
+    return StreamBuilder<Userinfo?>(
+        stream: DatabaseService(uid: user?.uid).uDatadoc,
+        builder: (context, snapshot) {
+          Userinfo? userData = snapshot.data;
+          return Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              title: const Text(
+                'Schedule',
+                style: TextStyle(
+                    fontFamily: 'Bebas',
+                    fontSize: 30,
+                    fontWeight: FontWeight.w400),
               ),
             ),
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        physics: tutorDatas.length <= 4
-            ? const NeverScrollableScrollPhysics()
-            : null,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50.0),
-          child: Center(
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 130.0,
-                      height: 30,
-                      color: (const Color(0xFFFDD835)),
-                      child: Center(
-                        child: Text(
-                          month.toUpperCase(),
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 20.0),
-                    Expanded(
-                      child: Container(
-                        height: 30,
-                        color: (const Color(0xFFFDD835)),
-                        child: Center(
-                          child: Text(
-                            "Students for Today:".toUpperCase(),
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
+            body: SingleChildScrollView(
+              physics: tutorDatas.length <= 4
+                  ? const NeverScrollableScrollPhysics()
+                  : null,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 30.0, vertical: 50.0),
+                child: Center(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            width: 130.0,
+                            height: 30,
+                            color: (const Color(0xFFFDD835)),
+                            child: Center(
+                              child: Text(
+                                month.toUpperCase(),
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Container(
-                      width: 130.0,
-                      height: 100,
-                      color: (const Color(0xFFEEEEEE)),
-                      child: Center(
-                        child: Text(
-                          day.toUpperCase(),
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 60.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 20.0),
-                    //Student List with Bullet
-                    Expanded(
-                      child: Container(
-                        height: 100,
-                        color: const Color(0xFFEEEEEE),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Center(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                for (var i = 0;
-                                    i <
-                                        (tutorDatas.length <= 4
-                                            ? tutorDatas.length
-                                            : 3);
-                                    i++)
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          const Icon(
-                                            Icons.brightness_1,
-                                            size: 6,
-                                          ),
-                                          const SizedBox(width: 5.0),
-                                          Text(
-                                            tutorDatas[i].name,
-                                            style: const TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                          const SizedBox(width: 20.0),
+                          Expanded(
+                            child: Container(
+                              height: 30,
+                              color: (const Color(0xFFFDD835)),
+                              child: Center(
+                                child: Text(
+                                  "Students for Today:".toUpperCase(),
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                if (showRemainingStudents)
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          const Icon(
-                                            Icons.brightness_1,
-                                            size: 6,
-                                          ),
-                                          const SizedBox(width: 5.0),
-                                          Text(
-                                            '+ $remainingStudents more students',
-                                            style: const TextStyle(
-                                              fontSize: 14,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                              ],
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
-                    )
-                  ],
-                ),
-                const SizedBox(height: 20.0),
-                Column(
-                  children: [
-                    //Individual Containers with Time
-                    Column(
-                      children: tutorDatas.map((info) {
-                        Color bookmarkColor =
-                            bookmarkColors[colorIndex % bookmarkColors.length];
-                        colorIndex++;
-                        return Column(
-                          children: [
-                            Container(
-                              height: 95,
-                              width: 500.0,
+                      Row(
+                        children: [
+                          Container(
+                            width: 130.0,
+                            height: 100,
+                            color: (const Color(0xFFEEEEEE)),
+                            child: Center(
+                              child: Text(
+                                day.toUpperCase(),
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 60.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 20.0),
+                          //Student List with Bullet
+                          Expanded(
+                            child: Container(
+                              height: 100,
                               color: const Color(0xFFEEEEEE),
-                              padding: const EdgeInsets.all(25.0),
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Center(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      for (var i = 0;
+                                          i <
+                                              (tutorDatas.length <= 4
+                                                  ? tutorDatas.length
+                                                  : 3);
+                                          i++)
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                const Icon(
+                                                  Icons.brightness_1,
+                                                  size: 6,
+                                                ),
+                                                const SizedBox(width: 5.0),
+                                                Text(
+                                                  tutorDatas[i].name,
+                                                  style: const TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      if (showRemainingStudents)
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                const Icon(
+                                                  Icons.brightness_1,
+                                                  size: 6,
+                                                ),
+                                                const SizedBox(width: 5.0),
+                                                Text(
+                                                  '+ $remainingStudents more students',
+                                                  style: const TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(height: 20.0),
+                      Column(
+                        children: [
+                          //Individual Containers with Time
+                          Column(
+                            children: tutorDatas.map((info) {
+                              Color bookmarkColor = bookmarkColors[
+                                  colorIndex % bookmarkColors.length];
+                              colorIndex++;
+                              return Column(
+                                children: [
+                                  Container(
+                                    height: 95,
+                                    width: 500.0,
+                                    color: const Color(0xFFEEEEEE),
+                                    padding: const EdgeInsets.all(25.0),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.bookmark,
+                                          color: bookmarkColor,
+                                          size: 30.0,
+                                        ),
+                                        const SizedBox(width: 30.0),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              info.name.toUpperCase(),
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            Text(
+                                              info.date.toUpperCase(),
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(height: 15.0),
+                                ],
+                              );
+                            }).toList(),
+                          ),
+                          TextButton(
+                            onPressed: printPdf,
+                            style: ButtonStyle(
+                              overlayColor:
+                                  MaterialStateProperty.resolveWith((states) {
+                                return Colors.transparent;
+                              }),
+                            ),
+                            child: const Center(
                               child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(
-                                    Icons.bookmark,
-                                    color: bookmarkColor,
-                                    size: 30.0,
+                                    Icons.file_download_outlined,
+                                    color: Colors.black,
                                   ),
-                                  const SizedBox(width: 30.0),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        info.name.toUpperCase(),
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 15.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Text(
-                                        info.date.toUpperCase(),
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 15.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
+                                  SizedBox(width: 5.0),
+                                  Text(
+                                    "Get PDF Schedule",
+                                    style: TextStyle(
+                                      fontSize: 18.0,
+                                      color: Colors.black,
+                                      decoration: TextDecoration.underline,
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 15.0),
-                          ],
-                        );
-                      }).toList(),
-                    ),
-                    TextButton(
-                      onPressed: printPdf,
-                      style: ButtonStyle(
-                        overlayColor:
-                            MaterialStateProperty.resolveWith((states) {
-                          return Colors.transparent;
-                        }),
+                          ),
+                        ],
                       ),
-                      child: const Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.file_download_outlined,
-                              color: Colors.black,
-                            ),
-                            SizedBox(width: 5.0),
-                            Text(
-                              "Get PDF Schedule",
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                color: Colors.black,
-                                decoration: TextDecoration.underline,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
-    );
+          );
+        });
   }
 }

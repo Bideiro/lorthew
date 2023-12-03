@@ -4,13 +4,13 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:lorthew/models/schedinfo.dart';
 
+import '../models/sched.dart';
 import '../models/userinf.dart';
 
 class DatabaseService {
   final String? uid;
-  DatabaseService({this.uid}); //yung required dito
+  DatabaseService({this.uid});
 //collection reference
 
   final CollectionReference schedTdataCollection =
@@ -45,19 +45,6 @@ class DatabaseService {
     });
   }
 
-  //changing main user data
-  // Future updateUserData(String fname, String lname, String aboutMe,
-  //     String phoneNum, String location) async {
-  //   return await userdataCollection.doc(uid).update({
-  //     'fname': fname,
-  //     'lname': lname,
-  //     'abtme': aboutMe,
-  //     'phono': phoneNum,
-  //     'loc': location,
-  //     'uid': uid,
-  //   });
-  // }
-
 //changing main user data
   Future updateUserData(String fname, String lname, String aboutMe,
       String phoneNum, String location, String subj, String exp) async {
@@ -68,7 +55,7 @@ class DatabaseService {
       'phono': phoneNum,
       'loc': location,
       'subj': subj,
-      'exp': '',
+      'exp': exp,
       'pricelvl': 0,
       'starno': 0,
     });
@@ -110,39 +97,7 @@ class DatabaseService {
 // //list of the data in docs for pupil
 //user data from snapshot
 
-  // PupilUserinfo _pupiluDataFromSnapshot(DocumentSnapshot snapshot) {
-  //   return PupilUserinfo(
-  //     uid: uid,
-  //     fname: snapshot.get('fname'),
-  //     lname: snapshot.get('lname'),
-  //     abtme: snapshot.get('abtme'),
-  //     email: snapshot.get('email'),
-  //     phono: snapshot.get('phono'),
-  //     loc: snapshot.get('loc'),
-  //     iconURL: snapshot.get('iconURL'),
-  //     isTutor: snapshot.get('isTutor'),
-  //   );
-  // }
-
-  // TutorUserinfo _tutoruDataFromSnapshot(DocumentSnapshot snapshot) {
-  //   return TutorUserinfo(
-  //     uid: uid,
-  //     fname: snapshot.get('fname'),
-  //     lname: snapshot.get('lname'),
-  //     abtme: snapshot.get('abtme'),
-  //     email: snapshot.get('email'),
-  //     phono: snapshot.get('phono'),
-  //     loc: snapshot.get('loc'),
-  //     iconURL: snapshot.get('iconURL'),
-  //     isTutor: snapshot.get('isTutor'),
-  //     subj: snapshot.get('subj'),
-  //     pricelvl: snapshot.get('pricelvl'),
-  //     starno: snapshot.get('starno'),
-  //     exp: snapshot.get('exp'),);
-  // }
-
-
-Userinfo _uDataFromSnapshot(DocumentSnapshot snapshot) {
+  Userinfo _uDataFromSnapshot(DocumentSnapshot snapshot) {
     return Userinfo(
       uid: uid,
       fname: snapshot.get('fname'),
@@ -156,33 +111,38 @@ Userinfo _uDataFromSnapshot(DocumentSnapshot snapshot) {
       subj: snapshot.get('subj'),
       pricelvl: snapshot.get('pricelvl'),
       starno: snapshot.get('starno'),
-      exp: snapshot.get('exp'),);
+      exp: snapshot.get('exp'),
+    );
   }
 
-  SchedToday _schedMFromSnapshot(DocumentSnapshot snapshot) {
-    return SchedToday(
-        tutoruid: snapshot.get('tutoruid'),
-        tutor: snapshot.get('tutor'),
-        pupiluid: snapshot.get('pupiluid'),
-        pupil: snapshot.get('pupil'),
-        time: snapshot.get('time'));
+  sched _schedMFromSnapshot(DocumentSnapshot snapshot) {
+    return sched(
+        puid: snapshot.get('puid'),
+        timeend: snapshot.get('timeend'),
+        timestart: snapshot.get('timestart'),
+        pname: snapshot.get('pname'),
+        day: snapshot.get('day'));
   }
 
-// get pupil data stream
-  // Stream<PupilUserinfo?> get PuDatadoc {
-  //   return userdataCollection.doc(uid).snapshots().map(_pupiluDataFromSnapshot);
-  // }
+  Future setsched(
+      String puid,String day, int timestart, int timeend,String tuid) async {
+    return await userdataCollection
+        .doc(puid)
+        .collection('Sched$day')
+        .doc(tuid)
+        .set({
+      'timestart': timestart,
+      'timeend': timeend,
+      'puid': puid,
+    });
+  }
+
 
   Stream<Userinfo?> get uDatadoc {
     return userdataCollection.doc(uid).snapshots().map(_uDataFromSnapshot);
   }
 
-  Stream<SchedToday> get SchedM {
-    return schedTdataCollection
-        .doc(uid)
-        .collection('SchedM')
-        .doc(uid)
-        .snapshots()
-        .map(_schedMFromSnapshot);
+  Stream<sched> get Sched {
+    return schedTdataCollection.doc(uid).snapshots().map(_schedMFromSnapshot);
   }
 }

@@ -47,7 +47,7 @@ class _TutorPageState extends State<TutorPage> {
 
   Widget _buildProfileView() {
     return StreamBuilder<DocumentSnapshot>(
-      stream: ProfileService().PuDatadoc,
+      stream: ProfileService().uDatadoc,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text('Error${snapshot.error}');
@@ -74,7 +74,7 @@ class _TutorPageState extends State<TutorPage> {
                   ),
                 ),
                 const SizedBox(height: 15.0),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Column(

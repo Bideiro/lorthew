@@ -157,15 +157,15 @@ class _ChatMenuState extends State<ChatMenu> {
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
-                              SizedBox(width: 8.0),
+                              const SizedBox(width: 8.0),
                               Text(
                                 formattedTime,
-                                style: TextStyle(fontSize: 12.0, color: Colors.grey),
+                                style: const TextStyle(fontSize: 12.0, color: Colors.grey),
                               ),
                             ],
                           );
                         } else {
-                          return Text(
+                          return const Text(
                             'Say hi! 👋',
                             style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
                           );

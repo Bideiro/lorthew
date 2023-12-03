@@ -145,13 +145,12 @@ class _PaymentScreenState extends State<PaymentScreenP> {
     if (_auth.currentUser!.email != data['email'] && data['isTutor'] == true) {
       String rfullname = data['fname'] + ' ' + data['lname'];
       String remail = data['email'];
-
+      String hasicon = data['iconURL'].toString();
       //displaying non current user data
       if (rfullname.isNotEmpty && remail.isNotEmpty) {
         return ListTile(
-          leading: CircleAvatar(
-            child: Text(rfullname[0].toUpperCase()),
-          ),
+          leading:
+              hasicon == '' ? _hanosicon(data['fname']) : _hasicon(data['iconURL']),
           title: Text(rfullname),
           subtitle: Text(remail),
           onTap: () {
@@ -162,11 +161,10 @@ class _PaymentScreenState extends State<PaymentScreenP> {
                 builder: (context) => PaymentScreenP2(
                   tutorfname: data['fname'],
                   tutorlname: data['lname'],
-                  currfname: 'test',
-                  currlname: 'test',
                   tutoremail: data['email'],
-                  currphono: 'testest',
                   tutorphono: data['phono'],
+                  tutoruid: data['uid'],
+                  iconURL: data['iconURL'],
                 ),
               ),
             );
@@ -178,5 +176,18 @@ class _PaymentScreenState extends State<PaymentScreenP> {
     } else {
       return Container();
     }
+  }
+
+  Widget _hasicon(String iconURL) {
+    return CircleAvatar(radius: 40.0, backgroundImage: NetworkImage(iconURL));
+  }
+
+  Widget _hanosicon(String name) {
+    return CircleAvatar(
+        radius: 65.0,
+        child: Text(
+          name[0].toUpperCase(),
+          style: const TextStyle(fontSize: 50.0),
+        ));
   }
 }
