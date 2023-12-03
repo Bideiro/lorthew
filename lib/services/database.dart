@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lorthew/models/schedinfo.dart';
 
 import '../models/userinf.dart';
 
@@ -11,6 +12,9 @@ class DatabaseService {
   final String? uid;
   DatabaseService({this.uid}); //yung required dito
 //collection reference
+
+  final CollectionReference schedTdataCollection =
+      FirebaseFirestore.instance.collection('Sched');
 
   final CollectionReference userdataCollection =
       FirebaseFirestore.instance.collection('UData');
@@ -22,10 +26,10 @@ class DatabaseService {
     return await userdataCollection.doc(uid).set({
       'fname': fname,
       'lname': lname,
-      'isTuTor': false,
+      'isTutor': false,
       'uid': uid,
       'email': email,
-      'iconURL' : '',
+      'iconURL': '',
     });
   }
 
@@ -37,18 +41,17 @@ class DatabaseService {
       'isTutor': true,
       'uid': uid,
       'email': email,
-      'iconURL' : '',
+      'iconURL': '',
     });
   }
 
   //changing main user data for pupil
   Future updatePUserData(String fname, String lname, String aboutMe,
-      String email, String phoneNum, String location) async {
+      String phoneNum, String location) async {
     return await userdataCollection.doc(uid).update({
       'fname': fname,
       'lname': lname,
       'abtme': aboutMe,
-      'email': email,
       'phono': phoneNum,
       'loc': location,
       'uid': uid,
@@ -57,12 +60,11 @@ class DatabaseService {
 
 //changing main user data for pupil
   Future updateTUserData(String fname, String lname, String aboutMe,
-      String email, String phoneNum, String location, String subj) async {
+      String phoneNum, String location, String subj) async {
     return await userdataCollection.doc(uid).update({
       'fname': fname,
       'lname': lname,
       'abtme': aboutMe,
-      'email': email,
       'phono': phoneNum,
       'loc': location,
       'subj': subj,
@@ -104,12 +106,44 @@ class DatabaseService {
       'iconURL': dlurl,
     });
   }
+
 // //list of the data in docs for pupil
+//user data from snapshot
 
-//user data from snpashot
+  // PupilUserinfo _pupiluDataFromSnapshot(DocumentSnapshot snapshot) {
+  //   return PupilUserinfo(
+  //     uid: uid,
+  //     fname: snapshot.get('fname'),
+  //     lname: snapshot.get('lname'),
+  //     abtme: snapshot.get('abtme'),
+  //     email: snapshot.get('email'),
+  //     phono: snapshot.get('phono'),
+  //     loc: snapshot.get('loc'),
+  //     iconURL: snapshot.get('iconURL'),
+  //     isTutor: snapshot.get('isTutor'),
+  //   );
+  // }
 
-  PupilUserinfo _pupiluDataFromSnapshot(DocumentSnapshot snapshot) {
-    return PupilUserinfo(
+  // TutorUserinfo _tutoruDataFromSnapshot(DocumentSnapshot snapshot) {
+  //   return TutorUserinfo(
+  //     uid: uid,
+  //     fname: snapshot.get('fname'),
+  //     lname: snapshot.get('lname'),
+  //     abtme: snapshot.get('abtme'),
+  //     email: snapshot.get('email'),
+  //     phono: snapshot.get('phono'),
+  //     loc: snapshot.get('loc'),
+  //     iconURL: snapshot.get('iconURL'),
+  //     isTutor: snapshot.get('isTutor'),
+  //     subj: snapshot.get('subj'),
+  //     pricelvl: snapshot.get('pricelvl'),
+  //     starno: snapshot.get('starno'),
+  //     exp: snapshot.get('exp'),);
+  // }
+
+
+Userinfo _uDataFromSnapshot(DocumentSnapshot snapshot) {
+    return Userinfo(
       uid: uid,
       fname: snapshot.get('fname'),
       lname: snapshot.get('lname'),
@@ -119,11 +153,36 @@ class DatabaseService {
       loc: snapshot.get('loc'),
       iconURL: snapshot.get('iconURL'),
       isTutor: snapshot.get('isTutor'),
-    );
+      subj: snapshot.get('subj'),
+      pricelvl: snapshot.get('pricelvl'),
+      starno: snapshot.get('starno'),
+      exp: snapshot.get('exp'),);
+  }
+
+  SchedToday _schedMFromSnapshot(DocumentSnapshot snapshot) {
+    return SchedToday(
+        tutoruid: snapshot.get('tutoruid'),
+        tutor: snapshot.get('tutor'),
+        pupiluid: snapshot.get('pupiluid'),
+        pupil: snapshot.get('pupil'),
+        time: snapshot.get('time'));
   }
 
 // get pupil data stream
-  Stream<PupilUserinfo?> get PuDatadoc {
-    return userdataCollection.doc(uid).snapshots().map(_pupiluDataFromSnapshot);
+  // Stream<PupilUserinfo?> get PuDatadoc {
+  //   return userdataCollection.doc(uid).snapshots().map(_pupiluDataFromSnapshot);
+  // }
+
+  Stream<Userinfo?> get uDatadoc {
+    return userdataCollection.doc(uid).snapshots().map(_uDataFromSnapshot);
+  }
+
+  Stream<SchedToday> get SchedM {
+    return schedTdataCollection
+        .doc(uid)
+        .collection('SchedM')
+        .doc(uid)
+        .snapshots()
+        .map(_schedMFromSnapshot);
   }
 }

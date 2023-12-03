@@ -27,7 +27,7 @@ class AuthService {
       User? user = result.user!; //yung exclamation mark need wala ata idfk
       await DatabaseService(uid: user.uid).initPUserData(fname, lname,email);
       await DatabaseService(uid: user.uid)
-          .updatePUserData(fname, lname, '', email, '', '');
+          .updatePUserData(fname, lname, '', '', '');
       return _userFromFirebase(user);
     } catch (e) {
       print(e.toString());
@@ -45,7 +45,7 @@ class AuthService {
       User? user = result.user!; //yung exclamation mark need wala ata idfk
       await DatabaseService(uid: user.uid).initTUserData(fname, lname,email);
       await DatabaseService(uid: user.uid)
-          .updateTUserData(fname, lname, '', email, '', '', subj);
+          .updateTUserData(fname, lname, '', '', '', subj);
       return _userFromFirebase(user);
     } catch (e) {
       print(e.toString());

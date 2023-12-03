@@ -112,73 +112,82 @@ class _ChatMenuState extends State<ChatMenu> {
       String remail = data['email'];
 
       if (rfullname.isNotEmpty && remail.isNotEmpty) {
-        return ListTile(
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage(data['iconURL']),
-            radius: 48,
-          ),
-          title: Text(rfullname),
-          subtitle: StreamBuilder<QuerySnapshot>(
-            stream: _chatService.getMessages(
-              _auth.currentUser!.uid,
-              data['uid'],
-            ),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              }
-
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Text('loading...');
-              }
-
-              var messages = snapshot.data!.docs;
-              if (messages.isNotEmpty) {
-                var latestMessage = messages.last['message'];
-                var timestamp = messages.last['timestamp'];
-                var formattedTime = _formatRelativeTime(timestamp);
-
-                bool isCurrentUserSender = messages.last['senderId'] == _auth.currentUser!.uid;
-
-                bool shouldAdjustWidth = latestMessage.length > 20;
-
-                return Row(
-                  children: [
-                    SizedBox(
-                      width: shouldAdjustWidth ? MediaQuery.of(context).size.width * 0.45 : null,
-                      child: Text(
-                        isCurrentUserSender ? 'You: $latestMessage' : latestMessage,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    const SizedBox(width: 8.0),
-                    Text(
-                      formattedTime,
-                      style: const TextStyle(fontSize: 12.0, color: Colors.grey),
-                    ),
-                  ],
-                );
-              } else {
-                return const Text(
-                  'Say hi! 👋',
-                  style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
-                );
-              }
-            },
-          ),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ChatPage(
-                  receiverfullname: rfullname,
-                  receiverUserEmail: remail,
-                  receiverUserID: data['uid'],
+        return Padding(
+            padding: EdgeInsets.only(left: 16.0),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  radius: 30,
+                  backgroundImage: NetworkImage(data['iconURL']),
                 ),
-              ),
-            );
-          },
+                Expanded(
+                  child: ListTile(
+                    title: Text(rfullname),
+                    subtitle: StreamBuilder<QuerySnapshot>(
+                      stream: _chatService.getMessages(
+                        _auth.currentUser!.uid,
+                        data['uid'],
+                      ),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        }
+
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return Text('loading...');
+                        }
+
+                        var messages = snapshot.data!.docs;
+                        if (messages.isNotEmpty) {
+                          var latestMessage = messages.last['message'];
+                          var timestamp = messages.last['timestamp'];
+                          var formattedTime = _formatRelativeTime(timestamp);
+
+                          bool isCurrentUserSender = messages.last['senderId'] == _auth.currentUser!.uid;
+
+                          bool shouldAdjustWidth = latestMessage.length > 20;
+
+                          return Row(
+                            children: [
+                              Container(
+                                width: shouldAdjustWidth ? MediaQuery.of(context).size.width * 0.45 : null,
+                                child: Text(
+                                  isCurrentUserSender ? 'You: $latestMessage' : latestMessage,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              SizedBox(width: 8.0),
+                              Text(
+                                formattedTime,
+                                style: TextStyle(fontSize: 12.0, color: Colors.grey),
+                              ),
+                            ],
+                          );
+                        } else {
+                          return Text(
+                            'Say hi! 👋',
+                            style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+                          );
+                        }
+                      },
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChatPage(
+                            receiverfullname: rfullname,
+                            receiverUserEmail: remail,
+                            receiverUserID: data['uid'],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
         );
       } else {
         return Container();

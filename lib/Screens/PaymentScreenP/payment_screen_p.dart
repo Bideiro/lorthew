@@ -112,54 +112,6 @@ class _PaymentScreenState extends State<PaymentScreenP> {
             ),
           ),
           Expanded(child: _buildUserListPayment())
-          // Expanded(
-          //   child: ListView.builder(
-          //     itemCount: filteredItems.length,
-          //     itemBuilder: (context, index) {
-          //       return GestureDetector(
-          //         onTap: () {
-          //           setState(() {
-          //             selectedItemIndex = index;
-          //           });
-          //           Navigator.push(
-          //             context,
-          //             MaterialPageRoute(
-          //               builder: (context) =>
-          //                   _buildUserListPayment(),
-          //             ),
-          //           );
-          //         },
-          //         child: MouseRegion(
-          //           onEnter: (_) {
-          //             setState(() {
-          //               selectedItemIndex = index;
-          //             });
-          //           },
-          //           onExit: (_) {
-          //             setState(() {
-          //               selectedItemIndex = null;
-          //             });
-          //           },
-          //           child: Container(
-          //             color: selectedItemIndex == index
-          //                 ? const Color.fromARGB(255, 15, 26, 122)
-          //                 : null,
-          //             child: ListTile(
-          //               title: Text(
-          //                 filteredItems[index],
-          //                 style: TextStyle(
-          //                   color: selectedItemIndex == index
-          //                       ? Colors.white
-          //                       : Colors.black,
-          //                 ),
-          //               ),
-          //             ),
-          //           ),
-          //         ),
-          //       );
-          //     },
-          //   ),
-          // ),
         ],
       ),
     );

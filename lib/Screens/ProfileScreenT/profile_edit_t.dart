@@ -36,11 +36,11 @@ class _ProfileEditTState extends State<ProfileEditT> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<cUser?>(context);
-    return StreamBuilder<PupilUserinfo?>(
-        stream: DatabaseService(uid: user?.uid).PuDatadoc,
+    return StreamBuilder<Userinfo?>(
+        stream: DatabaseService(uid: user?.uid).uDatadoc,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            PupilUserinfo? userData = snapshot.data;
+            Userinfo? userData = snapshot.data;
             String icon = userData!.iconURL;
             bool hasicon = userData.iconURL.isEmpty;
             return Scaffold(
@@ -317,7 +317,6 @@ class _ProfileEditTState extends State<ProfileEditT> {
                                 fname.isEmpty ? userData.fname : fname,
                                 lname.isEmpty ? userData.lname : lname,
                                 abtme.isEmpty ? userData.abtme : abtme,
-                                email.isEmpty ? userData.email : email,
                                 phono.isEmpty ? userData.phono : phono,
                                 loc.isEmpty ? userData.loc : loc,
                               );
@@ -393,7 +392,6 @@ class _ProfileEditTState extends State<ProfileEditT> {
               abtme,
               email,
               phono,
-              loc,
             );
           },
           icon: const Icon(

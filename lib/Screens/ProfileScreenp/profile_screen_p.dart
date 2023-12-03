@@ -28,11 +28,11 @@ class ProfileScreenP extends StatelessWidget {
     }
 
     // print("Building Profile Page with User Data: $userData");
-    return StreamBuilder<PupilUserinfo?>(
-        stream: DatabaseService(uid: user?.uid).PuDatadoc,
+    return StreamBuilder<Userinfo?>(
+        stream: DatabaseService(uid: user?.uid).uDatadoc,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            PupilUserinfo? userData = snapshot.data;
+            Userinfo? userData = snapshot.data;
             bool hasicon = userData!.iconURL.isEmpty;
             return GestureDetector(
               onTap: () {

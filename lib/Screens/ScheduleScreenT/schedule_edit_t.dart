@@ -11,8 +11,8 @@ class _ScheduleEditTState extends State<ScheduleEditT> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   
-  List<String> dropdownOptions1 = ['Option 1', 'Option 2', 'Option 3'];
-  List<String> dropdownOptions2 = ['Choice A', 'Choice B', 'Choice C'];
+  List<String> seltime = ['1', '2', '3','4','5','6','7','8','9','10','11','12'];
+  List<String> seltimeperiod = ['Choice A', 'Choice B', 'Choice C'];
 
   String? _selectedOption1;
   String? _selectedOption2;
@@ -49,9 +49,9 @@ class _ScheduleEditTState extends State<ScheduleEditT> {
               });
             },
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           if (_selectedDay != null) Text('Selected Day: $_selectedDay'),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Align(
             alignment: Alignment.center,
             child: Padding(
@@ -59,17 +59,17 @@ class _ScheduleEditTState extends State<ScheduleEditT> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Select Option 1:'),
-                  SizedBox(width: 10),
+                  const Text('Select Option 1:'),
+                  const SizedBox(width: 10),
                   DropdownButton<String>(
-                    hint: Text('Select Option 1'),
+                    hint: const Text('Select Option 1'),
                     value: _selectedOption1,
                     onChanged: (newValue) {
                       setState(() {
                         _selectedOption1 = newValue;
                       });
                     },
-                    items: dropdownOptions1.map((option) {
+                    items: seltime.map((option) {
                       return DropdownMenuItem(
                         value: option,
                         child: Text(option),
@@ -98,7 +98,7 @@ class _ScheduleEditTState extends State<ScheduleEditT> {
                         _selectedOption2 = newValue;
                       });
                     },
-                    items: dropdownOptions2.map((option) {
+                    items: seltimeperiod.map((option) {
                       return DropdownMenuItem(
                         value: option,
                         child: Text(option),

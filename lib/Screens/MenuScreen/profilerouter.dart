@@ -17,19 +17,23 @@ class ProfileRouter extends StatefulWidget {
 class ProfileRouterState extends State<ProfileRouter> {
   @override
   Widget build(BuildContext context) {
-    final cUser? user = Provider.of<cUser?>(context);
-
-    return StreamBuilder<PupilUserinfo?>(
-        stream: DatabaseService(uid: user?.uid).PuDatadoc,
+    final user = Provider.of<cUser?>(context);
+    return StreamBuilder<Userinfo?>(
+        stream: DatabaseService(uid: user?.uid).uDatadoc,
         builder: (context, snapshot) {
-          PupilUserinfo? userData = snapshot.data;
-          if (userData?.isTutor  == false) {
-            print("going to profile for pupil");
-            return ProfileScreenP();
-          } else {
-            print("going to profile for tutor");
-            return ProfileScreenT();
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Text('loading...');
           }
+          if (snapshot.hasData) {
+            Userinfo? userData = snapshot.data;
+            if (userData!.isTutor == true) {
+              return ProfileScreenT();
+            } else if (userData.isTutor == false) {
+              return ProfileScreenP();
+            }
+          }
+          print("no has data");
+          return Authenticate();
         });
   }
 }

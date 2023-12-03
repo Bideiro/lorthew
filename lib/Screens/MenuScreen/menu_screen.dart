@@ -4,10 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:lorthew/Screens/MenuScreen/profilerouter.dart';
 
 import '../all.dart';
 import 'Profile_page_t.dart';
-import 'profilerouter.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -126,7 +126,7 @@ class CurvePainter extends CustomPainter{
     path.quadraticBezierTo(size.width*0.70, size.height*0.90, size.width, 0);
     path.close();
 
-    paint.color = colorThree!;
+    paint.color = colorThree;
     canvas.drawPath(path, paint);
 
     path = Path();
@@ -139,7 +139,7 @@ class CurvePainter extends CustomPainter{
     path.lineTo(size.width, 0);
     path.close();
 
-    paint.color = colorTwo!;
+    paint.color = colorTwo;
     canvas.drawPath(path, paint);
 
     path =Path();
@@ -362,7 +362,7 @@ class _HomeScreenState extends State<HomeScreen> {
       String remail = data['email'];
 
       // Displaying non-current user data
-      if (rfullname.isNotEmpty && remail.isNotEmpty) {
+      if (rfullname.isNotEmpty && remail.isNotEmpty && data['isTutor'] == true) {
         return Container(
           height: 100.0,
           decoration: BoxDecoration(
