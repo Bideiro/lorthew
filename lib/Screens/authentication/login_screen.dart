@@ -6,13 +6,13 @@ import 'package:lorthew/Screens/authentication/register_info_t.dart';
 import '../../services/auth.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
-  _LoginWidgetState createState() => _LoginWidgetState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginWidgetState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   String email = '';

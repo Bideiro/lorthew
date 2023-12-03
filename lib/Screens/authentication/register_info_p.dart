@@ -171,7 +171,7 @@ class _RegisterWidgetState extends State<RegisterInfoPupil> {
                                   return 'Enter a valid email address';
                                 } else {
                                   String domain = email.split('@').last.toLowerCase();
-                                  if (!allowedDomains.any((allowedDomain) => domain.endsWith(allowedDomain))) {
+                                  if (!alloweddomains.any((allowedDomain) => domain.endsWith(allowedDomain))) {
                                     return 'Enter a valid email address with an allowed domain';
                                   }
                                 }

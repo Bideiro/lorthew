@@ -10,8 +10,10 @@ import '../authentication/login_screen.dart';
 // }
 
 class Authenticate extends StatefulWidget {
+  const Authenticate({super.key});
+
   @override
-  _AuthenticateState createState() => _AuthenticateState();
+  State<Authenticate> createState() => _AuthenticateState();
 }
 
 class _AuthenticateState extends State<Authenticate> {

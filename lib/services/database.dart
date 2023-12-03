@@ -45,22 +45,22 @@ class DatabaseService {
     });
   }
 
-  //changing main user data for pupil
-  Future updatePUserData(String fname, String lname, String aboutMe,
-      String phoneNum, String location) async {
-    return await userdataCollection.doc(uid).update({
-      'fname': fname,
-      'lname': lname,
-      'abtme': aboutMe,
-      'phono': phoneNum,
-      'loc': location,
-      'uid': uid,
-    });
-  }
+  //changing main user data
+  // Future updateUserData(String fname, String lname, String aboutMe,
+  //     String phoneNum, String location) async {
+  //   return await userdataCollection.doc(uid).update({
+  //     'fname': fname,
+  //     'lname': lname,
+  //     'abtme': aboutMe,
+  //     'phono': phoneNum,
+  //     'loc': location,
+  //     'uid': uid,
+  //   });
+  // }
 
-//changing main user data for pupil
-  Future updateTUserData(String fname, String lname, String aboutMe,
-      String phoneNum, String location, String subj) async {
+//changing main user data
+  Future updateUserData(String fname, String lname, String aboutMe,
+      String phoneNum, String location, String subj, String exp) async {
     return await userdataCollection.doc(uid).update({
       'fname': fname,
       'lname': lname,
@@ -68,7 +68,7 @@ class DatabaseService {
       'phono': phoneNum,
       'loc': location,
       'subj': subj,
-      'exp': 0,
+      'exp': '',
       'pricelvl': 0,
       'starno': 0,
     });

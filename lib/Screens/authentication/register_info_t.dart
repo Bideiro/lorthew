@@ -114,7 +114,7 @@ class _RegisterWidgetState extends State<RegisterInfoTutor> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Align(
+                          const Align(
                             alignment: AlignmentDirectional(0.00, 0.00),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(16, 10, 16, 10),
@@ -129,12 +129,12 @@ class _RegisterWidgetState extends State<RegisterInfoTutor> {
                             ),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(0.00, 0.00),
+                            alignment: const AlignmentDirectional(0.00, 0.00),
                             child: Container(
                               width: 180,
                               height: 180,
                               clipBehavior: Clip.antiAlias,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                               ),
                               child: Image.asset(
@@ -143,7 +143,7 @@ class _RegisterWidgetState extends State<RegisterInfoTutor> {
                               ),
                             ),
                           ),
-                          Align(
+                          const Align(
                             alignment: AlignmentDirectional(0.00, 0.00),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(16, 10, 16, 10),
@@ -159,7 +159,7 @@ class _RegisterWidgetState extends State<RegisterInfoTutor> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(30, 16, 30, 16),
+                            padding: const EdgeInsetsDirectional.fromSTEB(30, 16, 30, 16),
                             child: TextFormField(
                               controller: _textController1,
                               focusNode: _textFieldFocusNode1,
@@ -171,7 +171,7 @@ class _RegisterWidgetState extends State<RegisterInfoTutor> {
                                   return 'Enter a valid email address';
                                 } else {
                                   String domain = email.split('@').last.toLowerCase();
-                                  if (!allowedDomains.any((allowedDomain) => domain.endsWith(allowedDomain))) {
+                                  if (!alloweddomains.any((allowedDomain) => domain.endsWith(allowedDomain))) {
                                     return 'Enter a valid email address with an allowed domain';
                                   }
                                 }
@@ -182,7 +182,7 @@ class _RegisterWidgetState extends State<RegisterInfoTutor> {
                               },
                               decoration: InputDecoration(
                                 labelText: 'Email',
-                                labelStyle: TextStyle(
+                                labelStyle: const TextStyle(
                                   fontFamily: 'Space Grotesk',
                                   color: Color(0xFF14181B),
                                   fontSize: 14,

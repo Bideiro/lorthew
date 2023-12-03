@@ -313,13 +313,14 @@ class _ProfileEditPState extends State<ProfileEditP> {
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               await DatabaseService(uid: user!.uid)
-                                  .updatePUserData(
-                                fname.isEmpty ? userData.fname : fname,
-                                lname.isEmpty ? userData.lname : lname,
-                                abtme.isEmpty ? userData.abtme : abtme,
-                                phono.isEmpty ? userData.phono : phono,
-                                loc.isEmpty ? userData.loc : loc,
-                              );
+                                  .updateUserData(
+                                      fname.isEmpty ? userData.fname : fname,
+                                      lname.isEmpty ? userData.lname : lname,
+                                      abtme.isEmpty ? userData.abtme : abtme,
+                                      phono.isEmpty ? userData.phono : phono,
+                                      loc.isEmpty ? userData.loc : loc,
+                                      '',
+                                      '');
 
                               print('User data updated successfully');
 
@@ -386,13 +387,8 @@ class _ProfileEditPState extends State<ProfileEditP> {
                 await DatabaseService(uid: uid).updateIcon(ImageSource.gallery);
             await DatabaseService(uid: uid)
                 .uploadImage('$uid - $name - Icon', img, uid);
-            await DatabaseService(uid: uid).updatePUserData(
-              fname,
-              lname,
-              abtme,
-              phono,
-              loc,
-            );
+            await DatabaseService(uid: uid)
+                .updateUserData(fname, lname, abtme, phono, loc, '','');
           },
           icon: const Icon(
             Icons.add_photo_alternate,

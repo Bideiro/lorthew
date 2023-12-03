@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:lorthew/Screens/ProfileScreenT/profile_edit_t.dart';
 import 'package:provider/provider.dart';
 
 import '../../loading.dart';
@@ -8,7 +9,6 @@ import '../../models/cuser.dart';
 import '../../models/userinf.dart';
 import '../../services/auth.dart';
 import '../../services/database.dart';
-import '../all.dart';
 
 class ProfileScreenT extends StatelessWidget {
   final AuthService _auth = AuthService();
@@ -74,7 +74,7 @@ class ProfileScreenT extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ProfileEditP()),
+                              builder: (context) => const ProfileEditT()),
                         );
                       },
                     ),
@@ -146,7 +146,7 @@ class ProfileScreenT extends StatelessWidget {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.fromLTRB(16, 0, 16, 20),
+                                padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -156,7 +156,7 @@ class ProfileScreenT extends StatelessWidget {
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Padding(
-                                            padding: EdgeInsets.fromLTRB(
+                                            padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 12),
                                             child: Container(
                                               width: 44,
@@ -165,12 +165,12 @@ class ProfileScreenT extends StatelessWidget {
                                                 color: (Color(0xFF0D47A1)),
                                                 shape: BoxShape.circle,
                                               ),
-                                              alignment: Alignment(0.00, 0.00),
+                                              alignment: const Alignment(0.00, 0.00),
                                               child: Icon(
                                                 Icons.work_outline,
                                                 color: Theme.of(context)
                                                     .primaryTextTheme
-                                                    .bodyText1!
+                                                    .bodyLarge!
                                                     .color,
                                                 size: 24,
                                               ),
@@ -190,35 +190,35 @@ class ProfileScreenT extends StatelessWidget {
                                     Expanded(
                                       child: Padding(
                                         padding:
-                                            EdgeInsets.fromLTRB(4, 0, 4, 0),
+                                            const EdgeInsets.fromLTRB(4, 0, 4, 0),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Padding(
-                                              padding: EdgeInsets.fromLTRB(
+                                              padding: const EdgeInsets.fromLTRB(
                                                   0, 0, 0, 12),
                                               child: Container(
                                                 width: 44,
                                                 height: 44,
-                                                decoration: BoxDecoration(
+                                                decoration: const BoxDecoration(
                                                   color:
-                                                      (const Color(0xFF0D47A1)),
+                                                      (Color(0xFF0D47A1)),
                                                   shape: BoxShape.circle,
                                                 ),
                                                 alignment:
-                                                    Alignment(0.00, 0.00),
+                                                    const Alignment(0.00, 0.00),
                                                 child: FaIcon(
                                                   FontAwesomeIcons
                                                       .solidThumbsUp,
                                                   color: Theme.of(context)
                                                       .primaryTextTheme
-                                                      .bodyText1!
+                                                      .bodyLarge!
                                                       .color,
                                                   size: 24,
                                                 ),
                                               ),
                                             ),
-                                            Text(
+                                            const Text(
                                               'Experience',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
@@ -235,28 +235,28 @@ class ProfileScreenT extends StatelessWidget {
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Padding(
-                                            padding: EdgeInsets.fromLTRB(
+                                            padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 12),
                                             child: Container(
                                               width: 44,
                                               height: 44,
-                                              decoration: BoxDecoration(
+                                              decoration: const BoxDecoration(
                                                 color:
-                                                    (const Color(0xFF0D47A1)),
+                                                    (Color(0xFF0D47A1)),
                                                 shape: BoxShape.circle,
                                               ),
-                                              alignment: Alignment(0.00, 0.00),
+                                              alignment: const Alignment(0.00, 0.00),
                                               child: Icon(
                                                 Icons.attach_money_sharp,
                                                 color: Theme.of(context)
                                                     .primaryTextTheme
-                                                    .bodyText1!
+                                                    .bodyLarge!
                                                     .color,
                                                 size: 24,
                                               ),
                                             ),
                                           ),
-                                          Text(
+                                          const Text(
                                             'Price',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(

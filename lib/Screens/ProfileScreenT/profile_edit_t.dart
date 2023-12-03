@@ -32,6 +32,8 @@ class _ProfileEditTState extends State<ProfileEditT> {
   String email = '';
   String phono = '';
   String loc = '';
+  String subj = '';
+  String exp = '';
 
   @override
   Widget build(BuildContext context) {
@@ -301,6 +303,46 @@ class _ProfileEditTState extends State<ProfileEditT> {
                                   ),
                                 ],
                               ),
+                              const SizedBox(height: 20),
+                              Row(
+                                children: [
+                                  const Expanded(
+                                    flex: 2,
+                                    child: Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 5),
+                                      child: Text(
+                                        'Subject',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 5,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                        color: Colors.grey[200],
+                                      ),
+                                      child: TextFormField(
+                                        initialValue: userData.subj,
+                                        decoration: const InputDecoration(
+                                          border: InputBorder.none,
+                                          contentPadding: EdgeInsets.all(12.0),
+                                        ),
+                                        onChanged: (val) {
+                                          setState(() => subj = val);
+                                        },
+                                        maxLength: 50,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ),
@@ -313,12 +355,14 @@ class _ProfileEditTState extends State<ProfileEditT> {
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               await DatabaseService(uid: user!.uid)
-                                  .updatePUserData(
+                                  .updateUserData(
                                 fname.isEmpty ? userData.fname : fname,
                                 lname.isEmpty ? userData.lname : lname,
                                 abtme.isEmpty ? userData.abtme : abtme,
                                 phono.isEmpty ? userData.phono : phono,
                                 loc.isEmpty ? userData.loc : loc,
+                                subj.isEmpty ? userData.subj : subj,
+                                ''
                               );
 
                               print('User data updated successfully');
@@ -386,12 +430,14 @@ class _ProfileEditTState extends State<ProfileEditT> {
                 await DatabaseService(uid: uid).updateIcon(ImageSource.gallery);
             await DatabaseService(uid: uid)
                 .uploadImage('$uid - $name - Icon', img, uid);
-            await DatabaseService(uid: uid).updatePUserData(
+            await DatabaseService(uid: uid).updateUserData(
               fname,
               lname,
               abtme,
               email,
               phono,
+              subj,
+              exp
             );
           },
           icon: const Icon(
@@ -427,4 +473,8 @@ class _ProfileEditTState extends State<ProfileEditT> {
       )
     ]);
   }
+
+// Widget _expwidget(String exp){
+//   return
+// }
 }

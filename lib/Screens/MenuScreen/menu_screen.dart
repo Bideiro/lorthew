@@ -22,7 +22,7 @@ class _MenuScreenState extends State<MenuScreen> {
     HomeScreen(),
     ChatMenu(),
     ScheduleScreenP(),
-    PaymentScreenP(),
+    const PaymentScreenP(),
     ProfileRouter(),
   ];
 
@@ -165,7 +165,7 @@ class CurvePainter extends CustomPainter{
 class CurvePainterBackground extends StatelessWidget {
   final double diameter;
 
-  const CurvePainterBackground({Key? key, this.diameter = 200}) : super(key: key);
+  const CurvePainterBackground({super.key, this.diameter = 200});
 
   @override
   Widget build(BuildContext context) {
@@ -213,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF2196F3),
+        backgroundColor: const Color(0xFF2196F3),
         elevation: 0,
         automaticallyImplyLeading: false,
         title: const Text(
@@ -243,7 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               'Find your best',
                               style: TextStyle(
                                 fontSize: 30,
@@ -254,7 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             CarouselSlider(
                               options: CarouselOptions(
                                 autoPlay: true,
-                                autoPlayInterval: Duration(milliseconds: 1500),
+                                autoPlayInterval: const Duration(milliseconds: 1500),
                                 enlargeCenterPage: true,
                                 aspectRatio: 2.0,
                                 height: 50.0,
@@ -262,7 +262,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               items: synonyms.map((item) => Text(
                                 item,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 30,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
@@ -373,7 +373,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.grey.withOpacity(0.5),
                 spreadRadius: 2,
                 blurRadius: 5,
-                offset: Offset(0, 2),
+                offset: const Offset(0, 2),
               ),
             ],
           ),

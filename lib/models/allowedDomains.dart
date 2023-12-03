@@ -1,4 +1,4 @@
-List<String> allowedDomains = [
+List<String> alloweddomains = [
 '.com',
 '.net',
 '.org',
