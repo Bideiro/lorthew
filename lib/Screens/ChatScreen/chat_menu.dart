@@ -114,7 +114,8 @@ class _ChatMenuState extends State<ChatMenu> {
       if (rfullname.isNotEmpty && remail.isNotEmpty) {
         return ListTile(
           leading: CircleAvatar(
-            child: Text(rfullname[0].toUpperCase()),
+            backgroundImage: NetworkImage(data['iconURL']),
+            radius: 48,
           ),
           title: Text(rfullname),
           subtitle: StreamBuilder<QuerySnapshot>(
@@ -128,7 +129,7 @@ class _ChatMenuState extends State<ChatMenu> {
               }
 
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Text('loading...');
+                return const Text('loading...');
               }
 
               var messages = snapshot.data!.docs;
@@ -143,7 +144,7 @@ class _ChatMenuState extends State<ChatMenu> {
 
                 return Row(
                   children: [
-                    Container(
+                    SizedBox(
                       width: shouldAdjustWidth ? MediaQuery.of(context).size.width * 0.45 : null,
                       child: Text(
                         isCurrentUserSender ? 'You: $latestMessage' : latestMessage,
@@ -151,15 +152,15 @@ class _ChatMenuState extends State<ChatMenu> {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    SizedBox(width: 8.0),
+                    const SizedBox(width: 8.0),
                     Text(
                       formattedTime,
-                      style: TextStyle(fontSize: 12.0, color: Colors.grey),
+                      style: const TextStyle(fontSize: 12.0, color: Colors.grey),
                     ),
                   ],
                 );
               } else {
-                return Text(
+                return const Text(
                   'Say hi! 👋',
                   style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
                 );

@@ -7,6 +7,7 @@ import 'package:line_icons/line_icons.dart';
 
 import '../all.dart';
 import 'Profile_page_t.dart';
+import 'profilerouter.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -22,7 +23,7 @@ class _MenuScreenState extends State<MenuScreen> {
     ChatMenu(),
     ScheduleScreenP(),
     PaymentScreenP(),
-    ProfileScreenP(),
+    ProfileRouter(),
   ];
 
   @override
@@ -389,14 +390,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: ListTile(
                   title: Text(
                     toTitleCase(rfullname),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   subtitle: Text(
                     remail,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12.0,
                     ),
                   ),

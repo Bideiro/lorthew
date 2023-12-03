@@ -16,8 +16,6 @@ class ProfileEditP extends StatefulWidget {
   State<ProfileEditP> createState() => _ProfileEditPState();
 }
 
-
-
 class _ProfileEditPState extends State<ProfileEditP> {
   // void updateIcon() async {
   //   Uint8List img = await DatabaseService().updateIconDB(ImageSource.gallery);
@@ -37,7 +35,6 @@ class _ProfileEditPState extends State<ProfileEditP> {
 
   @override
   Widget build(BuildContext context) {
-    
     final user = Provider.of<cUser?>(context);
     return StreamBuilder<PupilUserinfo?>(
         stream: DatabaseService(uid: user?.uid).PuDatadoc,
@@ -87,8 +84,8 @@ class _ProfileEditPState extends State<ProfileEditP> {
                     children: <Widget>[
                       const SizedBox(height: 25.0),
                       hasicon
-                          ? _noUserImage(userData!.fname, userData.uid!)
-                          : _UserImage(icon, userData!.fname, userData.uid!),
+                          ? _noUserImage(userData.fname, userData.uid!)
+                          : _UserImage(icon, userData.fname, userData.uid!),
                       const SizedBox(height: 10.0),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
@@ -122,7 +119,7 @@ class _ProfileEditPState extends State<ProfileEditP> {
                                         color: Colors.grey[200],
                                       ),
                                       child: TextFormField(
-                                        initialValue: userData!.fname,
+                                        initialValue: userData.fname,
                                         decoration: const InputDecoration(
                                           border: InputBorder.none,
                                           contentPadding: EdgeInsets.all(12.0),
@@ -386,9 +383,18 @@ class _ProfileEditPState extends State<ProfileEditP> {
         left: 90,
         child: IconButton(
           onPressed: () async {
-            Uint8List img = await DatabaseService(uid: uid).updateIconDB(ImageSource.gallery);
-              String dlURL = await DatabaseService(uid: uid).uploadImage('$uid - $name - Icon', img, uid);
-              await DatabaseService(uid: uid).updateIcon(dlURL, uid);
+            Uint8List img =
+                await DatabaseService(uid: uid).updateIcon(ImageSource.gallery);
+            await DatabaseService(uid: uid)
+                .uploadImage('$uid - $name - Icon', img, uid);
+            await DatabaseService(uid: uid).updatePUserData(
+              fname,
+              lname,
+              abtme,
+              email,
+              phono,
+              loc,
+            );
           },
           icon: const Icon(
             Icons.add_photo_alternate,
@@ -410,11 +416,10 @@ class _ProfileEditPState extends State<ProfileEditP> {
         left: 90,
         child: IconButton(
           onPressed: () async {
-            Uint8List img = await DatabaseService(uid: uid).updateIconDB(ImageSource.gallery);
-              String dlURL = await DatabaseService(uid: uid).uploadImage('$uid - $name - Icon', img, uid);
-              setState(() {
-                _UserImage(dlURL,name,uid);
-              });
+            Uint8List img =
+                await DatabaseService(uid: uid).updateIcon(ImageSource.gallery);
+            await DatabaseService(uid: uid)
+                .uploadImage('$uid - $name - Icon', img, uid);
           },
           icon: const Icon(
             Icons.add_photo_alternate,

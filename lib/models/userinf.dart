@@ -15,8 +15,9 @@ class PupilUserinfo {
   final String phono;
   final String loc;
   final String iconURL;
+  final bool isTutor;
 
-  PupilUserinfo({
+  PupilUserinfo( {required this.isTutor,
     required this.iconURL,
     required this.uid,
     required this.fname,

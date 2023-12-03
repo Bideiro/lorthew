@@ -19,7 +19,6 @@ class _AuthenticateState extends State<Authenticate> {
   Widget build(BuildContext context) {
     final cUser? user = Provider.of<cUser?>(context);
     print(user);
-
     if (user == null) {
       print("going to login");
       return LoginScreen();

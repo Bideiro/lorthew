@@ -68,7 +68,7 @@ class _ProfilefrommenuWidgetState extends State<TutorPage> {
           ),
           title: Text(
             '${widget.fname} ${widget.lname}',
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: 'Readex Pro',
               color: Colors.black,
               fontWeight: FontWeight.bold,
@@ -80,7 +80,7 @@ class _ProfilefrommenuWidgetState extends State<TutorPage> {
           elevation: 0,
         ),
         body: Align(
-          alignment: Alignment(0.00, 0.00),
+          alignment: const Alignment(0.00, 0.00),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -100,7 +100,7 @@ class _ProfilefrommenuWidgetState extends State<TutorPage> {
                             shape: BoxShape.circle,
                           ),
                           child: Padding(
-                            padding: EdgeInsets.all(2),
+                            padding: const EdgeInsets.all(2),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(50),
                               child: Image.network(

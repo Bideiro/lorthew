@@ -19,23 +19,25 @@ class DatabaseService {
 
   //initial pupil data
   Future initPUserData(String fname, String lname, String email) async {
-    return await userdataCollection.doc(uid).update({
+    return await userdataCollection.doc(uid).set({
       'fname': fname,
       'lname': lname,
       'isTuTor': false,
       'uid': uid,
-      'email': email
+      'email': email,
+      'iconURL' : '',
     });
   }
 
   // initial tutor data
   Future initTUserData(String fname, String lname, String email) async {
-    return await userdataCollection.doc(uid).update({
+    return await userdataCollection.doc(uid).set({
       'fname': fname,
       'lname': lname,
       'isTutor': true,
       'uid': uid,
-      'email': email
+      'email': email,
+      'iconURL' : '',
     });
   }
 
@@ -50,7 +52,6 @@ class DatabaseService {
       'phono': phoneNum,
       'loc': location,
       'uid': uid,
-      'iconURL': ''
     });
   }
 
@@ -65,18 +66,14 @@ class DatabaseService {
       'phono': phoneNum,
       'loc': location,
       'subj': subj,
-      'iconURL': ''
-    });
-  }
-
-  Future updateIcon(String dlurl, String curruid) async {
-    return await userdataCollection.doc(curruid).update({
-      'iconURL': dlurl,
+      'exp': 0,
+      'pricelvl': 0,
+      'starno': 0,
     });
   }
 
   //selecting icon
-  Future updateIconDB(ImageSource image) async {
+  Future updateIcon(ImageSource image) async {
     final ImagePicker imagepicker = ImagePicker();
     XFile? _file = await imagepicker.pickImage(source: image);
     if (_file != null) {
@@ -86,20 +83,27 @@ class DatabaseService {
     }
   }
 
-  Future<String> uploadImage(String filename, Uint8List file, String curruid) async {
+  Future<String> uploadImage(
+      String filename, Uint8List file, String curruid) async {
     //uploading of image
     Reference ref = _storage.ref().child(filename);
     UploadTask uploadTask = ref.putData(file);
     TaskSnapshot _snapshot = await uploadTask;
     String dlURL = await _snapshot.ref.getDownloadURL();
     try {
-      updateIcon(dlURL, curruid);return dlURL;
+      updateIconDB(dlURL, curruid);
+      return dlURL;
     } catch (e) {
       print(e);
       return 'asd';
     }
   }
 
+  Future updateIconDB(String dlurl, String curruid) async {
+    return await userdataCollection.doc(curruid).update({
+      'iconURL': dlurl,
+    });
+  }
 // //list of the data in docs for pupil
 
 //user data from snpashot
@@ -114,6 +118,7 @@ class DatabaseService {
       phono: snapshot.get('phono'),
       loc: snapshot.get('loc'),
       iconURL: snapshot.get('iconURL'),
+      isTutor: snapshot.get('isTutor'),
     );
   }
 
