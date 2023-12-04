@@ -390,7 +390,7 @@ class _HomeScreenState extends State<HomeScreen> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 Userinfo? userData = snapshot.data;
-                bool hasicon = userData!.iconURL.isEmpty;
+                String hasicon = data['iconURL'].toString();
                 return Container(
                   height: 100.0,
                   decoration: BoxDecoration(
@@ -413,7 +413,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       // Place the CircleAvatar here
                       CircleAvatar(
                         radius: 40.0,
-                        child: hasicon
+                        child: hasicon.isEmpty
                             ? _hanosicon(data['fname'])
                             : _hasicon(data['iconURL']),
                       ),

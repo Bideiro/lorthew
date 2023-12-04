@@ -18,14 +18,12 @@ class ProfileEditP extends StatefulWidget {
 
 class _ProfileEditPState extends State<ProfileEditP> {
   final _formKey = GlobalKey<FormState>();
-
   String fname = '';
   String lname = '';
   String abtme = '';
   String email = '';
   String phono = '';
   String loc = '';
-
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<cUser?>(context);
@@ -381,7 +379,7 @@ class _ProfileEditPState extends State<ProfileEditP> {
             await DatabaseService(uid: uid)
                 .uploadImage('$uid - $name - Icon', img, uid);
             await DatabaseService(uid: uid)
-                .updateUserData(fname, lname, abtme, phono, loc, '','');
+                .updateUserData(fname, lname, abtme, phono, loc, '', '');
           },
           icon: const Icon(
             Icons.add_photo_alternate,

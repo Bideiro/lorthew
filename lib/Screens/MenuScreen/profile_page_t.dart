@@ -59,9 +59,10 @@ class _ProfilefrommenuWidgetState extends State<TutorPage> {
     return StreamBuilder<Userinfo?>(
         stream: DatabaseService(uid: user?.uid).uDatadoc,
         builder: (context, snapshot) {
+
           if (snapshot.hasData) {
             Userinfo? userData = snapshot.data;
-            bool hasicon = userData!.iconURL.isEmpty;
+            String hasicon = widget.iconURL;
             return GestureDetector(
               onTap: () {
                 FocusScope.of(context).requestFocus(FocusNode());
@@ -116,7 +117,7 @@ class _ProfilefrommenuWidgetState extends State<TutorPage> {
                                         Theme.of(context).secondaryHeaderColor,
                                     shape: BoxShape.circle,
                                   ),
-                                  child: hasicon
+                                  child: hasicon.isEmpty
                                       ? _hanosicon(widget.fname)
                                       : _hasicon(widget.iconURL),
                                 ),
